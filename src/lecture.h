@@ -1,0 +1,1 @@
+char* lireCommande(void);
