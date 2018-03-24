@@ -1,4 +1,5 @@
-
+#Makefile
+#Déclaration des variables
 CC = gcc
 DEBUG = no
 LDFLAGS =
@@ -11,18 +12,25 @@ else
 endif
 
 interpreter = src/interpreter
+cmd = src/cmd
+obj = obj
+objects = lecture.o liste.o main.o parse.o
+OBJS = $(patsubst %,$(obj)/%,$(objects))
 
+.PHONY: clean ressources faroShell
 
-all: $(EXEC)
-	@echo "Compiling FaroShell..."
+all: ressources $(EXEC)
 
-faroShell: $(interpreter)/lecture.o $(interpreter)/liste.o \
-			$(interpreter)/main.o $(interpreter)/parse.o
+ressources:
+	mkdir -p $(obj)
+
+faroShell: $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
+	@echo "Build successful!"
 
-obj/%.o: $(interpreter)%.c
-	$(CC) -o $(interpreter)/$@ -c $(interpreter)/$< $(CFLAGS)
-
+$(OBJS): $(obj)/%.o: $(interpreter)/%.c
+	@echo "Compiling $@"
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 clean:
-	rm -rf *.o
+	rm -rf $(obj)
