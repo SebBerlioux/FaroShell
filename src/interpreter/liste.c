@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "liste.h"
 
 // strucutre d'une cellule d'une liste doublement chainee
@@ -24,7 +22,7 @@ SList* CreateList()
 
 	p_newList->p_head = NULL;	// initialisation tete de la liste
 	p_newList->p_tail = NULL;	// initialisation fin de la liste
-	
+
 	return p_newList;
 }
 
@@ -84,7 +82,7 @@ SCell* AddElementBegin(SList *list, Data elem)
 		// la tete de liste devient la nouvelle valeur
 		list->p_head->p_prev = p_newCell;
 		p_newCell->p_next = list->p_head;
-		list->p_head = p_newCell;	
+		list->p_head = p_newCell;
 	}
 
 	return p_newCell;
@@ -117,7 +115,7 @@ SCell* AddElementEnd(SList *list, Data elem)
 		// la fin de liste devient la nouvelle valeur
 		list->p_tail->p_next = p_newCell;
 		p_newCell->p_prev = list->p_tail;
-		list->p_tail = p_newCell;	
+		list->p_tail = p_newCell;
 	}
 
 	return p_newCell;
@@ -171,7 +169,7 @@ void DeleteCell(SList *list, SCell *cell)
 {
 	SCell *p_tmp = list->p_head;
 	int trouve = 0;
-		
+
 	while (p_tmp != NULL && !trouve)	// tant que pas a la fin et pas trouve
 	{
 		if (p_tmp == cell)	// cellule cherchee trouvee

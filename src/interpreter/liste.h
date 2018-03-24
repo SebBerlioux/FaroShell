@@ -1,6 +1,9 @@
 #ifndef _LISTE_H
 	#define _LISTE_H
 
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef char* Data;
 typedef struct SCell SCell;
 typedef struct SList SList;

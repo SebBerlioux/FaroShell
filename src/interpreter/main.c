@@ -5,6 +5,13 @@
 #include "lecture.h"
 #include "parse.h"
 
+#define SHELLNAME "FaroShell"
+#define EXIT_CMD "exit"
+
+#define ANSI_COLOR_CYAN    "\x1b[96m"
+#define ANSI_COLOR_YELLOW  "\x1b[93m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 int main(void)
 {
 	printf("\033[H\033[2J");	// efface la console
@@ -15,6 +22,8 @@ int main(void)
 	do
 	{
 		parametresList = CreateList();	// init liste
+		printf(ANSI_COLOR_YELLOW "User" ANSI_COLOR_CYAN "@%s" ANSI_COLOR_RESET "\n",
+			SHELLNAME);
 		printf("> ");	// pour le bo-jeu
 		commande = lireCommande();	// lecture d'une commande entiere
 		parseParamsList(parametresList, commande);	// separation de chaque parametre dans une liste doublement chainee
@@ -22,7 +31,7 @@ int main(void)
 		PrintList(parametresList);	// affichage de la commande rentree
 		DeleteList(parametresList);	// suppression des donnees de la commande rentree
 	}
-	while(strcmp(commande, "exit"));	// fin de la boucle lorsque "exit" rentree
+	while(strcmp(commande, EXIT_CMD));	// fin de la boucle lorsque "exit" rentree
 
 	return 0;
 }
