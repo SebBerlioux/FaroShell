@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "liste.h"
+#include "../libs/liste.h"
 #include "lecture.h"
 #include "parse.h"
 
@@ -18,15 +18,18 @@ int main(void)
 
 	char *commande;	// commande rentree
 	SList *parametresList;	// liste des parametres (dont nom de commande)
+	char* result; // le résultat de la commande
 
 	do
 	{
 		parametresList = CreateList();	// init liste
 		printf(ANSI_COLOR_YELLOW "User" ANSI_COLOR_CYAN "@%s" ANSI_COLOR_RESET "\n",
 			SHELLNAME);
-		printf("> ");	// pour le bo-jeu
+		printf("> ");	// prompt
 		commande = lireCommande();	// lecture d'une commande entiere
 		parseParamsList(parametresList, commande);	// separation de chaque parametre dans une liste doublement chainee
+		result = executeCommand(parametresList);
+		printf("%s", result);
 		printf("> Commande rentrée : ");	// affichage de la commande rentree
 		PrintList(parametresList);	// affichage de la commande rentree
 		DeleteList(parametresList);	// suppression des donnees de la commande rentree
