@@ -28,10 +28,9 @@ int main(void)
 		printf("> ");	// prompt
 		commandLine = lireCommande();	// lecture d'une commande entiere
 		parseParamsList(parametresList, commandLine);	// separation de chaque parametre dans une liste doublement chainee
-		executeCommand(parametresList);
-		printf("%s", result);
 		printf("> Commande rentrée : ");	// affichage de la commande rentree
 		PrintList(parametresList);	// affichage de la commande rentree
+		executeCommand(parametresList);
 		DeleteList(parametresList);	// suppression des donnees de la commande rentree
 	}
 	while(strcmp(commandLine, EXIT_CMD));	// fin de la boucle lorsque "exit" rentree

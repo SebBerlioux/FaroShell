@@ -123,7 +123,21 @@ Data GetData(SCell *cell)
   return cell->value;
 }
 
-int GetSize()
+int GetSize(SList *list)
 {
-  return cell->size;
+  return list->size;
+}
+
+void PrintList(SList *list)
+{
+	if (list)
+	{
+		SCell *cell=GetFirstElement(list);
+		while (cell!=NULL)
+		{
+			printf("[%s] -> ",GetData(cell));
+			cell=GetNextElement(cell);
+		}
+		printf("NULL\n");
+	}
 }

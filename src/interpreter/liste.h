@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef int Data;
+typedef char* Data;
 typedef struct SCell SCell;
 typedef struct SList SList;
 
@@ -58,5 +58,9 @@ Data GetData(SCell *cell);
 	Retourne la taille de la liste
 */
 int GetSize();
+/*
+	Affiche la liste
+*/
+void PrintList(SList *list);
 
 #endif
