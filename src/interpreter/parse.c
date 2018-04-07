@@ -16,23 +16,17 @@ void parseParamsList(SList *liste, char* commandLine)
 
 void executeCommand(SList *liste)
 {
-
 	char *cmd = GetData(GetFirstElement(liste));
 	int nbArgs;
-
-	printf("yolo = %s\n", cmd);
 
 	DeleteCell(liste, GetFirstElement(liste));
 	nbArgs = GetSize(liste);
 	char *args[nbArgs];
 
-	printf("nb args = %d\n", nbArgs);
-	/*
 	SCell *cell = GetFirstElement(liste);
 	for (int i = 0; i < nbArgs; i++)
 	{
 		args[i] = GetData(cell);
-		//strcat(args, GetData(cell));
 		cell = GetNextElement(cell);
 	}
 
@@ -40,5 +34,4 @@ void executeCommand(SList *liste)
 	{
 		executeEcho(nbArgs, args);
 	}
-	*/
 }

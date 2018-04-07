@@ -2,10 +2,11 @@
 
 void executeEcho(int argc, char *argv[])
 {
-  char* result = "";
+  char* result;
   for (int i = 0; i < argc; i++)
   {
     strcat(result, argv[i]);
+    strcat(result, " ");
   }
   strcat(result, "\n");
   printf("%s", result);
