@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "mkdir.h"
+#include "mkdir.c"
 #include "pwd.h"
 
 int main(int argc, char const *argv[]) {
