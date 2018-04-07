@@ -3,8 +3,6 @@
 
 #include <string.h>
 
-#include "../../libs/liste.h"
-
-char* executeEcho(SList* liste);
+void executeEcho(int argc, char *argv[]);
 
 #endif

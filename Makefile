@@ -20,12 +20,11 @@ objects = lecture.o main.o parse.o
 commands = echo.o
 OBJS = $(patsubst %,$(obj)/%,$(objects))
 CMDS = $(patsubst %,$(objCmd)/%,$(commands))
-LIST = $(obj)/liste.o
 
 .PHONY: clean ressources faroShell
 
 #Déclaration des cibles pour la compilation
-all: ressources libs command $(EXEC)
+all: ressources command $(EXEC)
 
 #Création du répertoire obj
 ressources:
@@ -40,9 +39,6 @@ faroShell: $(OBJS)
 $(OBJS): $(obj)/%.o: $(interpreter)/%.c
 	@echo "Building $@"
 	$(CC) -c -o $@ $< $(CFLAGS)
-
-libs:
-	$(CC) -c -o $(obj)/liste.o $(libs)/liste.c $(CFLAGS)
 
 #Compilation des commandes
 command: $(CMDS)
