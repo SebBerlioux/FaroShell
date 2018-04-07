@@ -1,0 +1,4 @@
+"C:\Program Files\JetBrains\CLion 2017.3.2\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\Arthur\Documents\Polytech\S6\Projet_C\FaroShell
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug
