@@ -6,8 +6,6 @@ void parseParamsList(SList *liste, char* commandLine)
 	int cmpt = 0;	// cmpt de position dans la liste
 	char* argument;	// un parametre
 
-	printf("%s\n", commandLine);
-
 	argument = strtok(commandLine, " "); // recupere le premier "token" avant un espace
 	while (argument != NULL)	// tant que pas fin de chaine
 	{
@@ -18,13 +16,18 @@ void parseParamsList(SList *liste, char* commandLine)
 
 void executeCommand(SList *liste)
 {
+
 	char *cmd = GetData(GetFirstElement(liste));
 	int nbArgs;
+
+	printf("yolo = %s\n", cmd);
 
 	DeleteCell(liste, GetFirstElement(liste));
 	nbArgs = GetSize(liste);
 	char *args[nbArgs];
 
+	printf("nb args = %d\n", nbArgs);
+	/*
 	SCell *cell = GetFirstElement(liste);
 	for (int i = 0; i < nbArgs; i++)
 	{
@@ -37,4 +40,5 @@ void executeCommand(SList *liste)
 	{
 		executeEcho(nbArgs, args);
 	}
+	*/
 }
