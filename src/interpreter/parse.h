@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../libs/liste.h"
+#include "liste.h"
 #include "../cmd/echo/echo.h"
 
 #define NOMBRE_ARGUMENT 10
 
 void parseParamsList(SList *liste, char* commande);
-char* executeCommand(SList *liste);
+void executeCommand(SList *liste);
 
 #endif

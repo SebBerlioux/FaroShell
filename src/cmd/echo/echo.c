@@ -1,15 +1,12 @@
 #include "echo.h"
 
-char* executeEcho(SList* liste)
+void executeEcho(int argc, char *argv[])
 {
   char* result = "";
-  SCell *cell = GetNextElement(GetFirstElement(liste));
-  while (cell != NULL)
+  for (int i = 0; i < argc; i++)
   {
-  	strcat(result, GetData(cell));
-    strcat(result, " ");
-  	cell = GetNextElement(cell);
+    strcat(result, argv[i]);
   }
   strcat(result, "\n");
-  return result;
+  printf("%s", result);
 }
