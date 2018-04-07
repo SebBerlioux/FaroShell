@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]){
 
-    printf("C'est un test d'affichage pour fls\n");
+    printf("C'est un test d'affichage pour fls!\n");
     //fls(argc, argv)        //pour lancer la fonction ls
 
     return 0;
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
  * @param  {int}       argc   Le nombre d'arguments
  * @param  {char[] *}  argv   Les arguments d'entrée
  * @param  {int}       aFlag  Option -a
-*/
+
 int kls(int argc, char *argv[]) {
     char c;
 
@@ -60,3 +60,4 @@ int kls(int argc, char *argv[]) {
 
     return 0;
 }
+ */
