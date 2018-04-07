@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="FaroShell"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="FaroShell">
+				<Option output="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/FaroShell.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 FaroShell"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="FaroShell/fast">
+				<Option output="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/FaroShell.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 FaroShell/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/.gitignore">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/Makefile">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/README.md">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/cat/cat.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/cat/cat.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/cd/cd.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/cd/cd.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/chgrp/chgrp.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/chgrp/chgrp.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/chmod/chmod.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/chmod/chmod.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/cp/cp.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/cp/cp.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/du/du.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/du/du.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/echo/echo.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/echo/echo.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/ls/ls.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/ls/ls.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/mkdir/mkdir.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/mkdir/mkdir.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/mv/mv.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/mv/mv.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/pwd/pwd.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/pwd/pwd.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/rm/rm.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/rm/rm.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/su/su.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/cmd/su/su.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/interpreter/lecture.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/interpreter/lecture.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/interpreter/main.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/interpreter/parse.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/interpreter/parse.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/libs/liste.c">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/src/libs/liste.h">
+			<Option target="FaroShell"/>
+		</Unit>
+		<Unit filename="C:/Users/Arthur/Documents/Polytech/S6/Projet_C/FaroShell/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
