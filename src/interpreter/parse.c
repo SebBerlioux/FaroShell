@@ -1,12 +1,12 @@
 #include "parse.h"
 
-void parseParamsList(SList *liste, char* commande)
+void parseParamsList(SList *liste, char* commandLine)
 {
 	int nbArguments = NOMBRE_ARGUMENT;	// nombre d'argument max initial
 	int cmpt = 0;	// cmpt de position dans la liste
 	char* argument;	// un parametre
 
-	argument = strtok(commande, " "); // recupere le premier "token" avant un espace
+	argument = strtok(commandLine, " "); // recupere le premier "token" avant un espace
 	while (argument != NULL)	// tant que pas fin de chaine
 	{
 		AddElementEnd(liste, argument);	// ajout du parametre lu a la liste
@@ -14,14 +14,24 @@ void parseParamsList(SList *liste, char* commande)
 	}
 }
 
-char* executeCommand(SList *liste)
+void executeCommand(SList *liste)
 {
-	char *command = GetData(GetFirstElement(liste));
-	char* result = "";
+	char *cmd = GetData(GetFirstElement(liste));
+	int nbArgs;
 
-	if (strcmp(command, "echo") == 0)
+	DeleteCell(liste, GetFirstElement(liste));
+	nbArgs = GetSize(liste);
+	char *args[nbArgs];
+
+	SCell *cell = GetFirstElement(liste);
+	for (int i = 0; i < nbArgs; i++)
 	{
-		result = executeEcho(liste);
+		args[i] = GetData(cell);
+		cell = GetNextElement(cell);
 	}
-	return result;
+
+	if (strcmp(cmd, "echo") == 0)
+	{
+		executeEcho(nbArgs, args);
+	}
 }
