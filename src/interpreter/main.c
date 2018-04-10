@@ -27,11 +27,14 @@ int main(void)
 			SHELLNAME);
 		printf("> ");	// prompt
 		commandLine = lireCommande();	// lecture d'une commande entiere
-		parseParamsList(parametresList, commandLine);	// separation de chaque parametre dans une liste doublement chainee
-//		printf("> Commande rentrée : ");	// affichage de la commande rentree
-//		PrintList(parametresList);	// affichage de la commande rentree
-		executeCommand(parametresList);
-//		DeleteList(parametresList);	// suppression des donnees de la commande rentree
+		if (strcmp(commandLine, ""))
+		{
+			parseParamsList(parametresList, commandLine);	// separation de chaque parametre dans une liste doublement chainee
+			//printf("> Commande rentrée : ");	// affichage de la commande rentree
+			//PrintList(parametresList);	// affichage de la commande rentree
+			executeCommand(parametresList);
+		}
+		DeleteList(parametresList);	// suppression des donnees de la commande rentree
 	}
 	while(strcmp(commandLine, EXIT_CMD));	// fin de la boucle lorsque "exit" rentree
 	printf("Goodbye !\n");
