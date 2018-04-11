@@ -46,5 +46,5 @@ for(j=0;j<(argc-watchdog);j++){
 	
 printf("\nLes fichiers/chemins/... sont %s \n",fichier);
 int k = 0;
-for(k=0;j<(watchdog);j++){
+for(k=0;k<(watchdog);k++){
 	printf(" %s ",fichiers[k]);

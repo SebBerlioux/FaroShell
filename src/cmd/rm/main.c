@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-	char* commande[]={"TP.zip","-r","-f"};
-	frm(3,commande);
+	char* commande[]={"TP.zip","-r","-f","TP2.zip"};
+	frm(4,commande);
 	
 }
