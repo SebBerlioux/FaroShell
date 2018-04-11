@@ -18,7 +18,7 @@ for(i=0;i<argc;i++){								//On parcourt la liste des arguments pour séparer l
 	}
 		
 	else{
-		rintf("Un fichier à été trouvé\n");
+		printf("Un fichier à été trouvé\n");
 		commande[watchdog]=argv[i];   
 		watchdog = watchdog+1;
 		
