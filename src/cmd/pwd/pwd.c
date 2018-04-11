@@ -1,11 +1,11 @@
 #include "pwd.h"
 
-int pwd(){
+void pwd(){
     char tampon[100];
 
-    if (getcwd (tampon, 100) == NULL) {
-        return 0;
+    if (getcwd(tampon, 100) == NULL) {
+        exit(EXIT_FAILURE);
     }
-    puts (tampon);
-    return 0;
+    printf("%s\n", tampon);
+    exit(EXIT_SUCCESS);
 }
