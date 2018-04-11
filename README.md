@@ -8,13 +8,13 @@ Ce projet a pour but de créer un mini shell en langage C dans lequel les comman
 - ls     ✓  (sans options)
 - cat    ✓  (sans options)
 - mv     ✓  (sans options)
-- cp     
+- cp     -> Bastien (en cours)
 - rm     ✓  (sans options)
-- du
+- du     ✓  (sans options)
 - chmod
 - chgrp
 - echo   ✓  (sans options)
-- su
+- su     -> Arthur (en cours)
 
 ## L'équipe
 
