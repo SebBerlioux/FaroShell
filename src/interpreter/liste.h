@@ -28,7 +28,7 @@ SCell* AddElementEnd(SList *list,Data elem);
 /*
 	Ajoute un élément après un autre dans la liste
 */
-SCell* AddElementAfter(SList *list,SCell *cell,Data elem);
+SCell* AddElementAfter(SCell *cell,Data elem);
 /*
 	Supprime une cellule de la liste
 */

@@ -70,7 +70,7 @@ SCell* AddElementEnd(SList *list,Data elem)
   return list->tail;
 }
 
-SCell* AddElementAfter(SList *list,SCell *cell,Data elem)
+SCell* AddElementAfter(SCell *cell,Data elem)
 {
   SCell *newCell;
   newCell = malloc(sizeof(SCell));

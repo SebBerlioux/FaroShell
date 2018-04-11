@@ -2,7 +2,6 @@
 
 void parseParamsList(SList *liste, char* commandLine)
 {
-	int cmpt = 0;	// cmpt de position dans la liste
 	char* argument;	// un parametre
 
 	argument = strtok(commandLine, " "); // recupere le premier "token" avant un espace
