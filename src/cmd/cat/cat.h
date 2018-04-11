@@ -7,6 +7,5 @@
 #include <string.h>
 
 void fcat(int argc, char const *argv[]);
-void readFile(FILE *fp, char *option[], int nbOption);
 
 #endif
