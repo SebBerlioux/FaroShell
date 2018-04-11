@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include "ls.c"
 
-int main(int argc, char *argv[]){
+int main(int argc, char const *argv[]){
 
-    printf("Fonction ls ->!\n");
-    fls(argc, argv);        //pour lancer la fonction ls
+    fls(argc, argv);        //LA FONCTION NE MARCHE PAS AVEC DES OPTIONS........
 
     return 0;
 }
