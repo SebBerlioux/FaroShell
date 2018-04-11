@@ -57,8 +57,8 @@ void fcat(int argc, char const *argv[]){
 
 void readFile(FILE *fp, char *option[], int nbOption){
   FILE *stream;
-  size_t len = 0;
   char read[30] = "";
+  char line[]
 
   stream = fopen(fp, "r");
   if (stream == NULL){ // erreur lors de l'ouverture du fichier
