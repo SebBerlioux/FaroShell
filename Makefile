@@ -1,25 +1,6 @@
 #Makefile
-#Déclaration des variables
-CC = gcc
-DEBUG = no
-LDFLAGS =
-EXEC = faroShell
-
-ifeq ($(DEBUG),yes)
-        CFLAGS = -g -W -Wall
-else
-        CFLAGS =
-endif
-
-interpreter = src/interpreter
-cmd = src/cmd
-libs = src/libs
-obj = obj
-objCmd = obj/cmd
-objects = lecture.o main.o parse.o liste.o
-commands = echo.o
-OBJS = $(patsubst %,$(obj)/%,$(objects))
-CMDS = $(patsubst %,$(objCmd)/%,$(commands))
+#Inclusion des variables
+include Makefile.variables
 
 .PHONY: clean ressources faroShell
 
@@ -33,20 +14,25 @@ ressources:
 
 #Compilation de l'interpréteur et du shell
 faroShell: $(OBJS)
-	$(CC) -o $@ $^ $(LIST) $(objCmd)/echo.o $(LDFLAGS)
+	$(CC) -o $@ $^ $(objCmd)/echo/echo.o $(LDFLAGS)
 	@echo "Build successful!"
 
-$(OBJS): $(obj)/%.o: $(interpreter)/%.c
+$(OBJS): $(obj)/%.o: $(src)/$(interpreter)/%.c
 	@echo "Building $@"
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 #Compilation des commandes
-command: $(CMDS)
+command: cmdRepos cmdCompil
 
-$(CMDS): $(objCmd)/%.o: $(cmd)/%/echo.c
-	@echo "Building $@"
-	$(CC) -c -o $@ $< $(CFLAGS)
+cmdRepos:
+	mkdir -p $(bin)/$(cmd)
+	mkdir -p $(bin)/$(cmd)/$(static)
+	mkdir -p $(bin)/$(cmd)/$(dynamic)
 
-#Nettoyage des fichiers objet
+cmdCompil:
+	$(foreach cmds, $(CMDS), $(MAKE) -C $(src)/$(cmd)/$(cmds))
+
+#Nettoyage des fichiers objet et binaires
 clean:
 	rm -rf $(obj)
+	rm -rf $(bin)

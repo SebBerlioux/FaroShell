@@ -5,27 +5,68 @@
 #include <dirent.h>
 #include <stdbool.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <limits.h>
 #include <time.h>
+#include <grp.h>    //getgrgid
 #include <pwd.h>    //pourquoi ca trouve pas ???? sert pour *getpwuid pour avoir l'ID
 
-
-
-#define PURPLE   "\033[1;35m"
-#define CYAN     "\033[1;36m"
-#define RED      "\033[38;5;124m"
 
 const int LS_FLAG_a = 1;    //-a option
 const int LS_FLAG_l = 1<<1; //-l option
 
-char *monthName[] = {"janv.", "févr.", " mars", "avril", "  mai", " juin",
-                     "juil.", " août", "sept.", " oct.", " nov.", " déc."};
+char *monthName[] = {"janv.", "févr.", " mars", "avril", "  mai", " juin", "juil.", " août", "sept.", " oct.", " nov.", " déc."};
+
+
+/**
+ * fls
+ *
+ * Fonction ls
+ *
+ * @param  {int argc}
+ * @param  {char *argv[]}
+*/
+int fls(int argc, char const *argv[]) {
+
+    /*if(argc<2){
+        printf("Erreur manque de paramètre !\n");
+        exit(EXIT_FAILURE);
+    }*/
+
+    DIR *dirp;
+    struct dirent *dptr;
+    char* repertoire_courant = malloc(sizeof(char)*256);
+    size_t size = 256;
+
+    if (argv[1] == NULL)
+        getcwd(repertoire_courant, size);
+    else
+        repertoire_courant = argv[1];
+
+    if ((dirp=opendir(repertoire_courant))==NULL){
+        printf("Error\n");
+        return(-1);
+    }
+
+    while ((dptr=readdir(dirp))){
+        if (dptr->d_name[0] != '.')
+            printf("%s\n",dptr->d_name);
+    }
+    closedir(dirp);
+
+
+    return 0;
+}
+
+
+
+
+
 
 /**
  * printColorFile
  *
- * Affiche le nom du fichier avec la couleur correspondante en fonction du type
- * de fichier
+ * Affiche le nom du fichier avec la couleur (en fonction du type de fichier)
  *
  * @param  {mode_t}  mode   Le mode_t du fichier
  * @param  {char *}  mode   Le nom du fichier à affiche
@@ -33,16 +74,16 @@ char *monthName[] = {"janv.", "févr.", " mars", "avril", "  mai", " juin",
 
 void printColorFile(mode_t mode, char * path) {
     if (S_ISDIR(mode)) {                    // repertoire
-        printf(BLUE "%s/" END, path);
+        printf(BLUE "%s/", path);   //printf(BLUE "%s/" END, path); pareil sur les autres lignes x5
     } else if (S_ISLNK(mode)) {             // lien
-        printf(CYAN "%s" END, path);
+        printf(CYAN "%s", path);
     } else if (S_ISSOCK(mode)) {            // socket
-        printf(PURPLE "%s" END, path);
+        printf(PURPLE "%s", path);
     } else if (S_ISCHR(mode) || S_ISBLK(mode) || S_ISFIFO(mode)) {
         // périphérique de caractères
-        printf(YELLOW "%s" END, path);
+        printf(YELLOW "%s", path);
     } else if ((S_IXUSR & mode) == S_IXUSR) {//exécutable
-        printf(RED "%s" END, path);
+        printf(RED "%s", path);
     } else {
         printf("%s", path);
     }
@@ -100,6 +141,7 @@ char type(mode_t mode) {
     }
 }
 
+
 /**
  * isLink
  *
@@ -113,7 +155,7 @@ bool isLink(mode_t mode) {
 
 
 /**
- * kls_file
+ * fls_file
  *
  * Print les infos sur le fichier filepath
  *
@@ -121,7 +163,7 @@ bool isLink(mode_t mode) {
  * @param  {char *} filename
  * @param  {int}    options
  */
-int kls_file(char *dir, char *filename, int options) {
+int fls_file(char *dir, char *filename, int options) {
 
     struct stat statls;
     bool optL = (options & LS_FLAG_l) == LS_FLAG_l;
@@ -146,7 +188,7 @@ int kls_file(char *dir, char *filename, int options) {
         printf(" ");
         printf("%3u", (unsigned int) statls.st_nlink);
         printf(" ");
-        printf("%s", getpwuid(statls.st_uid)->pw_name); //A partir de l'uid, on obtient le nom de l'utilisateur
+        printf("%s", getpwuid(statls.st_uid)->pw_name);     //A partir de l'uid, on obtient le nom de l'utilisateur
         printf(" ");
         printf("%s", getgrgid(statls.st_gid)->gr_name);
         printf(" ");
@@ -175,33 +217,6 @@ int kls_file(char *dir, char *filename, int options) {
     } else {
         printf("    ");
     }
-
-    return 0;
-}
-
-
-int fls(int argc, char *argv[]) {
-
-    DIR *dirp;
-    struct dirent *dptr;
-    char* repertoire_courant = malloc(sizeof(char)*256);
-    size_t size = 256;
-
-    if (argv[1] == NULL)
-        getcwd(repertoire_courant, size);
-    else
-        repertoire_courant = argv[1];
-
-    if ((dirp=opendir(repertoire_courant))==NULL){
-        printf("Error\n");
-        return(-1);
-    }
-
-    while ((dptr=readdir(dirp))){
-        if (dptr->d_name[0] != '.')
-            printf("%s\n",dptr->d_name);
-    }
-    closedir(dirp);
 
     return 0;
 }

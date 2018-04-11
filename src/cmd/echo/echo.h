@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void executeEcho(int argc, char *argv[]);
+void fecho(int argc, char *argv[]);
 
 #endif

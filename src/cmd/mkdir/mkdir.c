@@ -2,7 +2,7 @@
 
 // ex:$ mkdir -m 777 folderName
 
-void fmkdir(int argc, char const *argv[]){
+void fmkdir(int argc, char const *argv[]){      //enlever le const pour enlever le warnin
 
   if(argc<2){
     printf("Erreur manque de paramètre !\n");
