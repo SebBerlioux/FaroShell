@@ -38,7 +38,7 @@ void executeCommand(SList *liste)
 		}
 		else if (strcmp(cmd, "cat") == 0)
 		{
-			fcat(nbArgs, args);
+			//fcat(nbArgs, args);
 		}
 	}
 }

@@ -1,28 +1,6 @@
 #Makefile
-#Déclaration des variables
-CC = gcc
-DEBUG = no
-LDFLAGS =
-EXEC = faroShell
-
-ifeq ($(DEBUG),yes)
-        CFLAGS = -g -W -Wall
-else
-        CFLAGS =
-endif
-
-src = src
-interpreter = interpreter
-cmd = cmd
-bin = bin
-obj = obj
-static = static
-dynamic = dynamic
-objCmd = obj/cmd
-objects = lecture.o main.o parse.o liste.o
-commands = echo.o
-OBJS = $(patsubst %,$(obj)/%,$(objects))
-CMDS = echo
+#Inclusion des variables
+include Makefile.variables
 
 .PHONY: clean ressources faroShell
 
@@ -36,7 +14,7 @@ ressources:
 
 #Compilation de l'interpréteur et du shell
 faroShell: $(OBJS)
-	$(CC) -o $@ $^ $(objCmd)/echo.o $(LDFLAGS)
+	$(CC) -o $@ $^ $(objCmd)/echo/echo.o $(LDFLAGS)
 	@echo "Build successful!"
 
 $(OBJS): $(obj)/%.o: $(src)/$(interpreter)/%.c
@@ -53,8 +31,8 @@ cmdRepos:
 
 cmdCompil:
 	$(foreach cmds, $(CMDS), $(MAKE) -C $(src)/$(cmd)/$(cmds))
-#	$(CC) -c -o $@ $< $(CFLAGS)
 
-#Nettoyage des fichiers objet
+#Nettoyage des fichiers objet et binaires
 clean:
 	rm -rf $(obj)
+	rm -rf $(bin)

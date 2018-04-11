@@ -1,7 +1,14 @@
+#Variables nécessaires aux Makefiles
 CC = gcc
 DEBUG = no
 LDFLAGS =
 EXEC = faroShell
+
+ifeq ($(DEBUG),yes)
+        CFLAGS = -g -W -Wall
+else
+        CFLAGS =
+endif
 
 src = src
 interpreter = interpreter
