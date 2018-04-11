@@ -40,9 +40,9 @@ int frm(int argc, char *argv[]) {
 	int k = 0;
 	for(k=0;k<(watchdog);k++){
 		printf(" %s ",fichiers[k]);
+		fichier=malloc(sizeof(fichiers[k]));   
+		strcat(fichier,fichiers[k]);
+		remove(fichier);
 	}
-	
-	
-//	remove(fichier);
 	return 0;
 }
