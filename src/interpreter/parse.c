@@ -34,12 +34,11 @@ void executeCommand(SList *liste)
 
 		if (strcmp(cmd, "echo") == 0)
 		{
-			executeEcho(nbArgs, args);
+			fecho(nbArgs, args);
 		}
 		else if (strcmp(cmd, "cat") == 0)
 		{
-			//printf("Ok\n");
-			//fcat(nbArgs, args);
+			fcat(nbArgs, args);
 		}
 	}
 }

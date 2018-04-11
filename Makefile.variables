@@ -1,0 +1,17 @@
+CC = gcc
+DEBUG = no
+LDFLAGS =
+EXEC = faroShell
+
+src = src
+interpreter = interpreter
+cmd = cmd
+bin = bin
+obj = obj
+static = static
+dynamic = dynamic
+objCmd = obj/cmd
+objects = lecture.o main.o parse.o liste.o
+commands = echo.o
+OBJS = $(patsubst %,$(obj)/%,$(objects))
+CMDS = echo
