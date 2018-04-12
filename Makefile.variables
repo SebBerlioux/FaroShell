@@ -1,13 +1,12 @@
 #Variables nécessaires aux Makefiles
 CC = gcc
-DEBUG = no
-LDFLAGS =
+DEBUG = yes
 EXEC = faroShell
 
 ifeq ($(DEBUG),yes)
-        CFLAGS = -g -W -Wall
+        CFLAGS = -fPIC -pedantic -std=c99 -Wall -Wextra
 else
-        CFLAGS =
+        CFLAGS = -fPIC -pedantic -std=c99
 endif
 
 src = src
@@ -16,7 +15,7 @@ cmd = cmd
 bin = bin
 obj = obj
 static = static
-dynamic = dynamic
+shared = shared
 objCmd = obj/cmd
 binCmd = bin/cmd
 objects = lecture.o main.o parse.o liste.o
