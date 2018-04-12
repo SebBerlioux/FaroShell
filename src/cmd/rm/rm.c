@@ -42,7 +42,10 @@ int frm(int argc, char *argv[]) {
 		printf(" %s ",fichiers[k]);
 		fichier=malloc(sizeof(fichiers[k]));   
 		strcat(fichier,fichiers[k]);
-		remove(fichier);
+		if (remove(fichier) == -1){
+			printf("Il y a eut un probleme avec la suppression du fichier");
+			return -1;
+		}
 	}
 	return 0;
 }
