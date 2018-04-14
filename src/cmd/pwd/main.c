@@ -1,6 +1,6 @@
-#include "pwd.c"
+#include "pwd.h"
 
 int main(int argc, char const *argv[]) {
-  pwd();
+  fpwd();
   return 0;
 }

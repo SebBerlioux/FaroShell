@@ -39,5 +39,9 @@ void executeCommand(SList *liste)
 		{
 			//fcat(nbArgs, args);
 		}
+		else if (strcmp(cmd, "pwd") == 0)
+		{
+			fpwd();
+		}
 	}
 }

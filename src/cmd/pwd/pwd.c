@@ -1,6 +1,6 @@
 #include "pwd.h"
 
-void pwd(){
+void fpwd(){
     char tampon[100];
 
     if (getcwd(tampon, 100) == NULL) {

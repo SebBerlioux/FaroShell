@@ -2,7 +2,9 @@
 #Inclusion des variables
 include Makefile.variables
 
-LDFLAGS = -L$(binCmd)/$(shared) $(addprefix -l, $(CMDS)) -lm
+CMDS = mkdir cd ls cat mv rm du echo pwd
+LDFLAGS = -L$(binCmd)/$(static) $(addprefix -l, $(CMDS)) -lm
+LIBSOBJ = $(objCmd)/$(CMDS)/$(CMDS).o
 
 .PHONY: clean ressources faroShell
 
@@ -32,7 +34,7 @@ cmdRepos:
 	mkdir -p $(bin)/$(cmd)/$(shared)
 
 cmdCompil:
-	$(foreach cmds, $(CMDS), $(MAKE) -C $(src)/$(cmd)/$(cmds))
+	$(foreach cmds, $(CMDS), $(MAKE) -C $(src)/$(cmd)/$(cmds);)
 
 #Nettoyage des fichiers objet et binaires
 clean:

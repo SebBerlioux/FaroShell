@@ -5,6 +5,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void pwd();
+void fpwd();
 
 #endif

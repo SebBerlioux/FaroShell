@@ -23,9 +23,9 @@ int main(void)
 	do
 	{
 		parametresList = CreateList();	// init liste
-		printf(ANSI_COLOR_YELLOW "User" ANSI_COLOR_CYAN "@%s" ANSI_COLOR_RESET "\n",
+		printf("[" ANSI_COLOR_YELLOW "User" ANSI_COLOR_CYAN "@%s" ANSI_COLOR_RESET "]\n",
 			SHELLNAME);
-		printf("> ");	// prompt
+		printf("$ ");	// prompt
 		commandLine = lireCommande();	// lecture d'une commande entiere
 		if (strcmp(commandLine, ""))
 		{

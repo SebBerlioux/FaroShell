@@ -21,4 +21,3 @@ binCmd = bin/cmd
 objects = lecture.o main.o parse.o liste.o
 commands = echo.o
 OBJS = $(patsubst %,$(obj)/%,$(objects))
-CMDS = echo
