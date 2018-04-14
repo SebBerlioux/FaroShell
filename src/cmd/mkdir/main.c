@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "mkdir.c"
+#include "mkdir.h"
 
 int main(int argc, char const *argv[]) {
   fmkdir(argc, argv);

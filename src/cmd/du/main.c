@@ -1,4 +1,4 @@
-#include "du.c"
+#include "du.h"
 
 int main(int argc, char const *argv[]) {
   fdu(argc, argv);

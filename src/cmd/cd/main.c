@@ -1,4 +1,4 @@
-#include "cd.c"
+#include "cd.h"
 
 int main(int argc, char const *argv[]) {
   fcd(argc, argv);
