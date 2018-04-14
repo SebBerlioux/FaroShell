@@ -1,22 +1,9 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "ls.h"
-#include <dirent.h>
-#include <stdbool.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <limits.h>
-#include <time.h>
-#include <grp.h>    //getgrgid
-#include <pwd.h>    //pourquoi ca trouve pas ???? sert pour *getpwuid pour avoir l'ID
-
 
 const int LS_FLAG_a = 1;    //-a option
 const int LS_FLAG_l = 1<<1; //-l option
 
 char *monthName[] = {"janv.", "févr.", " mars", "avril", "  mai", " juin", "juil.", " août", "sept.", " oct.", " nov.", " déc."};
-
 
 /**
  * fls
@@ -58,11 +45,6 @@ int fls(int argc, char const *argv[]) {
     return 0;
 }
 
-
-
-
-
-
 /**
  * printColorFile
  *
@@ -71,7 +53,6 @@ int fls(int argc, char const *argv[]) {
  * @param  {mode_t}  mode   Le mode_t du fichier
  * @param  {char *}  mode   Le nom du fichier à affiche
 */
-
 void printColorFile(mode_t mode, char * path) {
     if (S_ISDIR(mode)) {                    // repertoire
         printf(BLUE "%s/", path);   //printf(BLUE "%s/" END, path); pareil sur les autres lignes x5
@@ -88,7 +69,6 @@ void printColorFile(mode_t mode, char * path) {
         printf("%s", path);
     }
 }
-
 
 /**
  * permission
@@ -141,18 +121,14 @@ char type(mode_t mode) {
     }
 }
 
-
 /**
  * isLink
  *
  * @return  {boo}   True if the file is a symlink
  */
-
 bool isLink(mode_t mode) {
     return ((mode & S_IFLNK) == S_IFLNK);
 }
-
-
 
 /**
  * fls_file

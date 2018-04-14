@@ -62,5 +62,9 @@ void executeCommand(SList *liste)
 		{
 			fmkdir(nbArgs, args);
 		}
+		else if (strcmp(cmd, "ls") == 0)
+		{
+			fls(nbArgs, args);
+		}
 	}
 }
