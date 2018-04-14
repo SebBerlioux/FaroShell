@@ -37,11 +37,27 @@ void executeCommand(SList *liste)
 		}
 		else if (strcmp(cmd, "cat") == 0)
 		{
-			//fcat(nbArgs, args);
+			fcat(nbArgs, args);
 		}
 		else if (strcmp(cmd, "pwd") == 0)
 		{
 			fpwd();
+		}
+		else if (strcmp(cmd, "cd") == 0)
+		{
+			fcd(nbArgs, args);
+		}
+		else if (strcmp(cmd, "rm") == 0)
+		{
+			frm(nbArgs, args);
+		}
+		else if (strcmp(cmd, "mv") == 0)
+		{
+			fmv(nbArgs, args);
+		}
+		else if (strcmp(cmd, "mkdir") == 0)
+		{
+			fmkdir(nbArgs, args);
 		}
 	}
 }
