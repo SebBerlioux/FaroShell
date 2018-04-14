@@ -20,7 +20,7 @@ void executeCommand(SList *liste)
 		char *cmd = GetData(GetFirstElement(liste));
 		int nbArgs;
 
-		DeleteCell(liste, GetFirstElement(liste));
+		//DeleteCell(liste, GetFirstElement(liste));
 		nbArgs = GetSize(liste);
 		char *args[nbArgs];
 
@@ -30,6 +30,9 @@ void executeCommand(SList *liste)
 			args[i] = GetData(cell);
 			cell = GetNextElement(cell);
 		}
+
+		printf("nbArgs = %d\n", nbArgs);
+		printf("args = %s\n", args[0]);
 
 		if (strcmp(cmd, "echo") == 0)
 		{
