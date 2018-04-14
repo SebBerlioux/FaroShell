@@ -30,10 +30,10 @@ void executeCommand(SList *liste)
 			args[i] = GetData(cell);
 			cell = GetNextElement(cell);
 		}
-
+		/*
 		printf("nbArgs = %d\n", nbArgs);
 		printf("args = %s\n", args[0]);
-
+		*/
 		if (strcmp(cmd, "echo") == 0)
 		{
 			fecho(nbArgs, args);

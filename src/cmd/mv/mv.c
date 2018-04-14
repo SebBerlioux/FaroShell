@@ -6,10 +6,10 @@ void fmv(int argc, char const *argv[])
 	char* source = malloc(sizeof(argv[0]));
 	char* dest = malloc(sizeof(argv[1]));
 
-	if (argc == 2)	// pas d'options
+	if (argc == 3)	// pas d'options
 	{
-		strcpy(source, argv[0]);
-		strcpy(dest, argv[1]);
+		strcpy(source, argv[1]);
+		strcpy(dest, argv[2]);
 
 		ret = rename(source, dest);
 
@@ -18,7 +18,7 @@ void fmv(int argc, char const *argv[])
 			printf("FaroShell : Impossible de déplacer le fichier/dossier \"%s\".\n", source);
 		}
 	}
-	else if (argc > 2)
+	else if (argc > 3)
 	{
 		printf("FaroShell : Manque de paramètre !\n");
 	}
