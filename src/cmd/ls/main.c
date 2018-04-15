@@ -2,8 +2,6 @@
 #include "ls.h"
 
 int main(int argc, char const *argv[]){
-
-    fls(argc, argv);        //LA FONCTION NE MARCHE PAS AVEC DES OPTIONS........
-
+    fls(argc, argv);        //LA FONCTION NE MARCHE SANS LES OPTIONS
     return 0;
 }

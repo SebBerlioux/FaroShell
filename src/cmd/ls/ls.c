@@ -25,7 +25,7 @@ int fls(int argc, char const *argv[]) {
     char* repertoire_courant = malloc(sizeof(char)*256);
     size_t size = 256;
 
-    if (argv[1] == NULL)
+    if (argv[1] == NULL)        // ou (argv == NULL || argv[1] == NULL)
         getcwd(repertoire_courant, size);
     else
         repertoire_courant = argv[1];
@@ -45,6 +45,8 @@ int fls(int argc, char const *argv[]) {
     return 0;
 }
 
+
+
 /**
  * printColorFile
  *
@@ -55,7 +57,7 @@ int fls(int argc, char const *argv[]) {
 */
 void printColorFile(mode_t mode, char * path) {
     if (S_ISDIR(mode)) {                    // repertoire
-        printf(BLUE "%s/", path);   //printf(BLUE "%s/" END, path); pareil sur les autres lignes x5
+        printf(BLUE "%s/", path);   //printf(BLUE "%s/" END, path); pareil sur les autres lignes x5 avant    sinon autre solution    printf("%s%s/", BLUE, path);
     } else if (S_ISLNK(mode)) {             // lien
         printf(CYAN "%s", path);
     } else if (S_ISSOCK(mode)) {            // socket
@@ -69,6 +71,8 @@ void printColorFile(mode_t mode, char * path) {
         printf("%s", path);
     }
 }
+
+
 
 /**
  * permission
@@ -84,7 +88,7 @@ void permission(mode_t mode, char* perms) {
     perms[1] = ((S_IWUSR & mode) == S_IWUSR) ? 'w' : '-';
     perms[2] = ((S_IXUSR & mode) == S_IXUSR) ? 'x' : '-';
 
-    perms[3] = ((S_IRGRP & mode) == S_IRGRP) ? 'r' : '-';
+    perms[3] = ((S_IRGRP & mode) == S_IRGRP) ? 'r' : '-';       //Il faut remettre les define pour que ca marche
     perms[4] = ((S_IWGRP & mode) == S_IWGRP) ? 'w' : '-';
     perms[5] = ((S_IXGRP & mode) == S_IXGRP) ? 'x' : '-';
 
@@ -95,6 +99,9 @@ void permission(mode_t mode, char* perms) {
     perms[9] = '\0';
 
 }
+
+
+
 
 /**
  * type
@@ -121,6 +128,9 @@ char type(mode_t mode) {
     }
 }
 
+
+
+
 /**
  * isLink
  *
@@ -129,6 +139,10 @@ char type(mode_t mode) {
 bool isLink(mode_t mode) {
     return ((mode & S_IFLNK) == S_IFLNK);
 }
+
+
+
+
 
 /**
  * fls_file
