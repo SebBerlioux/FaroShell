@@ -3,7 +3,7 @@
 #include <string.h> 
 #include "rm.h"
 
-int frm(int argc, char *argv[]) {
+int frm(int argc, char const *argv[]) {
 	char* fichier = NULL;
 	char** fichiers=malloc(1024*sizeof(char*));
 	char** commande=malloc(1024*sizeof(char*));  //allocation de la place pour la liste des commandes ( volontairement beaucoup trop grande)	

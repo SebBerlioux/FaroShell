@@ -1,6 +1,6 @@
 #include "echo.h"
 
-void fecho(int argc, char *argv[])
+void fecho(int argc, char const *argv[])
 {
   for (int i = 1; i < argc; i++)
   {
