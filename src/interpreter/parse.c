@@ -4,8 +4,11 @@ void parseParamsList(SList *liste, char* commandLine)
 {
 	char* argument;	// un parametre
 
-	argument = strtok(commandLine, " "); // recupere le premier "token" avant un espace
-	while (argument != NULL)	// tant que pas fin de chaine
+	// recupere le premier "token" avant un espace
+	argument = strtok(commandLine, " ");
+	printf("argument = %s\n", argument);
+	// tant que pas fin de chaine
+	while (argument != NULL)
 	{
 		AddElementEnd(liste, argument);	// ajout du parametre lu a la liste
 		argument = strtok(NULL, " ");	// recupere le "token" suivant
@@ -65,6 +68,10 @@ void executeCommand(SList *liste)
 		else if (strcmp(cmd, "ls") == 0)
 		{
 			fls(nbArgs, args);
+		}
+		else if (strcmp(cmd, "exit") != 0)
+		{
+			printf("%s: command not found\n", cmd);
 		}
 	}
 }

@@ -23,20 +23,21 @@ int main(void)
 	do
 	{
 		parametresList = CreateList();	// init liste
-		printf("[" ANSI_COLOR_YELLOW "User" ANSI_COLOR_CYAN "@%s" ANSI_COLOR_RESET "]\n",
-			SHELLNAME);
+		printf("[" ANSI_COLOR_YELLOW "User" ANSI_COLOR_CYAN "@%s"
+			ANSI_COLOR_RESET "]\n", SHELLNAME);
 		printf("$ ");	// prompt
 		commandLine = lireCommande();	// lecture d'une commande entiere
 		if (strcmp(commandLine, ""))
 		{
-			parseParamsList(parametresList, commandLine);	// separation de chaque parametre dans une liste doublement chainee
-			//printf("> Commande rentrée : ");	// affichage de la commande rentree
-			//PrintList(parametresList);	// affichage de la commande rentree
+			// separation de chaque parametre dans une liste doublement chainee
+			parseParamsList(parametresList, commandLine);
 			executeCommand(parametresList);
 		}
-		DeleteList(parametresList);	// suppression des donnees de la commande rentree
+		// suppression des donnees de la commande rentree
+		DeleteList(parametresList);
 	}
-	while(strcmp(commandLine, EXIT_CMD));	// fin de la boucle lorsque "exit" rentree
+	// fin de la boucle lorsque "exit" rentree
+	while(strcmp(commandLine, EXIT_CMD));
 	printf("Goodbye !\n");
 
 	return 0;
