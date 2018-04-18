@@ -5,14 +5,7 @@ const int LS_FLAG_l = 1<<1; //-l option
 
 char *monthName[] = {"janv.", "févr.", " mars", "avril", "  mai", " juin", "juil.", " août", "sept.", " oct.", " nov.", " déc."};
 
-/**
- * fls
- *
- * Fonction ls
- *
- * @param  {int argc}
- * @param  {char *argv[]}
-*/
+
 int fls(int argc, char const *argv[]) {
 
     /*if(argc<2){
@@ -28,7 +21,7 @@ int fls(int argc, char const *argv[]) {
     if (argv[1] == NULL)        // ou (argv == NULL || argv[1] == NULL)
         getcwd(repertoire_courant, size);
     else
-        repertoire_courant = argv[1];
+        repertoire_courant = argv[1];   //Problème avec argv[1]
 
     if ((dirp=opendir(repertoire_courant))==NULL){
         printf("Error\n");
@@ -47,14 +40,6 @@ int fls(int argc, char const *argv[]) {
 
 
 
-/**
- * printColorFile
- *
- * Affiche le nom du fichier avec la couleur (en fonction du type de fichier)
- *
- * @param  {mode_t}  mode   Le mode_t du fichier
- * @param  {char *}  mode   Le nom du fichier à affiche
-*/
 void printColorFile(mode_t mode, char * path) {
     if (S_ISDIR(mode)) {                    // repertoire
         printf(BLUE "%s/", path);   //printf(BLUE "%s/" END, path); pareil sur les autres lignes x5 avant    sinon autre solution    printf("%s%s/", BLUE, path);
@@ -74,14 +59,6 @@ void printColorFile(mode_t mode, char * path) {
 
 
 
-/**
- * permission
- *
- * @param   {mode_t}    mode    Le mode du fichier à inspecter
- * @param   {char *}    perms   Le tableau de 10 caractère à remplir avec les
- *                              permissions
- *                              ex: rwxr--r--
- */
 void permission(mode_t mode, char* perms) {
 
     perms[0] = ((S_IRUSR & mode) == S_IRUSR) ? 'r' : '-';
@@ -103,13 +80,6 @@ void permission(mode_t mode, char* perms) {
 
 
 
-/**
- * type
- *
- * @param   {mode_t}    mode    Le mode du fichier à inspecter
- *
- * @return  {char}      Le type de fichier / dossier
- */
 char type(mode_t mode) {
     if((S_IFDIR & mode) == S_IFDIR) {
         return 'd';
@@ -131,11 +101,6 @@ char type(mode_t mode) {
 
 
 
-/**
- * isLink
- *
- * @return  {boo}   True if the file is a symlink
- */
 bool isLink(mode_t mode) {
     return ((mode & S_IFLNK) == S_IFLNK);
 }
@@ -143,16 +108,6 @@ bool isLink(mode_t mode) {
 
 
 
-
-/**
- * fls_file
- *
- * Print les infos sur le fichier filepath
- *
- * @param  {char *} dir
- * @param  {char *} filename
- * @param  {int}    options
- */
 int fls_file(char *dir, char *filename, int options) {
 
     struct stat statls;
