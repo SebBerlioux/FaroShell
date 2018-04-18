@@ -1,166 +1,150 @@
+#include "IS_file.h"
+#include <stdio.h>
+
 #include "ls.h"
 
-const int LS_FLAG_a = 1;    //-a option
-const int LS_FLAG_l = 1<<1; //-l option
 
-char *monthName[] = {"janv.", "févr.", " mars", "avril", "  mai", " juin", "juil.", " août", "sept.", " oct.", " nov.", " déc."};
+//affiche les informations du fichier / répertoire actuel sur une ligne
 
+void advancedDisplay(struct dirent *dptr,int dflag){
 
-int fls(int argc, char const *argv[]) {
+    struct stat st;				// Information générale contenu dans le fichier ou le reprtoire
+    struct passwd *userInfo;	// Information de l'utilisateur contenu dans le fichier ou le reprtoire
+    struct group *groupInfo;	// Information de groupe contenu dans le fichier ou le reprtoire
+    struct tm *timeInfo;		// les informations au niveau du temps
 
-    /*if(argc<2){
-        printf("Erreur manque de paramètre !\n");
-        exit(EXIT_FAILURE);
-    }*/
+    lstat(dptr->d_name,&st);    // On récupere le contenu du fichier ou du répertoire
 
-    DIR *dirp;
-    struct dirent *dptr;
-    char* repertoire_courant = malloc(sizeof(char)*256);
-    size_t size = 256;
+    // On l'affiche
+    if ((st.st_mode & S_IFSOCK)==S_IFSOCK) printf("s");	// socket
+    else if ((st.st_mode & S_IFLNK)==S_IFLNK) printf("l");	// symbolic link
+    else if ((st.st_mode & S_IFREG)==S_IFREG) printf("-");	// regular file
+    else if ((st.st_mode & S_IFBLK)==S_IFBLK) printf("b");	// block device
+    else if ((st.st_mode & S_IFDIR)==S_IFDIR) printf("d");	// directory
+    else if ((st.st_mode & S_IFCHR)==S_IFCHR) printf("c");	// character device
+    else if ((st.st_mode & S_IFIFO)==S_IFIFO) printf("p");	// FIFO
 
-    if (argv[1] == NULL)        // ou (argv == NULL || argv[1] == NULL)
-        getcwd(repertoire_courant, size);
-    else
-        repertoire_courant = argv[1];   //Problème avec argv[1]
+    // Les droits d'utilisateurs
+    printf("%c",(st.st_mode & S_IRUSR)==S_IRUSR ? 'r' : '-');	// owner R
+    printf("%c",(st.st_mode & S_IWUSR)==S_IWUSR ? 'w' : '-');	// owner W
+    printf("%c",(st.st_mode & S_IXUSR)==S_IXUSR ? 'x' : '-');	// owner X
+    printf("%c",(st.st_mode & S_IRGRP)==S_IRGRP ? 'r' : '-');	// group R
+    printf("%c",(st.st_mode & S_IWGRP)==S_IWGRP ? 'w' : '-');	// group W
+    printf("%c",(st.st_mode & S_IXGRP)==S_IXGRP ? 'x' : '-');	// group X
+    printf("%c",(st.st_mode & S_IROTH)==S_IROTH ? 'r' : '-');	// other R
+    printf("%c",(st.st_mode & S_IWOTH)==S_IWOTH ? 'w' : '-');	// other W
+    printf("%c",(st.st_mode & S_IXOTH)==S_IXOTH ? 'x' : '-');	// other X
 
-    if ((dirp=opendir(repertoire_courant))==NULL){
-        printf("Error\n");
-        return(-1);
+    printf(" %d",st.st_nlink);     // Le lien
+
+    userInfo=getpwuid(st.st_uid);     // Le proprietaire
+    printf(" %s",userInfo->pw_name);
+
+    groupInfo=getgrgid(st.st_gid);     // LE groupe
+    printf(" %s",groupInfo->gr_name);
+
+    printf(" %5d",st.st_size);     // La taille
+
+    timeInfo=localtime(&st.st_mtime);     // Information du temps
+    printf(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
+
+    if(dflag==0 && isFolder(dptr->d_name)){ // Si l'option n'est pas d et si c'est un repertoire l'onformation sera verte (MARCHE PAS)
+        printf("\033[32m");
+        printf(" %s \n",dptr->d_name);
+        printf("\033[0m");
     }
-
-    while ((dptr=readdir(dirp))){
-        if (dptr->d_name[0] != '.')
-            printf("%s\n",dptr->d_name);
-    }
-    closedir(dirp);
-
-
-    return 0;
+    else printf(" %s \n",dptr->d_name);
 }
 
 
+//Affiche le contenu du repertoire actuel
+int main(int argc,char *argv[]){
 
-void printColorFile(mode_t mode, char * path) {
-    if (S_ISDIR(mode)) {                    // repertoire
-        printf(BLUE "%s/", path);   //printf(BLUE "%s/" END, path); pareil sur les autres lignes x5 avant    sinon autre solution    printf("%s%s/", BLUE, path);
-    } else if (S_ISLNK(mode)) {             // lien
-        printf(CYAN "%s", path);
-    } else if (S_ISSOCK(mode)) {            // socket
-        printf(PURPLE "%s", path);
-    } else if (S_ISCHR(mode) || S_ISBLK(mode) || S_ISFIFO(mode)) {
-        // périphérique de caractères
-        printf(YELLOW "%s", path);
-    } else if ((S_IXUSR & mode) == S_IXUSR) {//exécutable
-        printf(RED "%s", path);
-    } else {
-        printf("%s", path);
-    }
-}
+    DIR *dirp;						// repertoire cible
+    struct dirent *dptr;			// informations sur le repertoire
+    int aflag=0, dflag=0, lflag=0;	// option utilisé
 
-
-
-void permission(mode_t mode, char* perms) {
-
-    perms[0] = ((S_IRUSR & mode) == S_IRUSR) ? 'r' : '-';
-    perms[1] = ((S_IWUSR & mode) == S_IWUSR) ? 'w' : '-';
-    perms[2] = ((S_IXUSR & mode) == S_IXUSR) ? 'x' : '-';
-
-    perms[3] = ((S_IRGRP & mode) == S_IRGRP) ? 'r' : '-';       //Il faut remettre les define pour que ca marche
-    perms[4] = ((S_IWGRP & mode) == S_IWGRP) ? 'w' : '-';
-    perms[5] = ((S_IXGRP & mode) == S_IXGRP) ? 'x' : '-';
-
-    perms[6] = ((S_IROTH & mode) == S_IROTH) ? 'r' : '-';
-    perms[7] = ((S_IWOTH & mode) == S_IWOTH) ? 'w' : '-';
-    perms[8] = ((S_IXOTH & mode) == S_IXOTH) ? 'x' : '-';
-
-    perms[9] = '\0';
-
-}
-
-
-
-
-char type(mode_t mode) {
-    if((S_IFDIR & mode) == S_IFDIR) {
-        return 'd';
-    } else if ((mode & S_IFLNK) == S_IFLNK) {
-        return 'l';
-    } else if ((mode & S_IFBLK) == S_IFBLK) {
-        return 'b';
-    } else if ((mode & S_IFIFO) == S_IFIFO) {
-        return 'p';
-    } else if ((mode & S_IFCHR) == S_IFCHR) {
-        return 'c';
-    } else if ((mode & S_IFSOCK) == S_IFSOCK) {
-        return 's';
-    } else {
-        return '-';
-    }
-}
-
-
-
-
-bool isLink(mode_t mode) {
-    return ((mode & S_IFLNK) == S_IFLNK);
-}
-
-
-
-
-int fls_file(char *dir, char *filename, int options) {
-
-    struct stat statls;
-    bool optL = (options & LS_FLAG_l) == LS_FLAG_l;
-
-    char filepath[PATH_MAX];
-    sprintf(filepath, "%s/%s", dir, filename);
-
-    if (stat(filepath, &statls) == -1) {
-        perror("stat error");
-        exit(EXIT_FAILURE);
+    // On regarde les options requise -a / -d / -l
+    char c;
+    while ( (c = getopt(argc, argv, "adl")) != -1 ){
+        switch(c){
+            case 'a':
+                aflag = 1;
+                break;
+            case 'd':
+                dflag = 1;
+                break;
+            case 'l':
+                lflag = 1;
+                break;
+            case '?':
+                printf("ls : option %s doesn't exist for command ls\n",argv[optind-1]);
+                return -1;
+        }
     }
 
-    if (optL) {
-        char perms[10];
-        permission(statls.st_mode, perms);
-
-        struct tm *tmInfo;
-        tmInfo = localtime(&statls.st_mtime);
-
-        printf("%c", type(statls.st_mode));
-        printf("%s", perms);
-        printf(" ");
-        printf("%3u", (unsigned int) statls.st_nlink);
-        printf(" ");
-        printf("%s", getpwuid(statls.st_uid)->pw_name);     //A partir de l'uid, on obtient le nom de l'utilisateur
-        printf(" ");
-        printf("%s", getgrgid(statls.st_gid)->gr_name);
-        printf(" ");
-        printf("%6d", (int) statls.st_size); // taille
-        printf(" ");
-        printf("%s %2d %2d:%02d\t",
-               monthName[tmInfo->tm_mon],
-               tmInfo->tm_mday,
-               tmInfo->tm_hour,
-               tmInfo->tm_min
-        );
-    }
-
-    printColorFile(statls.st_mode, filename);
-
-    if (optL) {
-        if (isLink(statls.st_mode)){ //si symlink, ajout de la destination
-            char buf[PATH_MAX];
-            size_t len;
-            if ((len = readlink(filepath, buf, sizeof(buf)-1)) != -1) {
-                buf[len] = '\0';
+    int index = optind;
+    // Si pas d'argument on prend le repertoire courant
+    if(argv[index]==NULL){
+        if ((dirp=opendir("."))==NULL){
+            printf("ls : directory %s doesn't exist\n",".");
+            return -1;
+        }
+        while((dptr=readdir(dirp))){
+            // Si -a n'est pas neccesaire on ignore le "." et le ".."
+            if(aflag==0) if(dptr->d_name[0]=='.') continue;
+            // Si il y al'option -l alors on affiche les informations avancées
+            if(lflag==1){
+                advancedDisplay(dptr,dflag);
             }
-            printf(" -> %s", buf);
+            else{
+                // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
+                if(dflag==0 && isFolder(dptr->d_name)){
+                    printf("\033[32m");
+                    printf("%s ",dptr->d_name);
+                    printf("\033[0m");
+                }
+                else printf("%s ",dptr->d_name);
+            }
         }
         printf("\n");
-    } else {
-        printf("    ");
+        closedir(dirp);
+    }
+        // On affiche les informations pour chaque arguments
+    else{
+        for (index = optind; index < argc; index++){
+            // Cas du dossier
+            if(isFolder(argv[index])){
+                if ((dirp=opendir(argv[index]))==NULL){
+                    printf("ls : directory %s doesn't exist\n",argv[index]);
+                }
+                else{
+                    while((dptr=readdir(dirp))){
+                        // On ignore le "." et ".." des repertoires
+                        if(aflag==0) if (!strcmp(dptr->d_name,".") || !strcmp(dptr->d_name,"..")) continue;
+                        // Option -l
+                        if(lflag==1){
+                            advancedDisplay(dptr,dflag);
+                        }
+                        else{
+                            // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
+                            if(dflag==0 && isFolder(dptr->d_name)){
+                                printf("\033[32m");
+                                printf("%s ",dptr->d_name);
+                                printf("\033[0m");
+                            }
+                            else printf("%s ",dptr->d_name);
+                        }
+                    }
+                    printf("\n");
+                    closedir(dirp);
+                }
+            }
+                // Sinon ERREUR
+            else{
+                printf("ls : directory %s doesn't exist\n",argv[index]);
+            }
+        }
     }
 
     return 0;
