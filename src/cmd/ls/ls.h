@@ -16,4 +16,10 @@
 
 void advancedDisplay(struct dirent *dptr,int dflag);
 
+struct stat sts;
+
+extern int isFolder(char* __testedFolder);
+
+extern int isRegularFile(char* __testedFile);
+
 #endif

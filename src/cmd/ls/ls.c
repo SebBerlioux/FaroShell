@@ -1,4 +1,3 @@
-#include "IS_file.h"
 #include <stdio.h>
 
 #include "ls.h"
@@ -16,19 +15,19 @@ void advancedDisplay(struct dirent *dptr,int dflag){
     lstat(dptr->d_name,&st);    // On récupere le contenu du fichier ou du répertoire
 
     // On l'affiche
-    if ((st.st_mode & S_IFSOCK)==S_IFSOCK) printf("s");	// socket
-    else if ((st.st_mode & S_IFLNK)==S_IFLNK) printf("l");	// symbolic link
-    else if ((st.st_mode & S_IFREG)==S_IFREG) printf("-");	// regular file
-    else if ((st.st_mode & S_IFBLK)==S_IFBLK) printf("b");	// block device
-    else if ((st.st_mode & S_IFDIR)==S_IFDIR) printf("d");	// directory
-    else if ((st.st_mode & S_IFCHR)==S_IFCHR) printf("c");	// character device
-    else if ((st.st_mode & S_IFIFO)==S_IFIFO) printf("p");	// FIFO
+    if ((st.st_mode & S_IFSOCK)==S_IFSOCK) printf("s");
+    else if ((st.st_mode & S_IFLNK)==S_IFLNK) printf("l");
+    else if ((st.st_mode & S_IFREG)==S_IFREG) printf("-");
+    else if ((st.st_mode & S_IFBLK)==S_IFBLK) printf("b");
+    else if ((st.st_mode & S_IFDIR)==S_IFDIR) printf("d");
+    else if ((st.st_mode & S_IFCHR)==S_IFCHR) printf("c");
+    else if ((st.st_mode & S_IFIFO)==S_IFIFO) printf("p");
 
     // Les droits d'utilisateurs
-    printf("%c",(st.st_mode & S_IRUSR)==S_IRUSR ? 'r' : '-');	// owner R
-    printf("%c",(st.st_mode & S_IWUSR)==S_IWUSR ? 'w' : '-');	// owner W
-    printf("%c",(st.st_mode & S_IXUSR)==S_IXUSR ? 'x' : '-');	// owner X
-    printf("%c",(st.st_mode & S_IRGRP)==S_IRGRP ? 'r' : '-');	// group R
+    printf("%c",(st.st_mode & S_IRUSR)==S_IRUSR ? 'r' : '-');	// utilisateur R
+    printf("%c",(st.st_mode & S_IWUSR)==S_IWUSR ? 'w' : '-');	// utilisateur W
+    printf("%c",(st.st_mode & S_IXUSR)==S_IXUSR ? 'x' : '-');	// utilisateur X
+    printf("%c",(st.st_mode & S_IRGRP)==S_IRGRP ? 'r' : '-');	// groupe R
     printf("%c",(st.st_mode & S_IWGRP)==S_IWGRP ? 'w' : '-');	// group W
     printf("%c",(st.st_mode & S_IXGRP)==S_IXGRP ? 'x' : '-');	// group X
     printf("%c",(st.st_mode & S_IROTH)==S_IROTH ? 'r' : '-');	// other R
@@ -58,7 +57,7 @@ void advancedDisplay(struct dirent *dptr,int dflag){
 
 
 //Affiche le contenu du repertoire actuel
-int main(int argc,char *argv[]){
+int fls(int argc,char *argv[]){
 
     DIR *dirp;						// repertoire cible
     struct dirent *dptr;			// informations sur le repertoire
@@ -66,6 +65,7 @@ int main(int argc,char *argv[]){
 
     // On regarde les options requise -a / -d / -l
     char c;
+
     while ( (c = getopt(argc, argv, "adl")) != -1 ){
         switch(c){
             case 'a':
@@ -84,8 +84,10 @@ int main(int argc,char *argv[]){
     }
 
     int index = optind;
+
     // Si pas d'argument on prend le repertoire courant
     if(argv[index]==NULL){
+
         if ((dirp=opendir("."))==NULL){
             printf("ls : directory %s doesn't exist\n",".");
             return -1;
@@ -93,10 +95,12 @@ int main(int argc,char *argv[]){
         while((dptr=readdir(dirp))){
             // Si -a n'est pas neccesaire on ignore le "." et le ".."
             if(aflag==0) if(dptr->d_name[0]=='.') continue;
-            // Si il y al'option -l alors on affiche les informations avancées
+
+            // Si il y a l'option -l alors on affiche les informations avancées
             if(lflag==1){
                 advancedDisplay(dptr,dflag);
             }
+
             else{
                 // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
                 if(dflag==0 && isFolder(dptr->d_name)){
@@ -113,11 +117,14 @@ int main(int argc,char *argv[]){
         // On affiche les informations pour chaque arguments
     else{
         for (index = optind; index < argc; index++){
+
             // Cas du dossier
             if(isFolder(argv[index])){
+
                 if ((dirp=opendir(argv[index]))==NULL){
                     printf("ls : directory %s doesn't exist\n",argv[index]);
                 }
+
                 else{
                     while((dptr=readdir(dirp))){
                         // On ignore le "." et ".." des repertoires
@@ -148,4 +155,21 @@ int main(int argc,char *argv[]){
     }
 
     return 0;
+}
+
+
+struct stat sts;    // Declaration d'une struct stat
+
+// isFolder prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
+
+int isFolder(char* testedFolder){
+    if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) return 1;
+    else return 0;
+}
+
+// isRegularFile prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
+
+int isRegularFile(char* testedFile){
+    if(testedFile!=NULL && stat(testedFile,&sts)==0 && S_ISREG(sts.st_mode)) return 1;
+    else return 0;
 }
