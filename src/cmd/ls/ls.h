@@ -36,9 +36,32 @@
 #define	S_ISBLK(m)	((m & 0170000) == 0060000)	/* block special */
 #define	S_ISFIFO(m)	((m & 0170000) == 0010000)	/* fifo */
 #define	S_ISLNK(m)	((m & 0170000) == 0120000)	/* symbolic link */
-
-
 #define	S_IFREG	 0100000		/* regular */
+
+
+
+
+#include <unistd.h>
+
+int getopt(int argc, char * const argv[],
+           const char *optstring);
+
+extern char *optarg;
+extern int optind, opterr, optopt;
+
+#define _GNU_SOURCE
+#include <getopt.h>
+
+int getopt_long (int argc, char * const argv[],
+                 const char *optstring,
+                 const struct option *longopts, int *longindex);
+
+int getopt_long_only (int argc, char * const argv[],
+                      const char *optstring,
+                      const struct option *longopts, int *longindex);
+
+
+
 
 void advancedDisplay(struct dirent *dptr,int dflag);
 

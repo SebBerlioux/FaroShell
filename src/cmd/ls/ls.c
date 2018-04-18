@@ -78,7 +78,7 @@ int fls(int argc,char *argv[]){
                 lflag = 1;
                 break;
             case '?':
-                printf("ls : option %s doesn't exist for command ls\n");    //ls\n",argv[optind-1]
+                printf("ls : option %s doesn't exist for command ls\n",argv[optind-1]);
                 return -1;
         }
     }
