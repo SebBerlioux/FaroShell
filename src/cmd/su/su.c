@@ -1,48 +1,30 @@
 #include "su.h"
-#include "../ls/ls.h"
-
-
-void fsu(int argc, char const *argv[]){
-
-    if(argc<2){
-        printf("Erreur manque de paramètre !\n");
-        exit(EXIT_FAILURE);
-    }
-}
-
 
 
 const char DEFAULT_USER[] = "root"; //Root est l'utilisateur par défaut (si aucun argument n'est entré)
 
 static struct pam_conv conv = { //Pour converser entre l'utilisateur et le programme
 
-#ifdef _SU_H
+/*#ifdef _SU_H
         openpam_ttyconv,
 #else
         misc_conv,
 #endif
         NULL
-};
+};*/
 
 struct passwd *pwd;
 
 
 
-/**
- * fsu
- *
- * Fonction de SU
- *
- * @param  {int}        argc
- * @param  {char *[]}   argv
- */
-int ksu(int argc, char *argv[]) {
+int fsu(int argc, char *argv[]) {
+
     pam_handle_t *pamh = NULL;
     char ** pam_env_list; // liste des variable d'environnement
     int retval;
 
     if(argc > 2) {
-        fprintf(stderr, "ksu : trop d'arguments\n");
+        fprintf(stderr, "fsu : trop d'arguments\n");
         exit(EXIT_FAILURE);
     }
 
@@ -100,7 +82,7 @@ int ksu(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // FERMETURE DE LA FONCTION PAM
+    // On ferme la fonction PAM
 
     if (pam_end(pamh,retval) != PAM_SUCCESS) {
         pamh = NULL;
@@ -108,7 +90,7 @@ int ksu(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // LANCEMENT DU NOUVEAU BASH AVEC LE BON USER
+    // Lancement du nouveau bash avec le bon User
     if (retval == PAM_SUCCESS)
         execvp("bash", (char*[]){"bash", NULL});
 

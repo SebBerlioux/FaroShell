@@ -1,5 +1,5 @@
 #ifndef _SU_H
-#define _SU_H
+    #define _SU_H
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -37,7 +37,8 @@ int setuid(uid_t uid);
 struct passwd *getpwuid(uid_t uid);
 
 
-void fsu(int argc, char const *argv[]);
+int fsu(int argc, char *argv[]);
+
 
 #endif
 

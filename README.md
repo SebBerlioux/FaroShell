@@ -14,7 +14,7 @@ Ce projet a pour but de créer un mini shell en langage C dans lequel les comman
 - chmod  ✓  
 - chgrp
 - echo   ✓  (sans options)
-- su
+- su        Arthur (j'ai commencé mais je bloque)
 
 ## L'équipe
 
