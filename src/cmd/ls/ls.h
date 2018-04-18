@@ -37,6 +37,9 @@
 #define	S_ISFIFO(m)	((m & 0170000) == 0010000)	/* fifo */
 #define	S_ISLNK(m)	((m & 0170000) == 0120000)	/* symbolic link */
 
+
+#define	S_IFREG	 0100000		/* regular */
+
 void advancedDisplay(struct dirent *dptr,int dflag);
 
 struct stat sts;
