@@ -67,6 +67,7 @@ void executeCommand(SList *liste)
 		}
 		else if (strcmp(cmd, "ls") == 0)
 		{
+			printf("yolo\n");
 			fls(nbArgs, args);
 		}
 		else if (strcmp(cmd, "exit") != 0)
