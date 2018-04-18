@@ -6,7 +6,7 @@ void parseParamsList(SList *liste, char* commandLine)
 
 	// recupere le premier "token" avant un espace
 	argument = strtok(commandLine, " ");
-	printf("argument = %s\n", argument);
+	//printf("argument = %s\n", argument);
 	// tant que pas fin de chaine
 	while (argument != NULL)
 	{
@@ -55,7 +55,7 @@ void executeCommand(SList *liste)
 		}
 		else if (strcmp(cmd, "rm") == 0)
 		{
-			frm(nbArgs, args);
+			//frm(nbArgs, args);
 		}
 		else if (strcmp(cmd, "mv") == 0)
 		{
