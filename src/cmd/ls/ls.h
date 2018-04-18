@@ -17,8 +17,9 @@
 
 
 
-
+int fls(int argc,char *argv[]);
 void advancedDisplay(struct dirent *dptr,int dflag);
+
 
 struct stat sts;
 
