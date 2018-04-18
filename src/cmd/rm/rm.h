@@ -1,3 +1,3 @@
 
 
-int frm(int argc, char const *argv[]);
+int frm(int argc, char *argv[]);
