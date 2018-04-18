@@ -33,6 +33,8 @@ void executeCommand(SList *liste)
 			args[i] = GetData(cell);
 			cell = GetNextElement(cell);
 		}
+		args[nbArgs] = NULL;
+
 		/*
 		printf("nbArgs = %d\n", nbArgs);
 		printf("args = %s\n", args[0]);
@@ -67,7 +69,6 @@ void executeCommand(SList *liste)
 		}
 		else if (strcmp(cmd, "ls") == 0)
 		{
-			printf("yolo\n");
 			fls(nbArgs, args);
 		}
 		else if (strcmp(cmd, "exit") != 0)
