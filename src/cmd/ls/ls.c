@@ -55,6 +55,8 @@ void advancedDisplay(struct dirent *dptr,int dflag){
 }
 
 
+
+
 //Affiche le contenu du repertoire actuel
 int fls(int argc,char *argv[]){
 
@@ -155,6 +157,7 @@ int fls(int argc,char *argv[]){
 
     return 0;
 }
+
 
 
 struct stat sts;    // Declaration d'une struct stat
