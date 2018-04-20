@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "su.h"
+#include "su.c"
 
 int main(int argc, char const *argv[]) {
     fsu(argc, argv);

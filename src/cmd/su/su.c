@@ -1,23 +1,23 @@
 #include "su.h"
 
-
 const char DEFAULT_USER[] = "root"; //Root est l'utilisateur par défaut (si aucun argument n'est entré)
 
-static struct pam_conv conv = { //Pour converser entre l'utilisateur et le programme
-
-/*#ifdef _SU_H
+//Pour converser entre l'utilisateur et le programme MAIS CA NE MARCHE PAS
+//static struct pam_conv conv =  misc_conv;   ou penpam_ttyconv;
+#ifdef _SU_H_
         openpam_ttyconv,
 #else
         misc_conv,
 #endif
         NULL
-};*/
+};
 
 struct passwd *pwd;
 
 
 
-int fsu(int argc, char *argv[]) {
+int fsu(int argc, char *argv[])
+{
 
     pam_handle_t *pamh = NULL;
     char ** pam_env_list; // liste des variable d'environnement

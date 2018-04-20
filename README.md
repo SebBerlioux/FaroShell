@@ -11,7 +11,7 @@ Ce projet a pour but de créer un mini shell en langage C dans lequel les comman
 - cp     -> Bastien (en cours)
 - rm     ✓  (sans options)
 - du     ✓  (sans options)
-- chmod  ✓  
+- chmod  ✓  (marche que pour les fichiers)
 - chgrp  ->  Arthur en cours
 - echo   ✓  (sans options)
 - su     ->  Arthur (j'ai commencé mais je bloque)
