@@ -4,7 +4,7 @@
 
 //affiche les informations du fichier / répertoire actuel sur une ligne
 
-void advancedDisplay(struct dirent *dptr,int dflag){
+void affichage_avance(struct dirent *dptr,int dflag){
 
     struct stat st;				// Information générale contenu dans le fichier ou le reprtoire
     struct passwd *userInfo;	// Information de l'utilisateur contenu dans le fichier ou le reprtoire
@@ -99,7 +99,7 @@ int fls(int argc,char *argv[]){
 
             // Si il y a l'option -l alors on affiche les informations avancées
             if(lflag==1){
-                advancedDisplay(dptr,dflag);
+                affichage_avance(dptr,dflag);
             }
 
             else{
@@ -132,7 +132,7 @@ int fls(int argc,char *argv[]){
                         if(aflag==0) if (!strcmp(dptr->d_name,".") || !strcmp(dptr->d_name,"..")) continue;
                         // Option -l
                         if(lflag==1){
-                            advancedDisplay(dptr,dflag);
+                            affichage_avance(dptr,dflag);
                         }
                         else{
                             // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
@@ -165,13 +165,10 @@ struct stat sts;    // Declaration d'une struct stat
 // isFolder prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
 
 int isFolder(char* testedFolder){
-    if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) return 1;
-    else return 0;
-}
-
-// isRegularFile prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
-
-int isRegularFile(char* testedFile){
-    if(testedFile!=NULL && stat(testedFile,&sts)==0 && S_ISREG(sts.st_mode)) return 1;
-    else return 0;
+    if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }

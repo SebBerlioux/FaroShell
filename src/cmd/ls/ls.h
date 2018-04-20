@@ -18,13 +18,11 @@
 
 
 int fls(int argc,char *argv[]);
-void advancedDisplay(struct dirent *dptr,int dflag);
+void affichage_avance(struct dirent *dptr,int dflag);
 
 
 struct stat sts;
 
 extern int isFolder(char* __testedFolder);
-
-extern int isRegularFile(char* __testedFile);
 
 #endif
