@@ -76,7 +76,7 @@ void executeCommand(int nbArgs, char *args[])
 	}
 	else if (strcmp(cmd, "pwd") == 0)
 	{
-		fpwd();
+		fpwd(nbArgs, args);
 	}
 	else if (strcmp(cmd, "cd") == 0)
 	{
@@ -101,6 +101,14 @@ void executeCommand(int nbArgs, char *args[])
 	else if (strcmp(cmd, "chmod") == 0)
 	{
 		mod(nbArgs, args);
+	}
+	else if (strcmp(cmd, "chgrp") == 0)
+	{
+		grp(nbArgs, args);
+	}
+	else if (strcmp(cmd, "du") == 0)
+	{
+		//fdu(nbArgs, args);
 	}
 	else if (strcmp(cmd, "exit") != 0)
 	{

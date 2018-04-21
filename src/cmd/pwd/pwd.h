@@ -5,6 +5,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void fpwd();
+void fpwd(int argc, char *argv[]);
 
 #endif

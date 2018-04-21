@@ -1,81 +1,77 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h> 
 #include "rm.h"
-#include "IS_file.h"
 
-// Pour avoir les commantaire de chaque étape, décommenter les printf 
+// Pour avoir les commantaire de chaque étape, décommenter les printf
 
 int frm(int argc, char *argv[]) {
-	
+
 	struct stat st;          	//Ces deux variables seront utiliser pour verifier lles droits et le type des cibles
 	struct passwd *userInfo;
-	
+
 	char* fichier = NULL;
 	char** fichiers=malloc(1024*sizeof(char*));  //allocation de la place pour la liste des fichier ( volontairement beaucoup trop grande)
-	char** commande=malloc(1024*sizeof(char*));  //allocation de la place pour la liste des commandes ( volontairement beaucoup trop grande)	
+	char** commande=malloc(1024*sizeof(char*));  //allocation de la place pour la liste des commandes ( volontairement beaucoup trop grande)
 	char* tmp = NULL;
 	int watchdog = 0;
 	int position = 0;
 	int R = 0;									//Les variables R et F seront utiliser pour tenir compte des options données avec la fonction
 	int F = 0;
-	
+
 	int i=0;
 	for(i=0;i<argc;i++){								//On parcourt la liste des arguments pour séparer les options du fichier
 		tmp = malloc(sizeof(argv[i]));
 		tmp = argv[i];
 //		printf("%c\n",tmp[0]);
-		                     						
+
 		if(tmp[0]=='-'){								   //Vérification du premier caractère de la chaine, si c'est un "-" alors la
-//			printf("Ajout d'une commande à la liste\n");   //commande sera mise dans la liste commande 
-			commande[position]=argv[i];				   
+//			printf("Ajout d'une commande à la liste\n");   //commande sera mise dans la liste commande
+			commande[position]=argv[i];
 			position = position + 1;
 			}
-			
+
 		else{												//Si ce n'est pas un "-" c'est que c'est une cible de la fonction
 //			printf("Un fichier à été trouvé\n");
-			fichiers[watchdog]=argv[i];   
+			fichiers[watchdog]=argv[i];
 			watchdog = watchdog+1;
 			}
 		}
-		
+
 	int j = 0; int z = 0;
 	for(j=0;j<(argc-watchdog);j++){
 //		printf("Option à analiser : %s \n",commande[j]);  //Vérification de la validité des options
 		tmp = commande[j];
-		
+
 		for(z=1;z<strlen(tmp);z++){
 //			printf("Caractère à traiter %c \n",tmp[z]);
-			
+
 			if(tmp[z]=='r'){
 				R=1;
 //				printf("Option r détécté\n");
 				}
-				
+
 			if(tmp[z]=='f'){
 				F=1;
 //				printf("Option f détécté\n");
 				}
-			
+
 //			else{
 //				printf("Option invalide, Seul -r et -f sont disponible");
 //				return 1;
 //			}
-		}		
+		}
 	}
 
 //	printf("Les options entrées sont ");
 //	printf("r :%i, f :%i\n",R,F);
-	
+
 //	printf("\nLes fichiers/chemins/... sont : ");
 //	int k = 0;
 //	for(k=0;k<(watchdog);k++){
 ////		printf(" %s ",fichiers[k]);
-//		fichier=malloc(sizeof(fichiers[k]));   
+//		fichier=malloc(sizeof(fichiers[k]));
 //		}
-		
+
 	for(k=0;k<(watchdog);k++){
-		printf("\n %s ",fichiers[k]); 
+		printf("\n %s ",fichiers[k]);
 		fichier=malloc(sizeof(fichiers[k]));
 		strcat(fichier,fichiers[k]);
 		lstat(fichier,&st);
@@ -96,7 +92,7 @@ int frm(int argc, char *argv[]) {
 			}
 		}
 		else{
-			if((st.st_mode & S_IWUSR)==S_IWUSR){ 
+			if((st.st_mode & S_IWUSR)==S_IWUSR){
 				remove(fichier);
 				printf("   -- Fichier supprimé\n");
 			}
@@ -105,7 +101,7 @@ int frm(int argc, char *argv[]) {
 					remove(fichier);
 					printf("   -- Fichier supprimé avec écrasement des droits\n");
 				}
-				
+
 				else{
 					printf("   -- Erreur vous n'avez pas les droits suffisant");
 					return 1;

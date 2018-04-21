@@ -1,6 +1,7 @@
 #include "pwd.h"
 
-void fpwd(){
+void fpwd(int argc, char *argv[])
+{
     char tampon[100];
 
     if (getcwd(tampon, 100) == NULL) {

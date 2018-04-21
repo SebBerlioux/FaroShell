@@ -1,6 +1,6 @@
 #include "mv.h"
 
-void fmv(int argc, char const *argv[])
+void fmv(int argc, char *argv[])
 {
 	int ret;
 	char* source = malloc(sizeof(argv[0]));

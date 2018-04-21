@@ -5,6 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void fmv(int argc, char const *argv[]);
+void fmv(int argc, char *argv[]);
 
 #endif

@@ -10,6 +10,6 @@
 #include <stdlib.h>
 #include "../pwd/pwd.c"
 
-void fdu(int argc, char const *argv[]);
+void fdu(int argc, char *argv[]);
 
 #endif

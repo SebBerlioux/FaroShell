@@ -33,7 +33,7 @@ void affichage_avance(struct dirent *dptr,int dflag){
     printf("%c",(st.st_mode & S_IWOTH)==S_IWOTH ? 'w' : '-');	// other W
     printf("%c",(st.st_mode & S_IXOTH)==S_IXOTH ? 'x' : '-');	// other X
 
-    printf(" %d",st.st_nlink);     // Le lien
+    printf(" %zu",st.st_nlink);     // Le lien
 
     userInfo=getpwuid(st.st_uid);     // Le proprietaire
     printf(" %s",userInfo->pw_name);
@@ -41,7 +41,7 @@ void affichage_avance(struct dirent *dptr,int dflag){
     groupInfo=getgrgid(st.st_gid);     // LE groupe
     printf(" %s",groupInfo->gr_name);
 
-    printf(" %5d",st.st_size);     // La taille
+    printf(" %zu",st.st_size);     // La taille
 
     timeInfo=localtime(&st.st_mtime);     // Information du temps
     printf(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);

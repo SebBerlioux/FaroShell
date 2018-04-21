@@ -9,6 +9,6 @@
 #include <stdlib.h>
 #include <errno.h>
 
-int fmkdir(int argc, char const *argv[]);
+int fmkdir(int argc, char *argv[]);
 
 #endif
