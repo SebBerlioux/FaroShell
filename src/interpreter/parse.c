@@ -7,8 +7,10 @@ void parseParams(char *commandLine)
 	splitCommands(commandLine);
 	for (int i = 0; i < nb_cmds; i++)
 	{
+		printf("executeCommand\n");
 		executeCommand(cmds[i].argc, cmds[i].argv);
 	}
+	nb_cmds = 0;
 }
 
 void splitCommands(char* commandLine)
@@ -28,28 +30,32 @@ void splitCommands(char* commandLine)
 	while (argument != NULL)
 	{
 		if (strcmp(argument, "|") == 0)
-		{
 			special = 1;
-			break;
-		}
-		else
-		{
-			nbArgs++;
-			argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
-			args[nbArgs] = argument;
-			printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
-		}
+		nbArgs++;
+		argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
+		args[nbArgs] = argument;
+		printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	}
 
-	Arguments arguments;
-	arguments.argc = nbArgs;
-	arguments.argv = args;
-	cmds[nb_cmds] = arguments;
-	nb_cmds++;
-
-	printf("argument restant = %s\n", commandLine);
-
+	if (special == 1)
+		parseSpecial(nbArgs, args);
+	else
+	{
+		Arguments arguments;
+		arguments.argc = nbArgs;
+		arguments.argv = args;
+		cmds[nb_cmds] = arguments;
+		nb_cmds++;
+	}
 	printf("argc = %d\n", cmds[0].argc);
+}
+
+void parseSpecial(int nbArgs, char *args[])
+{
+	for (int i = 0; i < nbArgs; i++)
+	{
+
+	}
 }
 
 void executeCommand(int nbArgs, char *args[])
