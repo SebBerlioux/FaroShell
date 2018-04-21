@@ -7,7 +7,7 @@ void parseParams(char *commandLine)
 	splitCommands(commandLine);
 	for (int i = 0; i < nb_cmds; i++)
 	{
-		printf("executeCommand\n");
+		//printf("executeCommand\n");
 		executeCommand(cmds[i].argc, cmds[i].argv);
 	}
 	nb_cmds = 0;
@@ -63,6 +63,8 @@ void executeCommand(int nbArgs, char *args[])
 
 	char *cmd;
 	cmd = args[0];
+
+	//printf("nbArgs = %d, cmd = %s\n", nbArgs, cmd);
 
 	if (strcmp(cmd, "echo") == 0)
 	{
