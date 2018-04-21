@@ -18,10 +18,14 @@
 #include "../cmd/chgrp/chgrp.h"
 
 #define NOMBRE_ARGUMENT 10
+#define MAX_CMDS 10
 #define BUF 1024
 #define DELIMITERS " \t\r\n\a"
 
-void parseParamsList(SStack *stack, char* commande);
-//void executeCommand(SList *liste);
+Arguments cmds[MAX_CMDS];
+
+void parseParams(char *commandLine);
+void splitCommands(char* commandLine);
+void executeCommand(int nbArgs, char *args[]);
 
 #endif
