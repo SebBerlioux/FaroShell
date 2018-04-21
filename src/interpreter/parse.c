@@ -16,6 +16,7 @@ void splitCommands(char* commandLine)
 	char* argument;	// un parametre
 	int buf = BUF;
 	int nbArgs = 0;
+	int special = 0;
 	char **args = malloc(buf * sizeof(char*));
 
 	// recupere le premier "token" avant un espace
@@ -26,11 +27,18 @@ void splitCommands(char* commandLine)
 	// tant que pas fin de chaine
 	while (argument != NULL)
 	{
-		nbArgs++;
-		//AddElementEnd(liste, argument);	// ajout du parametre lu a la liste
-		argument = strtok(NULL, " ");	// recupere le "token" suivant
-		args[nbArgs] = argument;
-		printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
+		if (strcmp(argument, "|") == 0)
+		{
+			special = 1;
+			break;
+		}
+		else
+		{
+			nbArgs++;
+			argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
+			args[nbArgs] = argument;
+			printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
+		}
 	}
 
 	Arguments arguments;
@@ -38,7 +46,10 @@ void splitCommands(char* commandLine)
 	arguments.argv = args;
 	cmds[nb_cmds] = arguments;
 	nb_cmds++;
-	//printf("argc = %d\n", cmds[0].argc);
+
+	printf("argument restant = %s\n", commandLine);
+
+	printf("argc = %d\n", cmds[0].argc);
 }
 
 void executeCommand(int nbArgs, char *args[])

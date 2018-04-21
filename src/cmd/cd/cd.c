@@ -10,9 +10,9 @@ void fcd(int argc, char const *argv[]){
     char* dossier = NULL;
     strcat(dossier,argv[1]);
     lstat(dossier,&st);
-    if((st.st_mode & S_IRUSR)==S_IRUSR){. //On teste si l'on a les droit de lecture du contenu
+    if((st.st_mode & S_IRUSR)==S_IRUSR){ //On teste si l'on a les droit de lecture du contenu
       chdir(argv[1]);
-      
+
     }
     else{
       printf("Vous n'avez pas le droit d'entrer dans ce dossier");
