@@ -2,7 +2,7 @@
 
 // ex:$ mkdir -m 777 folderName
 
-void fmkdir(int argc, char const *argv[]){      //enlever le const pour enlever le warnin
+int fmkdir(int argc, char const *argv[]){      //enlever le const pour enlever le warnin
 
   if(argc<2){
     printf("Erreur manque de paramètre !\n");
@@ -29,4 +29,6 @@ void fmkdir(int argc, char const *argv[]){      //enlever le const pour enlever 
     // de folderMode, le dossier créé a une permission '777'
     mkdir(*folderName, folderMode);
   }
+
+  return 0;
 }
