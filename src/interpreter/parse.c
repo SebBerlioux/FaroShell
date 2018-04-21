@@ -1,20 +1,35 @@
 #include "parse.h"
 
-void parseParamsList(SList *liste, char* commandLine)
+void parseParamsList(SStack *stack, char* commandLine)
 {
 	char* argument;	// un parametre
+	int buf = BUF;
+	int nbArgs = 0;
+	char **args = malloc(buf * sizeof(char*));
 
 	// recupere le premier "token" avant un espace
-	argument = strtok(commandLine, " ");
-	//printf("argument = %s\n", argument);
+	argument = strtok(commandLine, DELIMITERS);
+	args[nbArgs] = argument;
+
+	printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	// tant que pas fin de chaine
 	while (argument != NULL)
 	{
-		AddElementEnd(liste, argument);	// ajout du parametre lu a la liste
+		nbArgs++;
+		//AddElementEnd(liste, argument);	// ajout du parametre lu a la liste
 		argument = strtok(NULL, " ");	// recupere le "token" suivant
+		args[nbArgs] = argument;
+		printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	}
-}
 
+	Arguments arguments;
+	arguments.argc = nbArgs;
+	arguments.argv = args;
+
+	//push_elem(stack, args);
+
+}
+/*
 void executeCommand(SList *liste)
 {
 	if (GetData(GetFirstElement(liste)))
@@ -35,10 +50,10 @@ void executeCommand(SList *liste)
 		}
 		args[nbArgs] = NULL;
 
-		/*
+
 		printf("nbArgs = %d\n", nbArgs);
 		printf("args = %s\n", args[0]);
-		*/
+
 		if (strcmp(cmd, "echo") == 0)
 		{
 			fecho(nbArgs, args);
@@ -81,3 +96,4 @@ void executeCommand(SList *liste)
 		}
 	}
 }
+*/

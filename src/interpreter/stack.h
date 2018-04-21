@@ -6,9 +6,12 @@
 
 #define MAX_SIZE 10
 
-typedef char* Data;
+typedef struct Arguments {
+	int argc;
+	char **argv;
+} Arguments;
+
 typedef struct SStack SStack;
-typedef struct SElem SElem;
 
 /*
 	Fonction d'initialisation d'un SStack
@@ -18,15 +21,14 @@ SStack* create_stack();
 	Fonction de supression d'un SStack
 */
 void delete_stack(SStack *stack);
-
 /*
 	Push un élément dans le SStack
 */
-void push_elem(SStack *stack, SElem elem);
+void push_elem(SStack *stack, Arguments args);
 /*
   Pop le SStack
 */
-SElem pop_elem(SStack *stack);
+Arguments pop_elem(SStack *stack);
 /*
 	Retourne la taille du SStack
 */
