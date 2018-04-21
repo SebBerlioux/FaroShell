@@ -22,7 +22,6 @@ const char *getUserName()
   {
     return pwd->pw_name;
   }
-
   return "";
 }
 
@@ -34,7 +33,7 @@ int main(void)
 
 	char *commandLine;	// ligne de commande rentree
 	SList *parametresList;	// liste des parametres (dont nom de commande)
-	
+
 	do
 	{
 		parametresList = CreateList();	// init liste

@@ -57,7 +57,7 @@ Data GetData(SCell *cell);
 /*
 	Retourne la taille de la liste
 */
-int GetSize();
+int GetSize(SList *list);
 /*
 	Affiche la liste
 */

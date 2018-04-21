@@ -71,6 +71,10 @@ void executeCommand(SList *liste)
 		{
 			fls(nbArgs, args);
 		}
+		else if (strcmp(cmd, "chmod") == 0)
+		{
+			mod(nbArgs, args);
+		}
 		else if (strcmp(cmd, "exit") != 0)
 		{
 			printf("%s: command not found\n", cmd);

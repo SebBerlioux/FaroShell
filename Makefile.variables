@@ -4,9 +4,9 @@ DEBUG = yes
 EXEC = faroShell
 
 ifeq ($(DEBUG),yes)
-        CFLAGS = -fPIC -pedantic -Wall -Wextra
+        CFLAGS = -fPIC -std=c99 -pedantic -Wall -Wextra
 else
-        CFLAGS = -fPIC -pedantic 
+        CFLAGS = -fPIC -std=c99 -pedantic
 endif
 
 src = src
@@ -18,6 +18,6 @@ static = static
 shared = shared
 objCmd = obj/cmd
 binCmd = bin/cmd
-objects = lecture.o main.o parse.o liste.o
+objects = lecture.o main.o parse.o liste.o stack.o
 commands = echo.o
 OBJS = $(patsubst %,$(obj)/%,$(objects))
