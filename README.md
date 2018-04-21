@@ -3,16 +3,17 @@
 ## Objectifs
 
 Ce projet a pour but de créer un mini shell en langage C dans lequel les commandes suivantes seront possibles à utilisées :
+
 - mkdir  ✓  (sans options)
 - cd     ✓  (sans options)
-- ls     ✓  (avec opt)
+- ls     ✓  (avec options)
 - cat    ✓  (sans options)
 - mv     ✓  (sans options)
-- cp     -> Arthur
+- cp     ✓  (sans options)
 - rm     ✓  (Options Disponible : -r -f )
 - du     ✓  (sans options)
 - chmod  ✓  
-- chgrp  ✓ (il faut un vrai linux pour la test)
+- chgrp  ✓  (il faut un vrai linux pour la test)
 - echo   ✓  (sans options)
 - su     ->  Guillaume
 
