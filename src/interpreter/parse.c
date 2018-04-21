@@ -1,25 +1,68 @@
 #include "parse.h"
 
+/*
+	Nombre de commandes dans la ligne de commande
+*/
 int nb_cmds = 0;
 
+/*
+	Tableau contenant le nom de toutes les commandes
+*/
+char *commands_name[] = {
+	"cat",
+	"cd",
+	"chgrp",
+	"chmod",
+	"echo",
+	"ls",
+	"mkdir",
+	"mv",
+	"pwd"
+};
+
+/*
+	Tableau contenant toutes les fonctions des commandes par pointeur de fonction
+*/
+int (*commands_function[]) (int, char**) = {
+	&fcat,
+	&fcd,
+	&grp,
+	&mod,
+	&fecho,
+	&fls,
+	&fmkdir,
+	&fmv,
+	&fpwd
+};
+
+/*
+	Nombre de commandes dans le tableau de commandes
+*/
+int num_commands = sizeof(commands_name) / sizeof(char*);
+
+/*
+	Fonction qui lance le parsing de la ligne de commande en entrée
+	et lance l'exécution des commandes
+*/
 void parseParams(char *commandLine)
 {
 	splitCommands(commandLine);
 	for (int i = 0; i < nb_cmds; i++)
 	{
-		//printf("executeCommand\n");
 		executeCommand(cmds[i].argc, cmds[i].argv);
 	}
 	nb_cmds = 0;
 }
 
+/*
+	Fonction qui sépare les arguments de la commande et les compte
+*/
 void splitCommands(char* commandLine)
 {
 	char* argument;	// un parametre
-	int buf = BUF;
 	int nbArgs = 0;
 	int special = 0;
-	char **args = malloc(buf * sizeof(char*));
+	char **args = malloc(NOMBRE_ARGUMENT * sizeof(char*));
 
 	// recupere le premier "token" avant un espace
 	argument = strtok(commandLine, DELIMITERS);
@@ -50,68 +93,40 @@ void splitCommands(char* commandLine)
 	printf("argc = %d\n", cmds[0].argc);
 }
 
+/*
+
+*/
 void parseSpecial(int nbArgs, char *args[])
 {
-	for (int i = 0; i < nbArgs; i++)
-	{
+	int i = 0;
+	int argc = 0;
+	char **argv = malloc(NOMBRE_ARGUMENT * sizeof(char*));
 
+	while (strcmp(args[i], "|"))
+	{
+		argv[i] = args[i];
+		argc++;
 	}
 }
 
-void executeCommand(int nbArgs, char *args[])
+/*
+	Fonction qui exécute une commande
+*/
+int executeCommand(int nbArgs, char *args[])
 {
 
 	char *cmd;
 	cmd = args[0];
+	// On parcours le tableau de commandes
+	for (int i = 0; i < num_commands; i++)
+	{
+		if (strcmp(cmd, commands_name[i]) == 0)
+		{
+			// On exécute la commande grâce au tableau des pointeurs de fct
+			return (*commands_function[i]) (nbArgs, args);
+		}
+	}
 
-	//printf("nbArgs = %d, cmd = %s\n", nbArgs, cmd);
+	return 0;
 
-	if (strcmp(cmd, "echo") == 0)
-	{
-		fecho(nbArgs, args);
-	}
-	else if (strcmp(cmd, "cat") == 0)
-	{
-		fcat(nbArgs, args);
-	}
-	else if (strcmp(cmd, "pwd") == 0)
-	{
-		fpwd(nbArgs, args);
-	}
-	else if (strcmp(cmd, "cd") == 0)
-	{
-		fcd(nbArgs, args);
-	}
-	else if (strcmp(cmd, "rm") == 0)
-	{
-		//frm(nbArgs, args);
-	}
-	else if (strcmp(cmd, "mv") == 0)
-	{
-		fmv(nbArgs, args);
-	}
-	else if (strcmp(cmd, "mkdir") == 0)
-	{
-		fmkdir(nbArgs, args);
-	}
-	else if (strcmp(cmd, "ls") == 0)
-	{
-		fls(nbArgs, args);
-	}
-	else if (strcmp(cmd, "chmod") == 0)
-	{
-		mod(nbArgs, args);
-	}
-	else if (strcmp(cmd, "chgrp") == 0)
-	{
-		grp(nbArgs, args);
-	}
-	else if (strcmp(cmd, "du") == 0)
-	{
-		//fdu(nbArgs, args);
-	}
-	else if (strcmp(cmd, "exit") != 0)
-	{
-		printf("%s: command not found\n", cmd);
-	}
 }

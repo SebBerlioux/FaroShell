@@ -2,7 +2,7 @@
 
 // ex:$ cat
 
-void fcat(int argc, char const *argv[]){
+int fcat(int argc, char *argv[]){
 
   if(argc < 2){
     printf("Erreur, manque de parametre !\n");
@@ -98,4 +98,7 @@ void fcat(int argc, char const *argv[]){
 
     fclose(fp);
   }
+
+  return 0;
+
 }

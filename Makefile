@@ -2,7 +2,7 @@
 #Inclusion des variables
 include Makefile.variables
 
-CMDS = cat cd chgrp chmod cp echo ls mkdir mv pwd
+CMDS = cat cd chgrp chmod echo ls mkdir mv pwd
 LDFLAGS = -L$(binCmd)/$(static) $(addprefix -l, $(CMDS)) -lm
 LIBSOBJ = $(objCmd)/$(CMDS)/$(CMDS).o
 

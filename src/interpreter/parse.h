@@ -10,6 +10,7 @@
 #include "../cmd/cat/cat.h"
 #include "../cmd/pwd/pwd.h"
 #include "../cmd/cd/cd.h"
+#include "../cmd/cp/cp.h"
 #include "../cmd/rm/rm.h"
 #include "../cmd/mv/mv.h"
 #include "../cmd/mkdir/mkdir.h"
@@ -17,9 +18,8 @@
 #include "../cmd/chmod/chmod.h"
 #include "../cmd/chgrp/chgrp.h"
 
-#define NOMBRE_ARGUMENT 10
+#define NOMBRE_ARGUMENT 32
 #define MAX_CMDS 10
-#define BUF 1024
 #define DELIMITERS " \t\r\n\a"
 
 Arguments cmds[MAX_CMDS];
@@ -27,6 +27,6 @@ Arguments cmds[MAX_CMDS];
 void parseParams(char *commandLine);
 void splitCommands(char* commandLine);
 void parseSpecial(int nbArgs, char *args[]);
-void executeCommand(int nbArgs, char *args[]);
+int executeCommand(int nbArgs, char *args[]);
 
 #endif

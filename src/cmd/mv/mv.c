@@ -1,6 +1,6 @@
 #include "mv.h"
 
-void fmv(int argc, char *argv[])
+int fmv(int argc, char *argv[])
 {
 	int ret;
 	char* source = malloc(sizeof(argv[0]));
@@ -26,4 +26,7 @@ void fmv(int argc, char *argv[])
 	{
 		printf("FaroShell : Trop de paramètre !\n");
 	}
+
+	return 0;
+
 }
