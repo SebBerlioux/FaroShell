@@ -34,12 +34,10 @@ int main(void)
 
 	char *commandLine;	// ligne de commande rentree
 	//SList *parametresList;	// liste des parametres (dont nom de commande)
-  SStack *stack;
 
 	do
 	{
 		//parametresList = CreateList();	// init liste
-    stack = create_stack();
 		printf(ANSI_COLOR_YELLOW "%s" ANSI_COLOR_RESET":" ANSI_COLOR_CYAN "%s"
 			ANSI_COLOR_RESET, getUserName(), getcwd(tampon, 100));
 		printf("$ ");	// prompt
@@ -47,14 +45,11 @@ int main(void)
 		if (strcmp(commandLine, ""))
 		{
 			// separation de chaque parametre dans une liste doublement chainee
-      parseParamsList(stack, commandLine);
-			//parseParamsList(parametresList, commandLine);
-
-			//executeCommand(parametresList);
+      parseParams(commandLine);
 		}
 		// suppression des donnees de la commande rentree
-    
 		//DeleteList(parametresList);
+    free(commandLine);
 	}
 	// fin de la boucle lorsque "exit" rentree
 	while(strcmp(commandLine, EXIT_CMD));
