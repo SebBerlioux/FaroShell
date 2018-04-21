@@ -6,6 +6,16 @@ void fcd(int argc, char const *argv[]){
     const char *homedir = pw->pw_dir; // On recupere ensuite le mot de passe qui contient le dossier personnel "HOME" de l'utilisateur
     chdir(homedir);
   }else{
-    chdir(argv[1]);
+    struct stat st;	//On a besoin des infos du fichier pour savoir si on peut y entrer
+    char* dossier = NULL;
+    strcat(dossier,argv[1]);
+    lstat(dossier,&st);
+    if((st.st_mode & S_IRUSR)==S_IRUSR){. //On teste si l'on a les droit de lecture du contenu
+      chdir(argv[1]);
+      
+    }
+    else{
+      printf("Vous n'avez pas le droit d'entrer dans ce dossier")
+    }
   }
 }
