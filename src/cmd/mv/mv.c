@@ -1,32 +1,116 @@
 #include "mv.h"
 
-int fmv(int argc, char *argv[])
+int fmv(int argc, char *const argv[])
 {
 	int ret;
-	char* source = malloc(sizeof(argv[0]));
-	char* dest = malloc(sizeof(argv[1]));
+	char* item;
+	char* dest;
 
-	if (argc == 3)	// pas d'options
-	{
-		strcpy(source, argv[1]);
-		strcpy(dest, argv[2]);
+	int verbose = 0;
+	int info = 0;
 
-		ret = rename(source, dest);
+	int c;
+	char options[] = "iv";
 
-		if (ret != 0)
-		{
-			printf("FaroShell : Impossible de déplacer le fichier/dossier \"%s\".\n", source);
-		}
-	}
-	else if (argc > 3)
+	int rep;
+	int ren = 0;
+
+	if (argc < 3)
 	{
 		printf("FaroShell : Manque de paramètre !\n");
 	}
 	else
 	{
-		printf("FaroShell : Trop de paramètre !\n");
+		while ((c = getopt(argc, argv, options)) != -1)
+		switch(c)
+		{
+			case 'i':
+				info = 1;
+				break;
+			case 'v':
+				verbose = 1;
+				break;
+		}
+
+		struct stat destStat;
+		int destExist = 1;
+
+		if (stat(argv[argc-1], &destStat) == -1)
+		{
+	        if (errno == ENOENT)
+	        {
+	            destExist = 0;
+	        }
+	        else
+	        {
+	            perror("Stat error");
+	            exit(EXIT_FAILURE);
+	        }
+	    }
+
+		for (; optind < argc-1; optind++)
+		{
+			item = malloc(sizeof(argv[optind]));
+			strcpy(item, argv[optind]);
+
+		    if (destExist && S_ISDIR(destStat.st_mode))
+		    {
+				dest = malloc(sizeof(argv[argc-1]) + strlen(basename(item)) + 2);
+				strcpy(dest, argv[argc-1]);
+				strcat(dest, "/");
+				strcat(dest, basename(item));
+		    }
+		    else
+		    {
+		    	dest = malloc(sizeof(argv[argc-1]));
+				strcpy(dest, argv[argc-1]);
+		    }
+
+			if (verbose) printf("Destination set to : %s\n", dest);
+
+			if (verbose) printf("Item to move :  \"%s\"\n", item);
+
+			if (info)
+			{
+				printf("Voulez-vous déplacer \"%s\" vers \"%s\" ? (y/n) ", item, dest);
+				do
+				{
+					rep = getc(stdin);
+					if (rep == 'y')
+					{
+						ren = 1;
+					}
+					else if (rep == 'n')
+					{
+						ren = 0;
+						printf("Aucunes modifications n'a été aportées.\n");
+					}
+					else
+					{
+						printf("Veuillez répondre par y ou n.\n");
+					}
+				}
+				while(rep != 'y' && rep != 'n');
+			}
+			else
+			{
+				ren = 1;
+			}
+
+			if (ren)
+			{
+				ret = rename(item, dest);
+				if (ret != 0)
+				{
+					printf("FaroShell : Impossible de déplacer l'élément suivant : \"%s\".\n", item);
+				}
+				else
+				{
+					if (verbose) printf("L'élément \"%s\" a été déplacé vers : \"%s\"\n", item, dest);
+				}
+			}
+			free(item);
+			free(dest);
+		}
 	}
-
-	return 0;
-
 }
