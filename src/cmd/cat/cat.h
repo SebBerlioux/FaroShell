@@ -6,6 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void fcat(int argc, char const *argv[]);
+int fcat(int argc, char *argv[]);
 
 #endif

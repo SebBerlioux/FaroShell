@@ -4,9 +4,9 @@ DEBUG = yes
 EXEC = faroShell
 
 ifeq ($(DEBUG),yes)
-        CFLAGS = -fPIC -std=c99 -pedantic -Wall -Wextra
+        CFLAGS = -fPIC -pedantic -Wall -Wextra
 else
-        CFLAGS = -fPIC -std=c99 -pedantic
+        CFLAGS = -fPIC -pedantic
 endif
 
 src = src

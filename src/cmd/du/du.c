@@ -1,6 +1,6 @@
 #include "du.h"
 
-void fdu(int argc, char const *argv[]){
+void fdu(int argc, char *argv[]){
 
   struct stat s;
 

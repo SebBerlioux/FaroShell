@@ -1,6 +1,7 @@
 #include "du.h"
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char *argv[])
+{
   fdu(argc, argv);
   return 0;
 }
