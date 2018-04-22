@@ -160,7 +160,7 @@ int fcp(int argc, char *argv[]){
 struct stat sts;    // Declaration d'une struct stat
 
 // Est_Dossier prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
-int Est_Dossier(char *testedFolder){
+int Est_Dossier(char* testedFolder){
     if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) {
         return 1;
     }
@@ -170,7 +170,7 @@ int Est_Dossier(char *testedFolder){
 }
 
 // Est_Fichier prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
-int Est_Fichier(char *testedFile){
+int Est_Fichier(char* testedFile){
     if(testedFile!=NULL && stat(testedFile,&sts)==0 && S_ISREG(sts.st_mode)) {
         return 1;
     }

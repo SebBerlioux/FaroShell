@@ -23,6 +23,6 @@ void affichage_avance(struct dirent *dptr,int dflag);
 
 struct stat sts;
 
-extern int Est_Dossier(char *__testedFolder);
+extern int isFolder(char* __testedFolder);
 
 #endif
