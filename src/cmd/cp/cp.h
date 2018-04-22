@@ -22,8 +22,8 @@ int cp_avanced(const char *nameSource,const char *nameDestination);
 
 struct stat sts;
 
-extern int Est_Dossier(char *__testedFolder);
+extern int Est_Dossier(char* __testedFolder);
 
-int Est_Fichier(char *testedFile);
+int Est_Fichier(char* testedFile);
 
 #endif
