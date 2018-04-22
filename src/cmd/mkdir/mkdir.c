@@ -1,32 +1,114 @@
 #include "mkdir.h"
 
-// ex:$ mkdir -m 777 folderName
+// ATTENTION
+// l'option -m ne fonctionne pas
+// la fonction mkdir() ne change pas le mode pour un quelconque raison
 
-void fmkdir(int argc, char const *argv[]){      //enlever le const pour enlever le warnin
+int fmkdir(int argc, char *argv[]){
 
-  if(argc<2){
+  if(argc<2){ // nombre de paramètre incorrect
     printf("Erreur manque de paramètre !\n");
+    printf("Usage: mkdir [-option (argument)] [diretory_name]\n");
+    return 1;
   }else{
-    mode_t folderMode;
-    folderMode = 0777; //default
-    char **endptr = NULL;
+    mode_t folderMode = 0;
 
-    char *folderName[20];
+    extern int optind;
+    extern char *optarg;
 
-    for(int i=0; i<argc; i++){
-      if(strcmp(argv[i], (char*)("-m")) == 0){ // -m : permissions
-        // printf("%s\n", argv[i+1]);
-        folderMode = strtol(argv[i+1],endptr,8);
-        // printf("%i\n", folderMode);
-        i++; // on saute alors les chiffres après le -m
-      }else{ // nom du fichier
-      // /!\ on ne gère pas les cas d'erreurs ici
-        *folderName = (char*)argv[i];
+    char *folderName;
+    char opt;
+
+    char *mod;
+
+    while((opt = getopt(argc, argv, "m:")) != -1){
+      switch(opt){
+        case 'm':
+          mod = optarg;
+          break;
+        default: // mauvaise option
+          printf("Invalid option: %s doesn't exist for mkdir command\n", argv[optind-1]);
+          return 1;
       }
     }
+    folderName = argv[optind];
 
-    // La fonction semble ne pas fonctionner, peut import la valeur
-    // de folderMode, le dossier créé a une permission '777'
-    mkdir(*folderName, folderMode);
+    switch(mod[0]){
+        case '1':
+            folderMode |= S_IXUSR;
+            break;
+        case '2':
+            folderMode |= S_IWUSR;
+            break;
+        case '3':
+            folderMode |= S_IWUSR | S_IXUSR;
+            break;
+        case '4':
+            folderMode |= S_IRUSR;
+            break;
+        case '5':
+            folderMode |= S_IRUSR | S_IXUSR;
+            break;
+        case '6':
+            folderMode |= S_IRUSR | S_IWUSR;
+            break;
+        case '7':
+            folderMode |= S_IRUSR | S_IWUSR | S_IXUSR;
+            break;
+    }
+
+    switch(mod[1]){
+        case '1':
+            folderMode |= S_IXGRP;
+            break;
+        case '2':
+            folderMode |= S_IWGRP;
+            break;
+        case '3':
+            folderMode |= S_IWGRP | S_IXGRP;
+            break;
+        case '4':
+            folderMode |= S_IRGRP;
+            break;
+        case '5':
+            folderMode |= S_IRGRP | S_IXGRP;
+            break;
+        case '6':
+            folderMode |= S_IRGRP | S_IWGRP;
+            break;
+        case '7':
+            folderMode |= S_IRGRP | S_IWGRP | S_IXGRP;
+            break;
+    }
+
+    switch(mod[2]){
+        case '1':
+            folderMode |= S_IXOTH;
+            break;
+        case '2':
+            folderMode |= S_IWOTH;
+            break;
+        case '3':
+            folderMode |= S_IWOTH | S_IXOTH;
+            break;
+        case '4':
+            folderMode |= S_IROTH;
+            break;
+        case '5':
+            folderMode |= S_IROTH | S_IXOTH;
+            break;
+        case '6':
+            folderMode |= S_IROTH | S_IWOTH;
+            break;
+        case '7':
+            folderMode |= S_IROTH | S_IWOTH | S_IXOTH;
+            break;
+    }
+
+      /*  La fonction semble ne pas fonctionner, peut importe la valeur
+        de folderfolderMode, le dossier créé a une permission '777'
+      */
+    mkdir(folderName, folderMode);
   }
+  return 0;
 }

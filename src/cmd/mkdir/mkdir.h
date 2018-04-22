@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <errno.h>
+#include <time.h>
 
-void fmkdir(int argc, char const *argv[]);
+int fmkdir(int argc, char *argv[]);
 
 #endif
