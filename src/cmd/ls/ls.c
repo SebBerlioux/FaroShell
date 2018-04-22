@@ -46,7 +46,7 @@ void affichage_avance(struct dirent *dptr,int dflag){
     timeInfo=localtime(&st.st_mtime);     // Information du temps
     printf(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
 
-    if(dflag==0 && isFolder(dptr->d_name)){ // Si l'option n'est pas d et si c'est un repertoire l'onformation sera verte (MARCHE PAS)
+    if(dflag==0 && Est_Dossier(dptr->d_name)){ // Si l'option n'est pas d et si c'est un repertoire l'onformation sera verte (MARCHE PAS)
         printf("\033[32m");
         printf(" %s \n",dptr->d_name);
         printf("\033[0m");
@@ -104,7 +104,7 @@ int fls(int argc,char *argv[]){
 
             else{
                 // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
-                if(dflag==0 && isFolder(dptr->d_name)){
+                if(dflag==0 && Est_Dossier(dptr->d_name)){
                     printf("\033[32m");
                     printf("%s ",dptr->d_name);
                     printf("\033[0m");
@@ -120,7 +120,7 @@ int fls(int argc,char *argv[]){
         for (index = optind; index < argc; index++){
 
             // Cas du dossier
-            if(isFolder(argv[index])){
+            if(Est_Dossier(argv[index])){
 
                 if ((dirp=opendir(argv[index]))==NULL){
                     printf("ls : directory %s doesn't exist\n",argv[index]);
@@ -136,7 +136,7 @@ int fls(int argc,char *argv[]){
                         }
                         else{
                             // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
-                            if(dflag==0 && isFolder(dptr->d_name)){
+                            if(dflag==0 && Est_Dossier(dptr->d_name)){
                                 printf("\033[32m");
                                 printf("%s ",dptr->d_name);
                                 printf("\033[0m");
@@ -162,9 +162,9 @@ int fls(int argc,char *argv[]){
 
 struct stat sts;    // Declaration d'une struct stat
 
-// isFolder prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
+// Est_Dossier prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
 
-int isFolder(char* testedFolder){
+int Est_Dossier(char *testedFolder){
     if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) {
         return 1;
     }

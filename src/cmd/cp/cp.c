@@ -96,7 +96,7 @@ int fcp(int argc, char *argv[]){
     }
 
     else{
-        if(isRegularFile(argv[1])){     //Test du fichier
+        if(Est_Fichier(argv[1])){     //Test du fichier
 
             FILE *f_Src;
             FILE *f_Dest;
@@ -144,7 +144,7 @@ int fcp(int argc, char *argv[]){
             fclose(f_Src);
         }
 
-        else if(isFolder(argv[1])){
+        else if(Est_Dossier(argv[1])){
             cp_avanced(argv[1],argv[2]);    //le cas d'un dossier qu'on copie d'un autre autre dossier
         }
 
@@ -159,8 +159,8 @@ int fcp(int argc, char *argv[]){
 
 struct stat sts;    // Declaration d'une struct stat
 
-// isFolder prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
-int isFolder(char* testedFolder){
+// Est_Dossier prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
+int Est_Dossier(char *testedFolder){
     if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) {
         return 1;
     }
@@ -169,8 +169,8 @@ int isFolder(char* testedFolder){
     }
 }
 
-// isRegularFile prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
-int isRegularFile(char* testedFile){
+// Est_Fichier prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
+int Est_Fichier(char *testedFile){
     if(testedFile!=NULL && stat(testedFile,&sts)==0 && S_ISREG(sts.st_mode)) {
         return 1;
     }

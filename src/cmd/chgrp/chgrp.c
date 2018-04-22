@@ -25,7 +25,7 @@ int grp(int argc, char *argv[])
         int i;
         gid_t group;        // Nouveau ID de groupe
 
-        if(isRegularFile(argv[2]))      //Vérifie la valeur du fichier
+        if(Est_Fichier(argv[2]))      //Vérifie la valeur du fichier
         {
             if((pass = fopen("/etc/group", "r")) != NULL)
             {
@@ -61,9 +61,9 @@ int grp(int argc, char *argv[])
 }
 
 
-// isRegularFile prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
+// Est_Fichier prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
 
-int isRegularFile(char* testedFile){
+int Est_Fichier(char *testedFile){
     if(testedFile!=NULL && stat(testedFile,&sts)==0 && S_ISREG(sts.st_mode)) {
         return 1;
     }

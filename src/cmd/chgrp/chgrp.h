@@ -14,7 +14,7 @@ int grp(int argc, char *argv[]);
 
 struct stat sts;
 
-extern int isRegularFile(char* __testedFile);
+extern int Est_Fichier(char *__testedFile);
 
 
 #endif
