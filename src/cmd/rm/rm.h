@@ -1,10 +1,14 @@
-#ifndef _PWD_H
-	#define _PWD_H
+#ifndef _RM_H
+	#define _RM_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "IS_file.h"
+#include <sys/stat.h>
+
+struct stat sts;
+
+extern int isAFolder(char* __testedFolder);
 
 int frm(int argc, char *argv[]);
 

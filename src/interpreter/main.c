@@ -38,6 +38,7 @@ int main(void)
 	do
 	{
 		//parametresList = CreateList();	// init liste
+    commandLine = malloc(sizeof(char*));
 		printf(ANSI_COLOR_YELLOW "%s" ANSI_COLOR_RESET":" ANSI_COLOR_CYAN "%s"
 			ANSI_COLOR_RESET, getUserName(), getcwd(tampon, 100));
 		printf("$ ");	// prompt

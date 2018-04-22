@@ -17,7 +17,8 @@ char *commands_name[] = {
 	"ls",
 	"mkdir",
 	"mv",
-	"pwd"
+	"pwd",
+	"rm"
 };
 
 /*
@@ -32,7 +33,8 @@ int (*commands_function[]) (int, char**) = {
 	&fls,
 	&fmkdir,
 	&fmv,
-	&fpwd
+	&fpwd,
+	&frm
 };
 
 /*

@@ -1,6 +1,6 @@
 #include "mv.h"
 
-int fmv(int argc, char *const argv[])
+int fmv(int argc, char *argv[])
 {
 	int ret;
 	char* item;
@@ -37,34 +37,34 @@ int fmv(int argc, char *const argv[])
 
 		if (stat(argv[argc-1], &destStat) == -1)
 		{
-	        if (errno == ENOENT)
-	        {
-	            destExist = 0;
-	        }
-	        else
-	        {
-	            perror("Stat error");
-	            exit(EXIT_FAILURE);
-	        }
-	    }
+        if (errno == ENOENT)
+        {
+            destExist = 0;
+        }
+        else
+        {
+            perror("Stat error");
+            exit(EXIT_FAILURE);
+        }
+    }
 
 		for (; optind < argc-1; optind++)
 		{
 			item = malloc(sizeof(argv[optind]));
 			strcpy(item, argv[optind]);
 
-		    if (destExist && S_ISDIR(destStat.st_mode))
-		    {
+	    if (destExist && S_ISDIR(destStat.st_mode))
+	    {
 				dest = malloc(sizeof(argv[argc-1]) + strlen(basename(item)) + 2);
 				strcpy(dest, argv[argc-1]);
 				strcat(dest, "/");
 				strcat(dest, basename(item));
-		    }
-		    else
-		    {
-		    	dest = malloc(sizeof(argv[argc-1]));
+			}
+	 		else
+		  {
+		    dest = malloc(sizeof(argv[argc-1]));
 				strcpy(dest, argv[argc-1]);
-		    }
+	    }
 
 			if (verbose) printf("Destination set to : %s\n", dest);
 
@@ -113,4 +113,7 @@ int fmv(int argc, char *const argv[])
 			free(dest);
 		}
 	}
+
+	return 0;
+
 }

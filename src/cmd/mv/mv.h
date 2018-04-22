@@ -10,6 +10,6 @@
 #include <sys/stat.h>
 #include <libgen.h>
 
-int fmv(int argc, char *const argv[]);
+int fmv(int argc, char *argv[]);
 
 #endif
