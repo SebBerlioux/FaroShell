@@ -110,9 +110,6 @@ int fmkdir(int argc, char *argv[]){
       */
     mkdir(folderName, folderMode);
   }
-<<<<<<< HEAD
-=======
 
->>>>>>> 4509a52a743d38aaf184cedd2515ab720b2f21b9
   return 0;
 }
