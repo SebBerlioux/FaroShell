@@ -8,7 +8,7 @@ Ce projet a pour but de créer un mini shell en langage C dans lequel les comman
 - cd     ✓  (sans options)
 - ls     ✓  (avec options)
 - cat    ✓  (sans options)
-- mv     ✓  (sans options)
+- mv     ✓  (Options Disponibles : -i -v)
 - cp     ✓  (sans options)
 - rm     ✓  (Options Disponible : -r -f )
 - du     ✓  (sans options)
