@@ -4,10 +4,13 @@
 
 int fcat(int argc, char *argv[]){
 
-  if(argc < 2){
+  if(argc < 2){ // manque de parametre
     printf("Erreur, manque de parametre !\n");
+    printf("Usage: cat [-option(s)] [fichier]\n");
+    return 1;
   }
   else{
+    
     FILE *fp;
     char read[30] = "";
     // char line[]
@@ -98,7 +101,5 @@ int fcat(int argc, char *argv[]){
 
     fclose(fp);
   }
-
   return 0;
-
 }
