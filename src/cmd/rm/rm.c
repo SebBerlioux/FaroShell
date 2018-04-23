@@ -58,15 +58,15 @@ int frm(int argc, char *argv[]) {
 //				printf("Option r détécté\n");
 				}
 
-			if(tmp[z]=='f'){
+			else if(tmp[z]=='f'){
 				F=1;
 //				printf("Option f détécté\n");
 				}
 
-//			else{
-//				printf("Option invalide, Seul -r et -f sont disponible");
-//				return 1;
-//			}
+			else{
+				printf("Option invalide, Seul -r et -f sont disponible");
+				return 1;
+			}
 		}
 	}
 
