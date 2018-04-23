@@ -50,10 +50,10 @@ int main(void)
 		}
 		// suppression des donnees de la commande rentree
 		//DeleteList(parametresList);
-    free(commandLine);
 	}
 	// fin de la boucle lorsque "exit" rentree
 	while(strcmp(commandLine, EXIT_CMD));
+    free(commandLine);
 	printf("Goodbye !\n");
 
 	return 0;
