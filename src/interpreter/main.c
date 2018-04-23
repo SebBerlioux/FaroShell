@@ -46,11 +46,10 @@ int main(void)
 			// separation de chaque parametre dans une liste doublement chainee
             parseParams(commandLine);
 		}
-		// suppression des donnees de la commande rentree
-        free(commandLine);
 	}
 	// fin de la boucle lorsque "exit" rentree
 	while(strcmp(commandLine, EXIT_CMD));
+    free(commandLine);
 	printf("Goodbye !\n");
 
 	return 0;
