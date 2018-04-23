@@ -119,5 +119,7 @@ int frm(int argc, char *argv[]) {
 			}
 		}
 	}
+	free(fichiers);
+	free(commande);
 	return 0;
 }
