@@ -33,12 +33,10 @@ int main(void)
 	char tampon[100];
 
 	char *commandLine;	// ligne de commande rentree
-	//SList *parametresList;	// liste des parametres (dont nom de commande)
 
 	do
 	{
-		//parametresList = CreateList();	// init liste
-    commandLine = malloc(sizeof(char*));
+        commandLine = malloc(sizeof(char*));
 		printf(ANSI_COLOR_YELLOW "%s" ANSI_COLOR_RESET":" ANSI_COLOR_CYAN "%s"
 			ANSI_COLOR_RESET, getUserName(), getcwd(tampon, 100));
 		printf("$ ");	// prompt
@@ -46,11 +44,10 @@ int main(void)
 		if (strcmp(commandLine, ""))
 		{
 			// separation de chaque parametre dans une liste doublement chainee
-      parseParams(commandLine);
+            parseParams(commandLine);
 		}
 		// suppression des donnees de la commande rentree
-		//DeleteList(parametresList);
-    free(commandLine);
+        free(commandLine);
 	}
 	// fin de la boucle lorsque "exit" rentree
 	while(strcmp(commandLine, EXIT_CMD));
