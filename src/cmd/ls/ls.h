@@ -15,8 +15,6 @@
 #include <limits.h>
 
 
-
-
 int fls(int argc,char *argv[]);
 void affichage_avance(struct dirent *dptr,int dflag);
 

@@ -114,6 +114,7 @@ int fls(int argc,char *argv[]){
         }
         printf("\n");
         closedir(dirp);
+        //printf("toto");
     }
         // On affiche les informations pour chaque arguments
     else{
