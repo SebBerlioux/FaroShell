@@ -1,98 +1,110 @@
-#include "su.h"
-
-const char DEFAULT_USER[] = "root"; //Root est l'utilisateur par défaut (si aucun argument n'est entré)
-
-//Pour converser entre l'utilisateur et le programme MAIS CA NE MARCHE PAS
-//static struct pam_conv conv =  misc_conv;   ou penpam_ttyconv;
-#ifdef _SU_H_
-        openpam_ttyconv,
+#define _XOPEN_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <security/pam_appl.h>
+#ifdef __APPLE__ //Test pour les utilisateurs de MacOS (G.P)
+#include <security/openpam.h>
 #else
-        misc_conv,
+#include <security/pam_misc.h>
 #endif
-        NULL
-};
+#include <unistd.h>
+#include <pwd.h>
+#include <string.h>
 
+
+const char D_USER[] = "root";  // Si aucun utilisateur est entré on considère que l'on cherche à se connecter à root
+
+//Pour converser entre l'utilisateur et le programme
+static struct pam_conv conv = {
+    //Test pour les utilisateurs de MacOS (G.P)
+    #ifdef __APPLE__  
+    openpam_ttyconv,
+    #else
+    misc_conv,
+    #endif
+    NULL
+};
 struct passwd *pwd;
 
-
-
-int fsu(int argc, char *argv[])
-{
-
-    pam_handle_t *pamh = NULL;
-    char ** pam_env_list; // liste des variable d'environnement
-    int retval;
-
-    if(argc > 2) {
-        fprintf(stderr, "fsu : trop d'arguments\n");
-        exit(EXIT_FAILURE);
-    }
-
+int fsu(int argc, char *argv[]) {
+    pam_handle_t *pam_h = NULL;
+    int val;                     // Variable qui va être utiliser pour stocker les résultats des commandes PAM
     const char *user;
-    if(argc == 2) {
+    char ** env_list;            // liste des variables d'environnements
+    
+    user = D_USER;               //On met tout de suite l'utilisateur à sa valeur par defaut
+
+    if(argc > 2) {               //On teste si il n'y a pas trop d'arguments dans la fonction
+        fprintf(stderr, "su : trop d'arguments\n");
+        return 0;
+    }
+    if(argc == 2) {             //Si il y a deux arguments on remplace l'utilisateur
         user = argv[1];
-    } else {
-        user = DEFAULT_USER;
+    }
+    
+    val = pam_start("check_user", user, &conv, &pam_h);  //On commence à valider 
+    if (val != PAM_SUCCESS){
+        fprintf(stderr, "Erreur avec le lancement de PAM\n");
     }
 
-    retval = pam_start("check_user", user, &conv, &pamh);
-
-    if (retval != PAM_SUCCESS)
-        fprintf(stderr, "Error with pam_start\n");
-
-    if (retval == PAM_SUCCESS) // authentification
-        retval = pam_authenticate(pamh, 0);
-
-    if (retval == PAM_SUCCESS)
-        retval = pam_acct_mgmt(pamh, 0);
-
-    if (retval != PAM_SUCCESS) { // pas le bon mdp donc on quitte
-        fprintf(stderr, "ksu: Authentication failure\n");
-        exit(EXIT_FAILURE);
+    if (val == PAM_SUCCESS){
+        val = pam_authenticate(pam_h, 0);
+    }
+    if (val != PAM_SUCCESS) {        // On verifie que tout c'est bien passé
+        fprintf(stderr, "su: Echec d'autentification 1\n");
+        return 0;
+    }
+    
+    if (val == PAM_SUCCESS){
+        val = pam_acct_mgmt(pam_h, 0);
+    }
+    if (val != PAM_SUCCESS) {        // On verifie que tout c'est bien passé
+        fprintf(stderr, "su: Echec d'autentification 2\n");
+        return 0;
     }
 
 
-    retval = pam_setcred(pamh, 0);
+    val = pam_setcred(pam_h, 0);
+    if (val != PAM_SUCCESS){
+        fprintf(stderr, "Erreur avec l'utilisateur\n");
+    }
 
-    if (retval != PAM_SUCCESS)
-        fprintf(stderr, "Error with user credentials\n");
-
-    // OUVERTURE DE LA SESSION
-
-    retval = pam_open_session(pamh, 0);
-    if (retval != PAM_SUCCESS)
-        fprintf(stderr, "Error with openning session\n");
-
+    val = pam_open_session(pam_h, 0);
+    if (val != PAM_SUCCESS){
+        fprintf(stderr, "Erreur à l'ouverture de session\n");
+    }
+        
     pwd = getpwnam(user);
-    if( setuid(pwd->pw_uid) != 0 )
-        fprintf(stderr, "Error with setting user id\n");
+    if( setuid(pwd->pw_uid) != 0 ){
+        fprintf(stderr, "Erreur liée à l'user_id\n");
+    }
 
-    // VARIABLE D ENVIRONNEMENT
 
-    pam_env_list = pam_getenvlist(pamh);
-    if (pam_env_list != NULL) {
+    env_list = pam_getenvlist(pam_h);
+    if (env_list != NULL) {
         char ** pam_env;
-        for (pam_env = pam_env_list; *pam_env != NULL; pam_env++) {
+        for (pam_env = env_list; *pam_env != NULL; pam_env++) {
             putenv(*pam_env);
             free(*pam_env);
         }
-        free(pam_env_list);
-    } else {
-        fprintf(stderr, "Error\n");
-        exit(EXIT_FAILURE);
+        free(env_list);
+    } 
+    else {
+        fprintf(stderr, "Erreur à la récupération des paramettres\n");
+        return 0;
     }
 
-    // On ferme la fonction PAM
 
-    if (pam_end(pamh,retval) != PAM_SUCCESS) {
-        pamh = NULL;
-        fprintf(stderr, "check_user: failed to release authenticator\n");
-        exit(EXIT_FAILURE);
+    if (pam_end(pam_h,val) != PAM_SUCCESS) { //On verifie que tout c'est bien passé à la fermeture
+        pam_h = NULL;
+        fprintf(stderr, "check_user: Echec de libération de l'autentificateur\n");
+        return 0;
     }
 
-    // Lancement du nouveau bash avec le bon User
-    if (retval == PAM_SUCCESS)
+    if (val == PAM_SUCCESS) //Si tout c'est bien passé on lance un nouveau bash avec le nouvel utilisateur
         execvp("bash", (char*[]){"bash", NULL});
 
-    return retval;
+    return val;
 }
+
