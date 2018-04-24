@@ -47,6 +47,6 @@ A la compilation du projet, 2 dossiers sont créés à la racine du projet :
 
 ## La répartition du travail
 
-| Groupe interpréteur | Groupe commandes              |
-| : --------------- : | : ------------------------- : |
-| Simon & Bastien     | Arthur, Sébastien & Guillaume |
+Groupe interpréteur | Groupe commandes
+:-: | :-:
+Simon & Bastien | Arthur, Sébastien & Guillaume
