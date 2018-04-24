@@ -5,6 +5,18 @@
 */
 int nb_cmds = 0;
 
+char *fileForRedirection;
+
+char *specials_list[] = {
+	"|",
+	">",
+	"<",
+	">>",
+	"<<",
+	"||",
+	"&&"
+};
+
 /*
 	Tableau contenant le nom de toutes les commandes
 */
@@ -72,20 +84,24 @@ void splitCommands(char* commandLine)
 	argument = strtok(commandLine, DELIMITERS);
 	args[nbArgs] = argument;
 
-	printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
+	//printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	// tant que pas fin de chaine
 	while (argument != NULL)
 	{
 		if (strcmp(argument, "|") == 0)
 			specialArg = 1;
+		else if (strcmp(argument, ">") == 0)
+			specialArg = 2;
+		else if (strcmp(argument, ">>") == 0)
+			specialArg = 4;
 		nbArgs++;
 		argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
 		args[nbArgs] = argument;
-		printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
+		//printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	}
 
-	if (specialArg == 1)
-		parseSpecial(nbArgs, args);
+	if (specialArg)
+		parseSpecial(specialArg, nbArgs, args);
 	else
 	{
 		Arguments arguments;
@@ -94,23 +110,55 @@ void splitCommands(char* commandLine)
 		cmds[nb_cmds] = arguments;
 		nb_cmds++;
 	}
-	printf("argc = %d\n", cmds[0].argc);
+	//printf("argc = %d\n", cmds[0].argc);
 }
 
 /*
-
+	Parse la ligne de commande si une redirection ou autre est détecté
 */
-void parseSpecial(int nbArgs, char *args[])
+void parseSpecial(int specialArg, int nbArgs, char *args[])
 {
 	int i = 0;
 	int argc = 0;
 	char **argv = malloc(NOMBRE_ARGUMENT * sizeof(char*));
+	char *specialChar = malloc(sizeof(char*));
+	specialChar = specials_list[specialArg-1];
 
-	while (strcmp(args[i], "|"))
+	printf("special = %s\n", specialChar);
+
+	while (strcmp(args[i], specialChar))
 	{
 		argv[i] = args[i];
+		printf("parse special = %s\n", argv[i]);
+		i++;
 		argc++;
 	}
+
+	Arguments arguments;
+	arguments.argc = argc;
+	arguments.argv = argv;
+	cmds[nb_cmds] = arguments;
+	nb_cmds++;
+
+	int argc2 = nbArgs - argc - 1;
+	free(argv);
+	argv = malloc(NOMBRE_ARGUMENT * sizeof(char*));
+
+	printf("argc = %d\nargc2 = %d\n", argc2, argc);
+	for (int i = argc+1; i < nbArgs; i++) {
+		argv[i] = args[i];
+		printf("parse special 2 = %s\n", argv[i]);
+	}
+
+	Arguments arguments2;
+	arguments2.argc = argc2;
+	arguments2.argv = argv;
+	cmds[nb_cmds] = arguments2;
+	nb_cmds++;
+
+	printf("nb_cmds = %d\n", nb_cmds);
+	for (int i = 0; i < nb_cmds; i++)
+		printf("cmds[%d].argv[0] = %s\n", i, cmds[i].argv[0]);
 }
 
 /*

@@ -7,11 +7,13 @@
 #include <stdarg.h>
 
 #define NO_SPECIAL 0
-#define PIPE_AND_OR 1
+#define PIPE 1
 #define REDIRECT_RIGHT 2
 #define REDIRECT_LEFT 3
 #define DOUBLE_REDIRECT_RIGHT 4
-#define DOUBLE_REDIDIRECT_LEFT 5
+#define DOUBLE_REDIRECT_LEFT 5
+#define OR 6
+#define AND 7
 
 int special = 0;
 char *filename;

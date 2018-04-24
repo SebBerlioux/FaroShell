@@ -27,7 +27,7 @@ Arguments cmds[MAX_CMDS];
 
 void parseParams(char *commandLine);
 void splitCommands(char* commandLine);
-void parseSpecial(int nbArgs, char *args[]);
+void parseSpecial(int specialArg, int nbArgs, char *args[]);
 int executeCommand(int nbArgs, char *args[]);
 
 #endif

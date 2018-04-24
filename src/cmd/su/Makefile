@@ -7,12 +7,12 @@ all: $(FaroShell)/$(binCmd)/su $(FaroShell)/$(binCmd)/$(static)/libsu.a \
 
 $(FaroShell)/$(binCmd)/su: $(FaroShell)/$(objCmd)/su/su.o \
 		$(FaroShell)/$(objCmd)/su/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/su $^ $(C99FLAG)
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/su $^ -lpam
 
 $(FaroShell)/$(objCmd)/su/%.o: $(FaroShell)/$(src)/$(cmd)/su/%.c
 	@echo "Building su"
 	mkdir -p $(FaroShell)/$(obj)/$(cmd)/su
-	$(CC) -c -o $@ $< $(CFLAGS) $(C99FLAG)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 #Static library
 $(FaroShell)/$(binCmd)/$(static)/libsu.a: $(FaroShell)/$(objCmd)/su/su.o

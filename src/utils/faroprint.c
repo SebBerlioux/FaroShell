@@ -48,7 +48,7 @@ int faroprint(const char* format, ...)
         va_end(list);
         fclose(fp);
     }
-    else if (special == PIPE_AND_OR)
+    else if (special == PIPE || special == OR || special == AND)
     {
         // On créer un fichier temporaire pour la stdin de la seconde cmd
         fp = fopen("tmp", "r+");
