@@ -10,5 +10,6 @@
 #include <stdlib.h>
 
 int fdu(int argc, char *argv[]);
+void conversionHumanReadable(off_t size, char *name, int indice);
 
 #endif
