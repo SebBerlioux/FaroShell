@@ -1,105 +1,111 @@
 #include "cat.h"
 
-// ex:$ cat
+// ex:$ cat [-options] [fichier]
 
 int fcat(int argc, char *argv[]){
 
   if(argc < 2){ // manque de parametre
     printf("Erreur, manque de parametre !\n");
     printf("Usage: cat [-option(s)] [fichier]\n");
-    return 1;
+    return 1; // retour erreur
   }
   else{
-    
+
+    /*
+       *************************
+       *        OPTIONS        *
+       *************************
+    */
+    extern int optind;
+    int opt;
+    int indicateurFichier = 1;
+
+    // validateurs d'option
+    int caseA = 0;
+    int caseE = 0;
+    int caseN = 0;
+    int caseT = 0;
+
+    while((opt = getopt(argc, argv, "AbEenT")) != -1){
+      switch (opt) {
+        case 'A': // display $ at end of each line & display TAB characters as ^I
+          caseA = 1; // l'option A est activee
+          indicateurFichier++;
+          break;
+        case 'E': // display $ at end of each line
+          caseE = 1; // l'option E ou e est activee
+          indicateurFichier++;
+          break;
+        case 'n': // number all output lines
+          caseN = 1; // l'option N est activee
+          indicateurFichier++;
+          break;
+        case 'T': // display TAB characters as ^I
+          caseT = 1; // l'option T ou t est activee
+          indicateurFichier++;
+          break;
+        case '?':
+          printf("Incorrect argument given: %s\n", argv[optind-1]);
+          printf("Available arguments are: -A, -b, -E (-e), -n, -T (-t) \n");
+          return 1; //retour erreur
+          break;
+        default: printf("bonsoir\n"); break;
+      }//end switch
+    }//end while
+
+    /*
+      **********************
+      *   LECTURE FICHIER  *
+      **********************
+    */
+
     FILE *fp;
-    char read[30] = "";
-    // char line[]
 
-    //int nbOption = 0;
-    // char* option[] = (char*)malloc(sizeof(char)); A completer
-
-    // *********************************
-    // * OPTIONS A COMPLETER PLUS TARD *
-    // *********************************
-
-    /*for(size_t i=1; i<argc; i++){
-      if(strcmp(argv[i], (char*)("-A")) == 0 || strcmp(argv[i], (char*)("--show-all")) == 0 || strcmp(argv[i], (char*)("-ET")) == 0){
-        // display $ at end of each line
-        // display TAB characters as ^I
-        nbOption += 2;
-        option = (char*)realloc(option, nbOption*sizeof(char*));
-        option[nbOption-2] = "E";
-        option[nbOption-1] = "T";
-      }
-      if(strcmp(argv[i], (char*)("-b")) == 0 || strcmp(argv[i], (char*)("--number-nonblank")) == 0){
-        // number nonempty output lines, overrides -n
-        nbOption++;
-        option = (char*)realloc(option, nbOption*sizeof(char*));
-        option[nbOption-1] = "b";
-      }
-      if(strcmp(argv[i], (char*)("-E")) == 0 || strcmp(argv[i], (char*)("--show-ends")) == 0 || strcmp(argv[i], (char*)("-e")) == 0){
-        // display $ at end of each line
-        nbOption++;
-        option = (char*)realloc(option, nbOption*sizeof(char*));
-        option[nbOption-1] = "E";
-      }
-      if(strcmp(argv[i], (char*)("-n")) == 0 || strcmp(argv[i], (char*)("--number")) == 0){
-        // number all output lines
-        nbOption++;
-        option = (char*)realloc(option, nbOption*sizeof(char*));
-        option[nbOption-1] = "n";
-      }
-      if(strcmp(argv[i], (char*)("-T")) == 0 || strcmp(argv[i], (char*)("--show-tabs")) == 0 || strcmp(argv[i], (char*)("-t")) == 0){
-        // display TAB characters as ^I
-        nbOption++;
-        option = (char*)realloc(option, nbOption*sizeof(char*));
-        option[nbOption-1] = "T";
-      }
-      // if(strcmp(argv[i], (char*)("--help")) == 0){} // afficher le man ??
-
-      // else{ fp = FILE *argv[i]; }
-
-      // ici les possibilités d'option sont: E, T, b, n
-
-    }*/
-
-    // **********************
-    // * LECTURE DU FICHIER *
-    // **********************
-
-    fp = fopen(argv[1], "r");
+    fp = fopen(argv[indicateurFichier], "r");
     if (fp == NULL){ // erreur lors de l'ouverture du fichier
-      exit(EXIT_FAILURE);
+      printf("Erreur lors de l'ouverture du fichier !\n");
+      return 1; //retour erreur
     }
 
-    // int n = 1; // compteur de ligne, sera affiché si option -n
+    int n = 0; // compteur de ligne, sera affiché si option -n
+    int c;
+    char cchar;
 
-    while(fgets(read, 30, fp) != NULL){ // lecture de chaque ligne du fichier
-      printf("%s",read);
-    }
-      /*for(size_t j=0; j<nbOption; j++){
+    int affichage = 1;
+    int nouvelleLigne = 1;
 
-          if(strcmp(option[j], (char*)("n")) == 0){
-            line = line + (char)("%i",n);
-            n++;
-          }
-          if(read == "\t"){
-            if(strcmp(option[j], (char*)("T")) == 0){
-              line = line + "^I";
-            }else{
-              line = line + "\t";
-            }
-          }
-          if(read == "\n"){
-            if(strcmp(option[j], (char*)("E")) == 0){
-              line = line + '$';
-            }else {
-              line = line + "\n";
-            }
-          }
-      }*/
+    while((c = fgetc(fp)) != EOF){ // lecture de chaque caractère du fichier
+      affichage = 1;
+      if(caseN){ // option n --------------- ok
+        if(nouvelleLigne){
+          n++;
+          printf("\t%i  ", n);
+          nouvelleLigne = 0;
+        }
+      }
 
-    fclose(fp);
-  }
+      if(c == '\t'){ // option T ou A  ------------- ok pour T
+        if(caseT || caseA){
+          printf("^I");
+          affichage = 0;
+        }
+      }
+      if(c == '\n'){ // option E ou A
+        if(caseE || caseA){
+          printf("$\n");
+          affichage = 0;
+        }
+        nouvelleLigne = 1;
+      }
+
+      if(affichage){
+        cchar = (char) c;
+        printf("%c", cchar);
+      }
+    } // end while
+
+      fclose(fp);
+  } // end else
+  printf("\n");
   return 0;
-}
+} //end function
