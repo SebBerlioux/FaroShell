@@ -19,7 +19,8 @@ char *commands_name[] = {
 	"mv",
 	"pwd",
 	"rm",
-	"cp"
+	"cp",
+	"su"
 };
 
 /*
@@ -36,7 +37,8 @@ int (*commands_function[]) (int, char**) = {
 	&fmv,
 	&fpwd,
 	&frm,
-	&fcp
+	&fcp,
+	&fsu
 };
 
 /*
@@ -65,7 +67,7 @@ void splitCommands(char* commandLine)
 {
 	char* argument;	// un parametre
 	int nbArgs = 0;
-	int special = 0;
+	int specialArg = 0;
 	char **args = malloc(NOMBRE_ARGUMENT * sizeof(char*));
 
 	// recupere le premier "token" avant un espace
@@ -77,14 +79,14 @@ void splitCommands(char* commandLine)
 	while (argument != NULL)
 	{
 		if (strcmp(argument, "|") == 0)
-			special = 1;
+			specialArg = 1;
 		nbArgs++;
 		argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
 		args[nbArgs] = argument;
 		printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	}
 
-	if (special == 1)
+	if (specialArg == 1)
 		parseSpecial(nbArgs, args);
 	else
 	{

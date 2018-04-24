@@ -52,5 +52,5 @@ int main(void)
     free(commandLine);
 	printf("Goodbye !\n");
 
-	return 0;
+	exit(EXIT_SUCCESS);
 }

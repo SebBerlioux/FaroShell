@@ -17,6 +17,7 @@
 #include "../cmd/ls/ls.h"
 #include "../cmd/chmod/chmod.h"
 #include "../cmd/chgrp/chgrp.h"
+#include "../cmd/su/su.h"
 
 #define NOMBRE_ARGUMENT 32
 #define MAX_CMDS 10
