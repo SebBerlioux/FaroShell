@@ -31,7 +31,8 @@ char *commands_name[] = {
 	"mv",
 	"pwd",
 	"rm",
-	"cp"
+	"cp",
+	"du"
 };
 
 /*
@@ -48,7 +49,8 @@ int (*commands_function[]) (int, char**) = {
 	&fmv,
 	&fpwd,
 	&frm,
-	&fcp
+	&fcp,
+	&fdu
 };
 
 /*
