@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <pwd.h>
 #include <string.h>
+#include "su.h"
 
 
 const char D_USER[] = "root";  // Si aucun utilisateur est entré on considère que l'on cherche à se connecter à root
