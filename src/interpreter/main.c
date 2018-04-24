@@ -32,6 +32,8 @@ int main(void)
 
 	char tampon[100];
 
+    extern int optind;
+
 	char *commandLine;	// ligne de commande rentree
 
 	do
@@ -43,6 +45,7 @@ int main(void)
 		commandLine = lireCommande();	// lecture d'une commande entiere
 		if (strcmp(commandLine, ""))
 		{
+            optind = 1;
 			// separation de chaque parametre dans une liste doublement chainee
             parseParams(commandLine);
 		}
