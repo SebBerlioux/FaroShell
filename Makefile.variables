@@ -2,6 +2,7 @@
 CC = gcc
 DEBUG = yes
 EXEC = faroShell
+C99FLAG = -std=c99
 
 ifeq ($(DEBUG),yes)
         CFLAGS = -fPIC -pedantic -Wall -Wextra
