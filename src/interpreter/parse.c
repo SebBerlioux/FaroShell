@@ -106,7 +106,12 @@ void splitCommands(char* commandLine)
 	{
 		appendCommand(nbArgs, args);
 	}
+
+	printf("nb_cmds = %d\n", nb_cmds);
+	for (int i = 0; i < nb_cmds; i++)
+		printf("cmds[%d].argv[0] = %s\n", i, cmds[i].argv[0]);
 	//printf("argc = %d\n", cmds[0].argc);
+	//free(args);
 }
 
 void appendCommand(int argc, char *argv[])
@@ -115,6 +120,7 @@ void appendCommand(int argc, char *argv[])
 	arguments.argc = argc;
 	arguments.argv = argv;
 	cmds[nb_cmds] = arguments;
+	printf("appendCommand cmds[%d].argv[0] = %s\n", nb_cmds, cmds[nb_cmds].argv[0]);
 	nb_cmds++;
 }
 
@@ -125,7 +131,7 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 {
 	int i = 0;
 	int argc = 0;
-	char **argv = malloc(NOMBRE_ARGUMENT * sizeof(char*));
+	char **argv = malloc(NOMBRE_ARGUMENT * sizeof(char *));
 	char *specialChar = malloc(sizeof(char*));
 	specialChar = specials_list[specialArg-1];
 
@@ -134,7 +140,7 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 	while (strcmp(args[i], specialChar))
 	{
 		argv[i] = args[i];
-		printf("parse special = %s\n", argv[i]);
+		printf("special argv1 = %s\n", argv[i]);
 		i++;
 		argc++;
 	}
@@ -142,20 +148,21 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 	appendCommand(argc, argv);
 
 	int argc2 = nbArgs - argc - 1;
-	free(argv);
-	argv = malloc(NOMBRE_ARGUMENT * sizeof(char*));
+	char **argv2 = malloc(NOMBRE_ARGUMENT * sizeof(char *));
 
 	printf("argc = %d\nargc2 = %d\n", argc2, argc);
+	int j = 0;
 	for (int i = argc+1; i < nbArgs; i++) {
-		argv[i] = args[i];
-		printf("parse special 2 = %s\n", argv[i]);
+		argv2[j] = args[i];
+		printf("special argv2[%d] = %s\n", j, argv2[j]);
+		j++;
 	}
+
+	free(argv);
+	free(argv2);
 
 	appendCommand(argc2, argv);
 
-	printf("nb_cmds = %d\n", nb_cmds);
-	for (int i = 0; i < nb_cmds; i++)
-		printf("cmds[%d].argv[0] = %s\n", i, cmds[i].argv[0]);
 }
 
 /*
