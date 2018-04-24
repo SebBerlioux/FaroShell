@@ -104,13 +104,18 @@ void splitCommands(char* commandLine)
 		parseSpecial(specialArg, nbArgs, args);
 	else
 	{
-		Arguments arguments;
-		arguments.argc = nbArgs;
-		arguments.argv = args;
-		cmds[nb_cmds] = arguments;
-		nb_cmds++;
+		appendCommand(nbArgs, args);
 	}
 	//printf("argc = %d\n", cmds[0].argc);
+}
+
+void appendCommand(int argc, char *argv[])
+{
+	Arguments arguments;
+	arguments.argc = argc;
+	arguments.argv = argv;
+	cmds[nb_cmds] = arguments;
+	nb_cmds++;
 }
 
 /*
@@ -134,11 +139,7 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 		argc++;
 	}
 
-	Arguments arguments;
-	arguments.argc = argc;
-	arguments.argv = argv;
-	cmds[nb_cmds] = arguments;
-	nb_cmds++;
+	appendCommand(argc, argv);
 
 	int argc2 = nbArgs - argc - 1;
 	free(argv);
@@ -150,11 +151,7 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 		printf("parse special 2 = %s\n", argv[i]);
 	}
 
-	Arguments arguments2;
-	arguments2.argc = argc2;
-	arguments2.argv = argv;
-	cmds[nb_cmds] = arguments2;
-	nb_cmds++;
+	appendCommand(argc2, argv);
 
 	printf("nb_cmds = %d\n", nb_cmds);
 	for (int i = 0; i < nb_cmds; i++)
