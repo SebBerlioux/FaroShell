@@ -8,8 +8,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <stdlib.h>
-#include "../pwd/pwd.c"
 
-void fdu(int argc, char *argv[]);
+int fdu(int argc, char *argv[]);
 
 #endif
