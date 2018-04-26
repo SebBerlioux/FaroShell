@@ -11,8 +11,7 @@ int fecho(int argc, char *argv[])
   int caseN = 0;
   int caseE = 0;
 
-  char *toRead[];
-  char *line[];
+  char *toRead = NULL;
 
   while((opt = getopt(argc, argv, "ne")) != -1){
     switch (opt) {
@@ -25,10 +24,11 @@ int fecho(int argc, char *argv[])
         indicateurString++;
         break;
       default:
-        toRead = argv[optind];
         break;
     }
   }
+  toRead = argv[optind];
+  char *line = (char*)malloc(sizeof(toRead)); // chaine transformée
 
   if(toRead == NULL){ // string missing
     printf("Error: argument missing\n");
@@ -36,48 +36,46 @@ int fecho(int argc, char *argv[])
     return 1; // retour erreur
   }
 
+
   char c;
+  int i = 0;
   int option = 0;
 
   int indiceLine = 0; // indice pour la ligne à remplir qui sera affichée
 
-  for (int i = 0; i < toRead; i++) // on regarde chaque caractère de la string à lire
-  {
+  // on regarde chaque caractère de la string à lire
+  while (toRead[i] != '\0') {
     c = toRead[i];
-    if(caseE){ // interpretation of backslash escapes
 
-      if(c == '\\'){option = 1;} // un option est aà venir
-      else if(c == 'a' && option == 1){line[indiceLine] = "\a"; indiceLine++;} // déclenche un son 'BEEP'
-      else if(c == 'b' && option == 1){
-        if(line[indiceLine] != NULL){ // si on n'est pas au début de la string
-          line[indiceLine] = NULL; // on supprime le caractère précédent
-        }
-      }
-      else if(c == 'e' && option == 1){i++;} // on saute le prochain caractère
-      else if(c == 'n' && option == 1){line[indiceLine] = "\n"; indiceLine++;} // saut de ligne
-      else if(c == 'r' && option == 1){indiceLine = 0;} // on revient au début de la ligne à écrire
-      else if(c == 't' && option == 1){line[indiceLine] = "\t"; indiceLine++;} // tabulation
+    if(caseE){ // interpretation of backslash escapes -- option -e
+
+      if(c == '\\'){option++;} // un option est à venir (il faut 2 \ pour l'activer)
+      else if(c == 'a' && option == 1){line[indiceLine] = '\a'; indiceLine++;option = 0;} // déclenche un son *BEEP*
+      else if(c == 'b' && option == 1){i--;option = 0;} // on revient en arrière d'un caractère
+      else if(c == 'e' && option == 1){i++;option = 0;} // on saute le prochain caractère
+      else if(c == 'n' && option == 1){line[indiceLine] = '\n'; indiceLine++;option = 0;} // saut de ligne
+      else if(c == 'r' && option == 1){indiceLine = 0;option = 0;} // on revient au début de la ligne à écrire
+      else if(c == 't' && option == 1){line[indiceLine] = '\t'; indiceLine++;option = 0;} // tabulation
+      else if(c == 'c' && option == 1){break;}
       else{ // cas d'une lettre non option
-        line[i] = toRead[i]; // on ajoute la lettre à la ligne à lire
+        line[indiceLine] = toRead[i]; // on ajoute la lettre à la ligne à lire
         indiceLine++;
       }
 
-      if(c == 'c' && option == 1){return 0;}
-      option = 0;
 
     } // end caseE
     else{
-      for(int i = 0; i<toRead; i++){
-        printf("%c",toRead[i]);
-      }
+      line[i] = c;
     }
-  } // end for
+    i++;
+  } //  end while
 
-  //printf("%s ", toRead[i]); //On les affiche les uns derière les autres
-
-  if(!caseN){
-    printf("\n");
+  for(int j = 0; j<i; j++){
+    printf("%c", line[j]);
   }
+
+  free(line);
+  if(!caseN){printf("\n");} // option -n
 
   return 0;
 }
