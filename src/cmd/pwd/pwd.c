@@ -8,7 +8,7 @@ int fpwd(int argc, char *argv[])
     return 1;
   }else{
 
-    char tampon[100];
+    char tampon[200];
 
     if (getcwd(tampon, 100) == NULL) {
       printf("Erreur (Fonction %s) lors de la recuperation du chemin !", fonction);
