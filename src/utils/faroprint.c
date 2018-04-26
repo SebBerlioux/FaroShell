@@ -5,7 +5,7 @@
 */
 void setSpecial(int value)
 {
-    special = value;
+    spec = value;
 }
 
 /*
@@ -13,7 +13,7 @@ void setSpecial(int value)
 */
 void setFileName(char *fname)
 {
-    strcpy(filename, fname);
+    filename = fname;
 }
 
 /*
@@ -26,21 +26,21 @@ int faroprint(const char* format, ...)
     va_list list;
     va_start(list, format);
 
-    if (special == NO_SPECIAL)
+    if (spec == NO_SPECIAL)
     {
         // On fait un printf classique
         vprintf(format, list);
         va_end(list);
     }
-    else if (special == REDIRECT_RIGHT)
+    else if (spec == REDIRECT_RIGHT)
     {
         // On ouvre le fichier et on supprime le contenu si il y en a
-        fp = fopen(filename, "w");
+        fp = fopen(filename, "wb");
         vfprintf(fp, format, list);
         va_end(list);
         fclose(fp);
     }
-    else if (special == DOUBLE_REDIRECT_RIGHT)
+    else if (spec == DOUBLE_REDIRECT_RIGHT)
     {
         // On ouvre le fichier sans supprimer le contenu pour ajouter à la fin
         fp = fopen(filename, "a");
@@ -48,13 +48,15 @@ int faroprint(const char* format, ...)
         va_end(list);
         fclose(fp);
     }
-    else if (special == PIPE || special == OR || special == AND)
+    else if (spec == PIPE || spec == OR || spec == AND)
     {
         // On créer un fichier temporaire pour la stdin de la seconde cmd
-        fp = fopen("tmp", "r+");
+        fp = fopen("/tmp/tmp", "r+");
         vfprintf(fp, format, list);
         va_end(list);
         fclose(fp);
     }
+
+    return 0;
 
 }

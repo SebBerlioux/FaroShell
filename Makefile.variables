@@ -13,6 +13,7 @@ endif
 src = src
 interpreter = interpreter
 cmd = cmd
+utils = utils
 bin = bin
 obj = obj
 static = static
@@ -20,5 +21,6 @@ shared = shared
 objCmd = obj/cmd
 binCmd = bin/cmd
 objects = lecture.o main.o parse.o liste.o stack.o
+utilsObj = faroprint.o
 commands = echo.o
 OBJS = $(patsubst %,$(obj)/%,$(objects))

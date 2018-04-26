@@ -3,8 +3,6 @@
 #include <dlfcn.h>
 #include <pwd.h>
 
-#include "stack.h"
-#include "liste.h"
 #include "lecture.h"
 #include "parse.h"
 
