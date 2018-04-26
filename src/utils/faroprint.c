@@ -13,7 +13,7 @@ void setSpecial(int value)
 */
 void setFileName(char *fname)
 {
-    strcpy(filename, fname);
+    filename = fname;
 }
 
 /*
@@ -35,7 +35,7 @@ int faroprint(const char* format, ...)
     else if (spec == REDIRECT_RIGHT)
     {
         // On ouvre le fichier et on supprime le contenu si il y en a
-        fp = fopen(filename, "w");
+        fp = fopen(filename, "wb");
         vfprintf(fp, format, list);
         va_end(list);
         fclose(fp);
@@ -51,7 +51,7 @@ int faroprint(const char* format, ...)
     else if (spec == PIPE || spec == OR || spec == AND)
     {
         // On créer un fichier temporaire pour la stdin de la seconde cmd
-        fp = fopen("tmp", "r+");
+        fp = fopen("/tmp/tmp", "r+");
         vfprintf(fp, format, list);
         va_end(list);
         fclose(fp);

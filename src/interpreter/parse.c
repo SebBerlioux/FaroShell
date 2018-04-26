@@ -64,6 +64,7 @@ int num_commands = sizeof(commands_name) / sizeof(char*);
 */
 void parseParams(char *commandLine)
 {
+	setSpecial(0);
 	splitCommands(commandLine);
 	/*
 	for (int i = 0; i < nb_cmds; i++)
@@ -127,7 +128,8 @@ void appendCommand(int argc, char *argv[])
 	arguments.argc = argc;
 	arguments.argv = argv;
 	cmds[nb_cmds] = arguments;
-	printf("appendCommand cmds[%d].argv[0] = %s\n", nb_cmds, cmds[nb_cmds].argv[0]);
+	printf("appendCommand cmds[%d].argv[0] = %s\n",
+		nb_cmds, cmds[nb_cmds].argv[0]);
 	nb_cmds++;
 }
 
@@ -152,8 +154,6 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 		argc++;
 	}
 
-	executeCommand(argc, argv);
-
 	int argc2 = nbArgs - argc - 1;
 	char **argv2 = malloc(NOMBRE_ARGUMENT * sizeof(char *));
 
@@ -163,7 +163,7 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 	{
 		if (specialArg == 2 || specialArg == 4)
 		{
-			printf("filename = %s\n", args[i]);
+			printf("double or simple redirect\n");
 			setFileName(args[i]);
 		}
 		else
@@ -174,7 +174,8 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 		}
 	}
 
-	executeCommand(argc2, argv2);
+	executeCommand(argc, argv);
+	//executeCommand(argc2, argv2);
 
 	free(argv);
 	free(argv2);
@@ -189,15 +190,22 @@ int executeCommand(int nbArgs, char *args[])
 
 	char *cmd;
 	cmd = args[0];
+	int find = 0;
 	// On parcours le tableau de commandes
 	for (int i = 0; i < num_commands; i++)
 	{
 		if (strcmp(cmd, commands_name[i]) == 0)
 		{
+			// On passe find à 1 pour dire que la commande existe
+			find = 1;
 			// On exécute la commande grâce au tableau des pointeurs de fct
 			return (*commands_function[i]) (nbArgs, args);
 		}
 	}
+
+	// Si find est égal à 0, on affiche que la commande n'existe pas
+	if (!find && strcmp(cmd, "exit") != 0)
+		printf("%s: command not found\n", cmd);
 
 	return 0;
 
