@@ -65,10 +65,12 @@ int num_commands = sizeof(commands_name) / sizeof(char*);
 void parseParams(char *commandLine)
 {
 	splitCommands(commandLine);
+	/*
 	for (int i = 0; i < nb_cmds; i++)
 	{
 		executeCommand(cmds[i].argc, cmds[i].argv);
 	}
+	*/
 	nb_cmds = 0;
 }
 
@@ -103,10 +105,13 @@ void splitCommands(char* commandLine)
 	}
 
 	if (specialArg)
+	{
+		setSpecial(specialArg);
 		parseSpecial(specialArg, nbArgs, args);
+	}
 	else
 	{
-		appendCommand(nbArgs, args);
+		executeCommand(nbArgs, args);
 	}
 
 	printf("nb_cmds = %d\n", nb_cmds);
@@ -147,23 +152,32 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 		argc++;
 	}
 
-	appendCommand(argc, argv);
+	executeCommand(argc, argv);
 
 	int argc2 = nbArgs - argc - 1;
 	char **argv2 = malloc(NOMBRE_ARGUMENT * sizeof(char *));
 
 	printf("argc = %d\nargc2 = %d\n", argc2, argc);
 	int j = 0;
-	for (int i = argc+1; i < nbArgs; i++) {
-		argv2[j] = args[i];
-		printf("special argv2[%d] = %s\n", j, argv2[j]);
-		j++;
+	for (int i = argc+1; i < nbArgs; i++)
+	{
+		if (specialArg == 2 || specialArg == 4)
+		{
+			printf("filename = %s\n", args[i]);
+			setFileName(args[i]);
+		}
+		else
+		{
+			argv2[j] = args[i];
+			printf("special argv2[%d] = %s\n", j, argv2[j]);
+			j++;
+		}
 	}
+
+	executeCommand(argc2, argv2);
 
 	free(argv);
 	free(argv2);
-
-	appendCommand(argc2, argv);
 
 }
 

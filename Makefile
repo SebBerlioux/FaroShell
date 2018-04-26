@@ -9,7 +9,11 @@ LIBSOBJ = $(objCmd)/$(CMDS)/$(CMDS).o
 .PHONY: clean ressources faroShell
 
 #Déclaration des cibles pour la compilation
-all: ressources command $(EXEC)
+all: ressources utils command $(EXEC)
+
+#Compilation des utils
+utils:
+	$(CC) -c -o $(obj)/faroprint.o $(src)/$(utils)/faroprint.c $(CFLAGS)
 
 #Création du répertoire obj
 ressources:
@@ -18,7 +22,7 @@ ressources:
 
 #Compilation de l'interpréteur et du shell
 faroShell: $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(obj)/$(utilsObj) $(LDFLAGS)
 	@echo "Build successful!"
 
 $(OBJS): $(obj)/%.o: $(src)/$(interpreter)/%.c

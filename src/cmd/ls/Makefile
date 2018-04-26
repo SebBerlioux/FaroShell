@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/ls $(FaroShell)/$(binCmd)/$(static)/libls.a \
 
 $(FaroShell)/$(binCmd)/ls: $(FaroShell)/$(objCmd)/ls/ls.o \
 		$(FaroShell)/$(objCmd)/ls/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/ls $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/ls $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/ls/%.o: $(FaroShell)/$(src)/$(cmd)/ls/%.c
 	@echo "Building ls"

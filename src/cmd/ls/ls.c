@@ -14,44 +14,44 @@ void affichage_avance(struct dirent *dptr,int dflag){
     lstat(dptr->d_name,&st);    // On récupere le contenu du fichier ou du répertoire
 
     // On l'affiche
-    if ((st.st_mode & S_IFSOCK)==S_IFSOCK) printf("s");
-    else if ((st.st_mode & S_IFLNK)==S_IFLNK) printf("l");
-    else if ((st.st_mode & S_IFREG)==S_IFREG) printf("-");
-    else if ((st.st_mode & S_IFBLK)==S_IFBLK) printf("b");
-    else if ((st.st_mode & S_IFDIR)==S_IFDIR) printf("d");
-    else if ((st.st_mode & S_IFCHR)==S_IFCHR) printf("c");
-    else if ((st.st_mode & S_IFIFO)==S_IFIFO) printf("p");
+    if ((st.st_mode & S_IFSOCK)==S_IFSOCK) faroprint("s");
+    else if ((st.st_mode & S_IFLNK)==S_IFLNK) faroprint("l");
+    else if ((st.st_mode & S_IFREG)==S_IFREG) faroprint("-");
+    else if ((st.st_mode & S_IFBLK)==S_IFBLK) faroprint("b");
+    else if ((st.st_mode & S_IFDIR)==S_IFDIR) faroprint("d");
+    else if ((st.st_mode & S_IFCHR)==S_IFCHR) faroprint("c");
+    else if ((st.st_mode & S_IFIFO)==S_IFIFO) faroprint("p");
 
     // Les droits d'utilisateurs
-    printf("%c",(st.st_mode & S_IRUSR)==S_IRUSR ? 'r' : '-');	// utilisateur R
-    printf("%c",(st.st_mode & S_IWUSR)==S_IWUSR ? 'w' : '-');	// utilisateur W
-    printf("%c",(st.st_mode & S_IXUSR)==S_IXUSR ? 'x' : '-');	// utilisateur X
-    printf("%c",(st.st_mode & S_IRGRP)==S_IRGRP ? 'r' : '-');	// groupe R
-    printf("%c",(st.st_mode & S_IWGRP)==S_IWGRP ? 'w' : '-');	// group W
-    printf("%c",(st.st_mode & S_IXGRP)==S_IXGRP ? 'x' : '-');	// group X
-    printf("%c",(st.st_mode & S_IROTH)==S_IROTH ? 'r' : '-');	// other R
-    printf("%c",(st.st_mode & S_IWOTH)==S_IWOTH ? 'w' : '-');	// other W
-    printf("%c",(st.st_mode & S_IXOTH)==S_IXOTH ? 'x' : '-');	// other X
+    faroprint("%c",(st.st_mode & S_IRUSR)==S_IRUSR ? 'r' : '-');	// utilisateur R
+    faroprint("%c",(st.st_mode & S_IWUSR)==S_IWUSR ? 'w' : '-');	// utilisateur W
+    faroprint("%c",(st.st_mode & S_IXUSR)==S_IXUSR ? 'x' : '-');	// utilisateur X
+    faroprint("%c",(st.st_mode & S_IRGRP)==S_IRGRP ? 'r' : '-');	// groupe R
+    faroprint("%c",(st.st_mode & S_IWGRP)==S_IWGRP ? 'w' : '-');	// group W
+    faroprint("%c",(st.st_mode & S_IXGRP)==S_IXGRP ? 'x' : '-');	// group X
+    faroprint("%c",(st.st_mode & S_IROTH)==S_IROTH ? 'r' : '-');	// other R
+    faroprint("%c",(st.st_mode & S_IWOTH)==S_IWOTH ? 'w' : '-');	// other W
+    faroprint("%c",(st.st_mode & S_IXOTH)==S_IXOTH ? 'x' : '-');	// other X
 
-    printf(" %zu",st.st_nlink);     // Le lien
+    faroprint(" %zu",st.st_nlink);     // Le lien
 
     userInfo=getpwuid(st.st_uid);     // Le proprietaire
-    printf(" %s",userInfo->pw_name);
+    faroprint(" %s",userInfo->pw_name);
 
     groupInfo=getgrgid(st.st_gid);     // LE groupe
-    printf(" %s",groupInfo->gr_name);
+    faroprint(" %s",groupInfo->gr_name);
 
-    printf(" %zu",st.st_size);     // La taille
+    faroprint(" %zu",st.st_size);     // La taille
 
     timeInfo=localtime(&st.st_mtime);     // Information du temps
-    printf(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
+    faroprint(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
 
     if(dflag==0 && isFolder(dptr->d_name)){ // Si l'option n'est pas d et si c'est un repertoire l'onformation sera verte (MARCHE PAS)
-        printf("\033[32m");
-        printf(" %s \n",dptr->d_name);
-        printf("\033[0m");
+        faroprint("\033[32m");
+        faroprint(" %s \n",dptr->d_name);
+        faroprint("\033[0m");
     }
-    else printf(" %s \n",dptr->d_name);
+    else faroprint(" %s \n",dptr->d_name);
 }
 
 
@@ -79,7 +79,7 @@ int fls(int argc,char *argv[]){
                 lflag = 1;
                 break;
             case '?':
-                printf("ls : option %s doesn't exist for command ls\n",argv[optind-1]);
+                faroprint("ls : option %s doesn't exist for command ls\n",argv[optind-1]);
                 return -1;
         }
     }
@@ -90,7 +90,7 @@ int fls(int argc,char *argv[]){
     if(argv[index]==NULL){
 
         if ((dirp=opendir("."))==NULL){
-            printf("ls : directory %s doesn't exist\n",".");
+            faroprint("ls : directory %s doesn't exist\n",".");
             return -1;
         }
         while((dptr=readdir(dirp))){
@@ -105,16 +105,16 @@ int fls(int argc,char *argv[]){
             else{
                 // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
                 if(dflag==0 && isFolder(dptr->d_name)){
-                    printf("\033[32m");
-                    printf("%s ",dptr->d_name);
-                    printf("\033[0m");
+                    faroprint("\033[32m");
+                    faroprint("%s ",dptr->d_name);
+                    faroprint("\033[0m");
                 }
-                else printf("%s ",dptr->d_name);
+                else faroprint("%s ",dptr->d_name);
             }
         }
-        printf("\n");
+        faroprint("\n");
         closedir(dirp);
-        //printf("toto");
+        //faroprint("toto");
     }
         // On affiche les informations pour chaque arguments
     else{
@@ -124,7 +124,7 @@ int fls(int argc,char *argv[]){
             if(isFolder(argv[index])){
 
                 if ((dirp=opendir(argv[index]))==NULL){
-                    printf("ls : directory %s doesn't exist\n",argv[index]);
+                    faroprint("ls : directory %s doesn't exist\n",argv[index]);
                 }
 
                 else{
@@ -138,20 +138,20 @@ int fls(int argc,char *argv[]){
                         else{
                             // Si il n'y a pas l'option -d et si c'est un reperoire l'information sera verte
                             if(dflag==0 && isFolder(dptr->d_name)){
-                                printf("\033[32m");
-                                printf("%s ",dptr->d_name);
-                                printf("\033[0m");
+                                faroprint("\033[32m");
+                                faroprint("%s ",dptr->d_name);
+                                faroprint("\033[0m");
                             }
-                            else printf("%s ",dptr->d_name);
+                            else faroprint("%s ",dptr->d_name);
                         }
                     }
-                    printf("\n");
+                    faroprint("\n");
                     closedir(dirp);
                 }
             }
                 // Sinon ERREUR
             else{
-                printf("ls : directory %s doesn't exist\n",argv[index]);
+                faroprint("ls : directory %s doesn't exist\n",argv[index]);
             }
         }
     }
