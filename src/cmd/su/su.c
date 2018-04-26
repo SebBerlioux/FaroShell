@@ -49,19 +49,15 @@ int fsu(int argc, char *argv[]) {
         fprintf(stderr, "Erreur avec le lancement de PAM\n");
     }
 
-    if (val == PAM_SUCCESS){
+    if (val == PAM_SUCCESS){   //on verifie que l'utilsateur existe (impossible de lancer la commande a cause de ce test qui a un probleme de permission.
         val = pam_authenticate(pam_h, 0);
-    }
-    if (val != PAM_SUCCESS) {        // On verifie que tout c'est bien passé
-        fprintf(stderr, "su: Echec d'autentification 1\n");
-        return 0;
     }
     
     if (val == PAM_SUCCESS){
         val = pam_acct_mgmt(pam_h, 0);
     }
     if (val != PAM_SUCCESS) {        // On verifie que tout c'est bien passé
-        fprintf(stderr, "su: Echec d'autentification 2\n");
+        fprintf(stderr, "su: Echec d'autentification\n");
         return 0;
     }
 
@@ -97,13 +93,13 @@ int fsu(int argc, char *argv[]) {
     }
 
 
-    if (pam_end(pam_h,val) != PAM_SUCCESS) { //On verifie que tout c'est bien passé à la fermeture
+    if (pam_end(pam_h,val) != PAM_SUCCESS) { //on ferme le module et on test toujour pour voir si on trouve une erreur.
         pam_h = NULL;
         fprintf(stderr, "check_user: Echec de libération de l'autentificateur\n");
         return 0;
     }
 
-    if (val == PAM_SUCCESS) //Si tout c'est bien passé on lance un nouveau bash avec le nouvel utilisateur
+    if (val == PAM_SUCCESS) //En cas de succes total on lance un nouveau bash avec le nouvel utilisateur.
         execvp("bash", (char*[]){"bash", NULL});
 
     return val;

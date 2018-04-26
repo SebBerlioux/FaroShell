@@ -15,13 +15,13 @@ int fmv(int argc, char *argv[])
 	int rep;
 	int ren = 0;
 
-	if (argc < 3)
+	if (argc < 3)  //Test des arguments
 	{
 		printf("FaroShell : Manque de paramètre !\n");
 	}
 	else
 	{
-		while ((c = getopt(argc, argv, options)) != -1)
+		while ((c = getopt(argc, argv, options)) != -1) //On extrait les options
 		switch(c)
 		{
 			case 'i':
@@ -72,7 +72,7 @@ int fmv(int argc, char *argv[])
 
 			if (info)
 			{
-				printf("Voulez-vous déplacer \"%s\" vers \"%s\" ? (y/n) ", item, dest);
+				printf("Voulez-vous déplacer \"%s\" vers \"%s\" ? (y/n) ", item, dest);  //On demande une confirmation
 				do
 				{
 					rep = getc(stdin);
@@ -99,7 +99,7 @@ int fmv(int argc, char *argv[])
 
 			if (ren)
 			{
-				ret = rename(item, dest);
+				ret = rename(item, dest); //on déplace l'objet.
 				if (ret != 0)
 				{
 					printf("FaroShell : Impossible de déplacer l'élément suivant : \"%s\".\n", item);

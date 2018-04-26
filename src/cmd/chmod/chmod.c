@@ -24,7 +24,7 @@ int mod(int argc, char *argv[])
 
     const char* mod = argv[1];
 
-    switch(mod[0]){
+    switch(mod[0]){    //change les droits de l'utilisateur sur le fichier 
 
         case '1':
             mode |= S_IXUSR;
@@ -49,7 +49,7 @@ int mod(int argc, char *argv[])
             break;
     }
 
-    switch(mod[1]){
+    switch(mod[1]){  //change les droits du groupe sur le fichier 
 
         case '1':
             mode |= S_IXGRP;
@@ -74,7 +74,7 @@ int mod(int argc, char *argv[])
             break;
     }
 
-    switch(mod[2]){
+    switch(mod[2]){   //changer les droits pour le reste des utilisateurs.
 
         case '1':
             mode |= S_IXOTH;
