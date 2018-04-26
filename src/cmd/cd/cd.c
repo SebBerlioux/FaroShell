@@ -21,7 +21,7 @@ int fcd(int argc, char *argv[])
     }
     else
     {
-      printf("Vous n'avez pas le droit d'entrer dans ce dossier");
+      printf("Vous n'avez pas le droit d'entrer dans ce dossier\n");
     }
   }
 
