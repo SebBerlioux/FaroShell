@@ -88,9 +88,7 @@ void splitCommands(char* commandLine)
 
 	// recupere le premier "token" avant un espace
 	argument = strtok(commandLine, DELIMITERS);
-	args[nbArgs] = argument;
 
-	//printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	// tant que pas fin de chaine
 	while (argument != NULL)
 	{
@@ -98,15 +96,47 @@ void splitCommands(char* commandLine)
 			specialArg = 1;
 		else if (strcmp(argument, ">") == 0)
 			specialArg = 2;
+		else if (strcmp(argument, "<") == 0)
+			specialArg = 3;
 		else if (strcmp(argument, ">>") == 0)
 			specialArg = 4;
-		nbArgs++;
+		else if (strcmp(argument, "<<") == 0)
+			specialArg = 5;
+		else if (strcmp(argument, "||") == 0)
+		{
+			//printf("OR detected\n");
+			specialArg = 6;
+			setSpecial(specialArg);
+			int exec = executeCommand(nbArgs, args);
+			if (exec == 0)
+			{
+				setSpecial(0);
+				executeCommand(nbArgs, args);
+				argument = NULL;
+				args[nbArgs] = argument;
+			}
+			else
+			{
+				nbArgs = 0;
+				specialArg = 0;
+				setSpecial(specialArg);
+			}
+		}
+		else if (strcmp(argument, "&&") == 0)
+			specialArg = 7;
+		else
+		{
+			args[nbArgs] = argument;
+			nbArgs++;
+		}
 		argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
-		args[nbArgs] = argument;
-		//printf("args[%d] = %s\n", nbArgs, args[nbArgs]);
 	}
+	args[nbArgs] = argument;
 
-	if (specialArg)
+	if (!specialArg) executeCommand(nbArgs, args);
+	else specialArg = 0;
+
+	/*if (specialArg)
 	{
 		setSpecial(specialArg);
 		parseSpecial(specialArg, nbArgs, args);
@@ -114,7 +144,7 @@ void splitCommands(char* commandLine)
 	else
 	{
 		executeCommand(nbArgs, args);
-	}
+	}*/
 
 	/*
 	printf("nb_cmds = %d\n", nb_cmds);
@@ -198,7 +228,6 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 */
 int executeCommand(int nbArgs, char *args[])
 {
-
 	char *cmd;
 	cmd = args[0];
 	int find = 0;
@@ -217,6 +246,7 @@ int executeCommand(int nbArgs, char *args[])
 	// Si find est égal à 0, on affiche que la commande n'existe pas
 	if (!find && strcmp(cmd, "exit") != 0)
 		printf("%s: command not found\n", cmd);
+		return -1;
 
 	return 0;
 
