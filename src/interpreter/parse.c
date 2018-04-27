@@ -223,9 +223,17 @@ void splitCommands(char* commandLine)
 					au lieu de print dans la console
 				Enfin on met la variable de test des chevrons à 0
 			*/
-			setSpecial(specialArg);
-			setFileName(argument);
-			executeCommand(nbArgs, args);
+			if (strcmp(args[1], argument) == 0 && strcmp(args[0], "cat") == 0)
+			{
+				printf("%s: %s: input file is output file\n",
+					args[0], argument);
+			}
+			else
+			{
+				setSpecial(specialArg);
+				setFileName(argument);
+				executeCommand(nbArgs, args);
+			}
 			redirect = 0;
 		}
 		else
