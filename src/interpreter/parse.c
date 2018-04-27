@@ -2,12 +2,8 @@
 #include "../utils/faroprint.h"
 
 /*
-	Nombre de commandes dans la ligne de commande
+	Liste des caractères de rediretion
 */
-int nb_cmds = 0;
-
-char *fileForRedirection;
-
 char *specials_list[] = {
 	"|",
 	">",
@@ -65,9 +61,12 @@ int num_commands = sizeof(commands_name) / sizeof(char*);
 */
 void parseParams(char *commandLine)
 {
+	/*
+		On commence par initialiser le caractère de rediretion à 0
+		On sépare la ligne de commande en éxécutant la/les commande(s)
+	*/
 	setSpecial(0);
 	splitCommands(commandLine);
-	nb_cmds = 0;
 }
 
 /*
@@ -76,21 +75,31 @@ void parseParams(char *commandLine)
 void splitCommands(char* commandLine)
 {
 	char* argument;	// un parametre
-	int nbArgs = 0;
-	int specialArg = 0;
-	char **args = malloc(NOMBRE_ARGUMENT * sizeof(char*));
+	int nbArgs = 0;	// nombre d'argument de la commande
+	int specialArg = 0;	// caractère de redirection
+	char **args = malloc(NOMBRE_ARGUMENT * sizeof(char*));	// tableau d'argument d'une commande
 
-	int redirect = 0;
-	int pipe = 0;
+	int redirect = 0;	// test si présence d'un caractère de redirection (chevrons)
+	int pipe = 0;	// test si présence d'un PIPE
 
-	// recupere le premier "token" avant un espace
+	// recupere le premier argument avant un espace
 	argument = strtok(commandLine, DELIMITERS);
 
 	// tant que pas fin de chaine
 	while (argument != NULL)
 	{
+		// on regarde l'argument récupéré
 		if (strcmp(argument, "|") == 0)
 		{
+			/*
+				On défini le caractère de redirection à 1 (PIPE)
+				On éxécute une première fois la commande pour tester si celle
+					se termine correctement
+				Si c'est le cas, on met à 1 la variable de test du PIPE
+				Sinon, l'argument passe à NULL pour sortir e la boucle
+				Enfin, qu'un PIPE soit détecté ou non, on réinitialise
+					le nombre d'argument ainsi que le caractère de redirection
+			*/
 			specialArg = 1;
 			setSpecial(specialArg);
 			int exec = executeCommand(nbArgs, args);
@@ -107,24 +116,42 @@ void splitCommands(char* commandLine)
 		}
 		else if (strcmp(argument, ">") == 0)
 		{
+			/*
+				On défini le caractère de redirection à 2 (REDIRECT_RIGHT)
+				On met à 1 la variable de test des chevrons
+			*/
 			specialArg = 2;
 			redirect = 1;
 		}
 		else if (strcmp(argument, "<") == 0)
 		{
-			specialArg = 3;
+			// non implémenté
 		}
 		else if (strcmp(argument, ">>") == 0)
 		{
+			/*
+				On défini le caractère de redirection à 4 (DOUBLE_REDIRECT_RIGHT)
+				On met à 1 la variable de test des chevrons
+			*/
 			specialArg = 4;
 			redirect = 1;
 		}
 		else if (strcmp(argument, "<<") == 0)
 		{
-			specialArg = 5;
+			// non implémenté
 		}
 		else if (strcmp(argument, "||") == 0)
 		{
+			/*
+				On défini le caractère de redirection à 6 (OR)
+				On éxécute une première fois la commande pour tester si celle
+					se termine correctement
+				Si c'est le cas, on réinitialise le caractère de redirection, on
+					éxécute la commande une deuxième fois puis on passe l'argument
+					à NULL pour sortir de la boucle
+				Sinon, on réinitialise le nombre d'argument ainsi que
+					le caractère de redirection
+			*/
 			specialArg = 6;
 			setSpecial(specialArg);
 			int exec = executeCommand(nbArgs, args);
@@ -143,6 +170,15 @@ void splitCommands(char* commandLine)
 		}
 		else if (strcmp(argument, "&&") == 0)
 		{
+			/*
+				On défini le caractère de redirection à 7 (AND)
+				On éxécute une première fois la commande pour tester si celle
+					se termine correctement
+				Si c'est le cas, on réinitialise le nombre d'argument ainsi que
+					le caractère de redirection
+				Sinon, on réinitialise le caractère de redirection puis on
+					passe l'argument à NULL pour sortir de la boucle
+			*/
 			specialArg = 7;
 			setSpecial(specialArg);
 			int exec = executeCommand(nbArgs, args);
@@ -160,6 +196,15 @@ void splitCommands(char* commandLine)
 		}
 		else if (pipe == 1)
 		{
+			/*
+				L'argument actuel étant la commande, on l'assigne à args[0]
+				On incrémente nbArgs pour assigner à args[1] l'emplacement du
+					fichier temporaire contenant le résultat de la commande
+					exécutée avant le PIPE puis on réincrémente nbArgs
+				On exécute ensuite la nouvelle commande (après le PIPE) avec ses
+					nouveaux arguments
+				Enfin on met la variable de test du PIPE à 0
+			*/
 			args[nbArgs] = argument;
 			nbArgs++;
 			args[nbArgs] = "/tmp/farotmp";
@@ -169,6 +214,15 @@ void splitCommands(char* commandLine)
 		}
 		else if (redirect == 1)
 		{
+			/*
+				En fonction du simple ou double chevron, on modifie le caractère
+					de redirection.
+				L'argument actuel étant la destination, on modifie le fichier de
+					destination pour la commande faroprint
+				On exécute la commande pour que celle-ci print dans un fichier
+					au lieu de print dans la console
+				Enfin on met la variable de test des chevrons à 0
+			*/
 			setSpecial(specialArg);
 			setFileName(argument);
 			executeCommand(nbArgs, args);
@@ -176,11 +230,26 @@ void splitCommands(char* commandLine)
 		}
 		else
 		{
+			/*
+				S'il s'agit d'un argument quelconque (commande, option, ...) on
+					le place dans la liste des arguments de la commande actuelle
+				On incrémente le nombre d'argument de cette commande
+			*/
 			args[nbArgs] = argument;
 			nbArgs++;
 		}
-		if (argument != NULL) argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
+		// si l'argument actuel est différent de NULL, on récupère le "token" suivant
+		if (argument != NULL) argument = strtok(NULL, DELIMITERS);
 	}
+
+	/*
+		Le dernier argument étant NULL, on termine la liste d'argument de la
+			commande actuelle par NULL
+		Si aucun caractère de redirection n'a été lu, on exécute la commande de
+			façon normale
+		Sinon, on réinitialise la caractère de redirection, la commande étant
+			déjà exécutée
+	*/
 	args[nbArgs] = argument;
 	if (!specialArg) executeCommand(nbArgs, args);
 	else specialArg = 0;
