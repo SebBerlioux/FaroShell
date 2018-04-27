@@ -5,13 +5,12 @@
 Ce projet a pour but de créer un mini shell en langage C dans lequel les commandes suivantes seront possibles à utilisées :
 
 - cd     ✓
+- pwd    ✓
 - mkdir  ✓  (Options disponibles : -m)
 - ls     ✓  (Options disponibles : -a -c -h -l)
 - cat    ✓  (Options disponibles : -A -E -n -T)
 - mv     ✓  (Options disponibles : -i -v)
 - cp     ✓  (Récursivité intégrée)
-- rm     ✓  (Options disponibles : -r -f )
-- cp     ✓  (sans options)
 - rm     ✓  (Options disponibles : -r -f)
 - du     ✓  (Options disponibles : -a -c -h)
 - chmod  ✓  
