@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "stack.h"
 #include "../cmd/echo/echo.h"
 #include "../cmd/cat/cat.h"
 #include "../cmd/pwd/pwd.h"

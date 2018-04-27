@@ -37,33 +37,29 @@ int frm(int argc, char *argv[]) {
 //			faroprint("Ajout d'une commande à la liste\n");   //commande sera mise dans la liste commande
 			commande[position]=argv[i];
 			position = position + 1;
-			}
+		}
 
 		else{												//Si ce n'est pas un "-" c'est que c'est une cible de la fonction
 //			faroprint("Un fichier à été trouvé\n");
 			fichiers[watchdog]=argv[i];
 			watchdog = watchdog+1;
-			}
 		}
+	}
 
 	int j = 0;
 	unsigned int z = 0;
 	for(j=0;j<(argc-watchdog);j++){
-//		faroprint("Option à analiser : %s \n",commande[j]);  //Vérification de la validité des options
 		tmp = commande[j];
 
 		for(z=1;z<strlen(tmp);z++){
-//			faroprint("Caractère à traiter %c \n",tmp[z]);
 
 			if(tmp[z]=='r'){
 				R=1;
-//				faroprint("Option r détécté\n");
-				}
+			}
 
 			else if(tmp[z]=='f'){
 				F=1;
-//				faroprint("Option f détécté\n");
-				}
+			}
 
 			else{
 				faroprint("Option invalide, Seul -r et -f sont disponible");
@@ -72,15 +68,7 @@ int frm(int argc, char *argv[]) {
 		}
 	}
 
-//	faroprint("Les options entrées sont ");
-//	faroprint("r :%i, f :%i\n",R,F);
-
-//	faroprint("\nLes fichiers/chemins/... sont : ");
 	int k = 0;
-//	for(k=0;k<(watchdog);k++){
-////		faroprint(" %s ",fichiers[k]);
-//		fichier=malloc(sizeof(fichiers[k]));
-//		}
 
 	for(k=0;k<(watchdog);k++){
 		faroprint("\n %s ",fichiers[k]);
@@ -96,7 +84,7 @@ int frm(int argc, char *argv[]) {
 				else{
 					faroprint("   -- Erreur : Vous n'avez pas les droits suffisant\n");
 					return 1;
-					}
+				}
 			}
 			else{
 				faroprint("   -- Erreur : La cible est un dossier\n");

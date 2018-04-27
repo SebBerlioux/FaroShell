@@ -2,7 +2,7 @@
 #include "../utils/faroprint.h"
 
 /*
-	Liste des caractères de rediretion
+	Tableau contenant les caractères de rediretion
 */
 char *specials_list[] = {
 	"|",

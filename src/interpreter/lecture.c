@@ -2,6 +2,9 @@
 
 #define NOMBRE_ARGUMENT 1024
 
+/*
+	Fonction qui lit la ligne de commande rentrée dans le shell
+*/
 char* lireCommande(void)
 {
 	int nbArgument = NOMBRE_ARGUMENT;
@@ -21,18 +24,13 @@ char* lireCommande(void)
 	{
 		caractere = getchar();
 
-		//printf("Caractère : \"%c\"\n", caractere);
-
 		if (caractere == EOF || caractere == '\n')
 		{
 			arguments[cmpt] = '\0';
-			//printf("Liste arguments retournés : \"%s\"\n", arguments);
 			return arguments;
 		}
 		else if (caractere == ' ')
 		{
-			//printf("Espace rencontré\n");
-
 			if (autorisationEspace == 1)
 			{
 				if (spaced == 0)
@@ -57,8 +55,6 @@ char* lireCommande(void)
 			{
 				spaced = 0;
 			}
-
-			//printf("\"%c\" ajouté à la liste (pos = %d)\n", caractere, cmpt-1);
 		}
 
 		if (cmpt >= nbArgument)
