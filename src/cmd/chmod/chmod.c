@@ -11,7 +11,7 @@ int mod(int argc, char *argv[])
 
     if(argc < 3)
     {
-        faroprint("chmod : Pas assez arguments!!!\n");
+        faroprint("chmod : Trop peu d'arguments!!!\n");
         return -1;
     }
 

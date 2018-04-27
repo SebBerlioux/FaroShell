@@ -3,18 +3,17 @@
 #include "../../utils/faroprint.h"
 
 //  Change le groupe d'utilisateur possédant un fichier ou un dossier.
-
 int grp(int argc, char *argv[])
 {
     if(argc < 3)
     {
-        faroprint("chgrp : too few arguments\n");
+        faroprint("chgrp : trop peu d'argument\n");
 
     }
 
     else if(argc > 3)
     {
-        faroprint("chgrp : too many arguments\n");
+        faroprint("chgrp : trop d'arguments\n");
     }
 
     else
@@ -51,7 +50,7 @@ int grp(int argc, char *argv[])
 
             else
             {
-                faroprint("error opening /etc/group\n");
+                faroprint("Erreur d'ouverture du fichier /etc/group\n");
                 return -1;
             }
             fclose(pass);
@@ -63,7 +62,6 @@ int grp(int argc, char *argv[])
 
 
 // isRegularFile prend en argument char *testedFile et retourrne 1 si l'argument est un fichier ou 0
-
 int isRegularFile(char* testedFile){
     if(testedFile!=NULL && stat(testedFile,&sts)==0 && S_ISREG(sts.st_mode)) {
         return 1;

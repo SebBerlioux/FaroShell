@@ -6,15 +6,15 @@
 int fcp(int argc, char *argv[]){
 
     if(argc<2){
-        faroprint("cp : too few argument\n");
+        faroprint("cp : Trop peu d'arguemnts\n");
         return -1;
     }
     if(argc==2){
-        faroprint("cp : missing destination file after '%s'\n",argv[1]);
+        faroprint("cp : Il manque la destination '%s'\n",argv[1]);
         return -1;
     }
     else if(argc>3){
-        faroprint("cp : too many arguments\n");
+        faroprint("cp : Trop d'argument\n");
         return -1;
     }
 
@@ -24,7 +24,7 @@ int fcp(int argc, char *argv[]){
             FILE *f_Src;
             FILE *f_Dest;
             char *path_Dest = argv[2], *path_Src = argv[1];
-            char tmp[4096];
+            char tmp[1024]; //1024 suffit
             int i;
             char* ret;
 
@@ -145,7 +145,7 @@ int cp_avanced(const char *Source_ID,const char *Destination_ID){
                 fwrite(tmp, 1, i, f_Dest);
             }
 
-            fclose(f_Dest); //On ferme tout
+            fclose(f_Dest); //On ferme le tout
             fclose(f_Src);
         }
 

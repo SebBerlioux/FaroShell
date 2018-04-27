@@ -26,9 +26,11 @@ void affichage_avance(struct dirent *dptr,int dflag){
     faroprint("%c",(st.st_mode & S_IRUSR)==S_IRUSR ? 'r' : '-');	// utilisateur R
     faroprint("%c",(st.st_mode & S_IWUSR)==S_IWUSR ? 'w' : '-');	// utilisateur W
     faroprint("%c",(st.st_mode & S_IXUSR)==S_IXUSR ? 'x' : '-');	// utilisateur X
+
     faroprint("%c",(st.st_mode & S_IRGRP)==S_IRGRP ? 'r' : '-');	// groupe R
     faroprint("%c",(st.st_mode & S_IWGRP)==S_IWGRP ? 'w' : '-');	// group W
     faroprint("%c",(st.st_mode & S_IXGRP)==S_IXGRP ? 'x' : '-');	// group X
+
     faroprint("%c",(st.st_mode & S_IROTH)==S_IROTH ? 'r' : '-');	// other R
     faroprint("%c",(st.st_mode & S_IWOTH)==S_IWOTH ? 'w' : '-');	// other W
     faroprint("%c",(st.st_mode & S_IXOTH)==S_IXOTH ? 'x' : '-');	// other X
@@ -53,8 +55,6 @@ void affichage_avance(struct dirent *dptr,int dflag){
     }
     else faroprint(" %s \n",dptr->d_name);
 }
-
-
 
 
 //Affiche le contenu du repertoire actuel
@@ -161,12 +161,9 @@ int fls(int argc,char *argv[]){
     return 0;
 }
 
-
-
 struct stat sts;    // Declaration d'une struct stat
 
 // isFolder prend en argument un char *testedFolder et retourne 1 si l'argument est un repertoire ou 0
-
 int isFolder(char* testedFolder){
     if(testedFolder!=NULL && stat(testedFolder,&sts)==0 && S_ISDIR(sts.st_mode)) {
         return 1;
