@@ -59,11 +59,11 @@ char* lireCommande(void)
 
 		if (cmpt >= nbArgument)
 		{
-			nbArgument += NOMBRE_ARGUMENT	;
+			nbArgument += NOMBRE_ARGUMENT;
 			arguments = realloc(arguments, nbArgument);
 			if (!arguments)
 			{
-				fprintf(stderr, "FaroShell: erreur d'allocatio mémoire\n");
+				fprintf(stderr, "FaroShell: erreur d'allocation mémoire\n");
 				exit(EXIT_FAILURE);
 			}
 		}
