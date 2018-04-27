@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/echo $(FaroShell)/$(binCmd)/$(static)/libecho.a \
 
 $(FaroShell)/$(binCmd)/echo: $(FaroShell)/$(objCmd)/echo/echo.o \
 		$(FaroShell)/$(objCmd)/echo/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/echo $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/echo $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/echo/%.o: $(FaroShell)/$(src)/$(cmd)/echo/%.c
 	@echo "Building echo"

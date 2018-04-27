@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/du $(FaroShell)/$(binCmd)/$(static)/libdu.a \
 
 $(FaroShell)/$(binCmd)/du: $(FaroShell)/$(objCmd)/du/du.o \
 		$(FaroShell)/$(objCmd)/du/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/du $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/du $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/du/%.o: $(FaroShell)/$(src)/$(cmd)/du/%.c
 	@echo "Building du"

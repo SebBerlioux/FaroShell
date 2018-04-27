@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/cd $(FaroShell)/$(binCmd)/$(static)/libcd.a \
 
 $(FaroShell)/$(binCmd)/cd: $(FaroShell)/$(objCmd)/cd/cd.o \
 		$(FaroShell)/$(objCmd)/cd/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/cd $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/cd $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/cd/%.o: $(FaroShell)/$(src)/$(cmd)/cd/%.c
 	@echo "Building cd"

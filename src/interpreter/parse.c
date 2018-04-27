@@ -1,4 +1,5 @@
 #include "parse.h"
+#include "../utils/faroprint.h"
 
 /*
 	Nombre de commandes dans la ligne de commande
@@ -115,11 +116,13 @@ void splitCommands(char* commandLine)
 		executeCommand(nbArgs, args);
 	}
 
+	/*
 	printf("nb_cmds = %d\n", nb_cmds);
 	for (int i = 0; i < nb_cmds; i++)
 		printf("cmds[%d].argv[0] = %s\n", i, cmds[i].argv[0]);
-	//printf("argc = %d\n", cmds[0].argc);
-	//free(args);
+	printf("argc = %d\n", cmds[0].argc);
+	free(args);
+	*/
 }
 
 void appendCommand(int argc, char *argv[])

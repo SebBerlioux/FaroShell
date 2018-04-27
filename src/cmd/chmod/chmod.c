@@ -1,22 +1,23 @@
 #include <stdio.h>
 #include "chmod.h"
+#include "../../utils/faroprint.h"
 
 //  Change le mode d'un fichier ou d'un dossier
 
 int mod(int argc, char *argv[])
 {
-    printf("%d\n", argc);
-    printf("%s\n%s\n%s\n", argv[0], argv[1], argv[2]);
+    faroprint("%d\n", argc);
+    faroprint("%s\n%s\n%s\n", argv[0], argv[1], argv[2]);
 
     if(argc < 3)
     {
-        printf("chmod : Pas assez arguments!!!\n");
+        faroprint("chmod : Pas assez arguments!!!\n");
         return -1;
     }
 
     else if(argc > 3)
     {
-        printf("chmod : Trop d'arguments\n");
+        faroprint("chmod : Trop d'arguments\n");
         return -1;
     }
 
@@ -24,7 +25,7 @@ int mod(int argc, char *argv[])
 
     const char* mod = argv[1];
 
-    switch(mod[0]){    //change les droits de l'utilisateur sur le fichier 
+    switch(mod[0]){    //change les droits de l'utilisateur sur le fichier
 
         case '1':
             mode |= S_IXUSR;
@@ -49,7 +50,7 @@ int mod(int argc, char *argv[])
             break;
     }
 
-    switch(mod[1]){  //change les droits du groupe sur le fichier 
+    switch(mod[1]){  //change les droits du groupe sur le fichier
 
         case '1':
             mode |= S_IXGRP;

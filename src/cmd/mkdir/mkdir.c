@@ -1,4 +1,5 @@
 #include "mkdir.h"
+#include "../../utils/faroprint.h"
 
 // ATTENTION
 // l'option -m ne fonctionne pas
@@ -7,8 +8,8 @@
 int fmkdir(int argc, char *argv[]){
 
   if(argc<2){ // nombre de paramètre incorrect
-    printf("Erreur manque de paramètre !\n");
-    printf("Usage: mkdir [-option (argument)] [diretory_name]\n");
+    faroprint("Erreur manque de paramètre !\n");
+    faroprint("Usage: mkdir [-option (argument)] [diretory_name]\n");
     return 1;
   }else{
     mode_t folderMode = 0;
@@ -27,7 +28,7 @@ int fmkdir(int argc, char *argv[]){
           mod = optarg;
           break;
         default: // mauvaise option
-          printf("Invalid option: %s doesn't exist for mkdir command\n", argv[optind-1]);
+          faroprint("Invalid option: %s doesn't exist for mkdir command\n", argv[optind-1]);
           return 1;
       }
     }

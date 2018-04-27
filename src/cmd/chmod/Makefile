@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/chmod $(FaroShell)/$(binCmd)/$(static)/libchmod.a \
 
 $(FaroShell)/$(binCmd)/chmod: $(FaroShell)/$(objCmd)/chmod/chmod.o \
 		$(FaroShell)/$(objCmd)/chmod/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/chmod $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/chmod $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/chmod/%.o: $(FaroShell)/$(src)/$(cmd)/chmod/%.c
 	@echo "Building chmod"
