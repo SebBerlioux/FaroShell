@@ -67,12 +67,6 @@ void parseParams(char *commandLine)
 {
 	setSpecial(0);
 	splitCommands(commandLine);
-	/*
-	for (int i = 0; i < nb_cmds; i++)
-	{
-		executeCommand(cmds[i].argc, cmds[i].argv);
-	}
-	*/
 	nb_cmds = 0;
 }
 
@@ -86,6 +80,8 @@ void splitCommands(char* commandLine)
 	int specialArg = 0;
 	char **args = malloc(NOMBRE_ARGUMENT * sizeof(char*));
 
+	int redirect = 0;
+
 	// recupere le premier "token" avant un espace
 	argument = strtok(commandLine, DELIMITERS);
 
@@ -93,37 +89,42 @@ void splitCommands(char* commandLine)
 	while (argument != NULL)
 	{
 		if (strcmp(argument, "|") == 0)
+		{
 			specialArg = 1;
+		}
 		else if (strcmp(argument, ">") == 0)
+		{
 			specialArg = 2;
+			redirect = 1;
+		}
 		else if (strcmp(argument, "<") == 0)
+		{
 			specialArg = 3;
+		}
 		else if (strcmp(argument, ">>") == 0)
+		{
 			specialArg = 4;
+			redirect = 1;
+		}
 		else if (strcmp(argument, "<<") == 0)
+		{
 			specialArg = 5;
+		}
 		else if (strcmp(argument, "||") == 0)
 		{
-			//printf("OR detected\n");
 			specialArg = 6;
-			setSpecial(specialArg);
-			int exec = executeCommand(nbArgs, args);
-			if (exec == 0)
-			{
-				setSpecial(0);
-				executeCommand(nbArgs, args);
-				argument = NULL;
-				args[nbArgs] = argument;
-			}
-			else
-			{
-				nbArgs = 0;
-				specialArg = 0;
-				setSpecial(specialArg);
-			}
 		}
 		else if (strcmp(argument, "&&") == 0)
+		{
 			specialArg = 7;
+		}
+		else if (redirect == 1)
+		{
+			setSpecial(specialArg);
+			setFileName(argument);
+			executeCommand(nbArgs, args);
+			redirect = 0;
+		}
 		else
 		{
 			args[nbArgs] = argument;
@@ -135,24 +136,6 @@ void splitCommands(char* commandLine)
 
 	if (!specialArg) executeCommand(nbArgs, args);
 	else specialArg = 0;
-
-	/*if (specialArg)
-	{
-		setSpecial(specialArg);
-		parseSpecial(specialArg, nbArgs, args);
-	}
-	else
-	{
-		executeCommand(nbArgs, args);
-	}*/
-
-	/*
-	printf("nb_cmds = %d\n", nb_cmds);
-	for (int i = 0; i < nb_cmds; i++)
-		printf("cmds[%d].argv[0] = %s\n", i, cmds[i].argv[0]);
-	printf("argc = %d\n", cmds[0].argc);
-	free(args);
-	*/
 }
 
 void appendCommand(int argc, char *argv[])
