@@ -125,6 +125,7 @@ int fls(int argc,char *argv[]){
 
                 if ((dirp=opendir(argv[index]))==NULL){
                     faroprint("ls : directory %s doesn't exist\n",argv[index]);
+                    return -1;
                 }
 
                 else{
@@ -152,6 +153,7 @@ int fls(int argc,char *argv[]){
                 // Sinon ERREUR
             else{
                 faroprint("ls : directory %s doesn't exist\n",argv[index]);
+                return -1;
             }
         }
     }
