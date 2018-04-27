@@ -23,12 +23,8 @@
 #define MAX_CMDS 10
 #define DELIMITERS " \t\r\n\a"
 
-Arguments cmds[MAX_CMDS];
-
 void parseParams(char *commandLine);
 void splitCommands(char* commandLine);
-void appendCommand(int argc, char *argv[]);
-void parseSpecial(int specialArg, int nbArgs, char *args[]);
 int executeCommand(int nbArgs, char *args[]);
 
 #endif

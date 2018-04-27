@@ -81,6 +81,7 @@ void splitCommands(char* commandLine)
 	char **args = malloc(NOMBRE_ARGUMENT * sizeof(char*));
 
 	int redirect = 0;
+	int pipe = 0;
 
 	// recupere le premier "token" avant un espace
 	argument = strtok(commandLine, DELIMITERS);
@@ -91,6 +92,18 @@ void splitCommands(char* commandLine)
 		if (strcmp(argument, "|") == 0)
 		{
 			specialArg = 1;
+			setSpecial(specialArg);
+			int exec = executeCommand(nbArgs, args);
+			if (exec == 0)
+			{
+				pipe = 1;
+			}
+			else
+			{
+				argument = NULL;
+			}
+			nbArgs = 0;
+			setSpecial(0);
 		}
 		else if (strcmp(argument, ">") == 0)
 		{
@@ -120,7 +133,6 @@ void splitCommands(char* commandLine)
 				setSpecial(0);
 				executeCommand(nbArgs, args);
 				argument = NULL;
-				args[nbArgs] = argument;
 			}
 			else
 			{
@@ -134,17 +146,26 @@ void splitCommands(char* commandLine)
 			specialArg = 7;
 			setSpecial(specialArg);
 			int exec = executeCommand(nbArgs, args);
-			if (exec != 0)
-			{
-				setSpecial(0);
-				argument = NULL;
-			}
-			else
+			if (exec == 0)
 			{
 				nbArgs = 0;
 				specialArg = 0;
 				setSpecial(specialArg);
 			}
+			else
+			{
+				setSpecial(0);
+				argument = NULL;
+			}
+		}
+		else if (pipe == 1)
+		{
+			args[nbArgs] = argument;
+			nbArgs++;
+			args[nbArgs] = "/tmp/farotmp";
+			nbArgs++;
+			executeCommand(nbArgs, args);
+			pipe = 0;
 		}
 		else if (redirect == 1)
 		{
@@ -158,72 +179,11 @@ void splitCommands(char* commandLine)
 			args[nbArgs] = argument;
 			nbArgs++;
 		}
-		argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
+		if (argument != NULL) argument = strtok(NULL, DELIMITERS);	// recupere le "token" suivant
 	}
 	args[nbArgs] = argument;
-
 	if (!specialArg) executeCommand(nbArgs, args);
 	else specialArg = 0;
-}
-
-void appendCommand(int argc, char *argv[])
-{
-	Arguments arguments;
-	arguments.argc = argc;
-	arguments.argv = argv;
-	cmds[nb_cmds] = arguments;
-	printf("appendCommand cmds[%d].argv[0] = %s\n",
-		nb_cmds, cmds[nb_cmds].argv[0]);
-	nb_cmds++;
-}
-
-/*
-	Parse la ligne de commande si une redirection ou autre est détecté
-*/
-void parseSpecial(int specialArg, int nbArgs, char *args[])
-{
-	int i = 0;
-	int argc = 0;
-	char **argv = malloc(NOMBRE_ARGUMENT * sizeof(char *));
-	char *specialChar = malloc(sizeof(char*));
-	specialChar = specials_list[specialArg-1];
-
-	printf("special = %s\n", specialChar);
-
-	while (strcmp(args[i], specialChar))
-	{
-		argv[i] = args[i];
-		printf("special argv1 = %s\n", argv[i]);
-		i++;
-		argc++;
-	}
-
-	int argc2 = nbArgs - argc - 1;
-	char **argv2 = malloc(NOMBRE_ARGUMENT * sizeof(char *));
-
-	printf("argc = %d\nargc2 = %d\n", argc2, argc);
-	int j = 0;
-	for (int i = argc+1; i < nbArgs; i++)
-	{
-		if (specialArg == 2 || specialArg == 4)
-		{
-			printf("double or simple redirect\n");
-			setFileName(args[i]);
-		}
-		else
-		{
-			argv2[j] = args[i];
-			printf("special argv2[%d] = %s\n", j, argv2[j]);
-			j++;
-		}
-	}
-
-	executeCommand(argc, argv);
-	//executeCommand(argc2, argv2);
-
-	free(argv);
-	free(argv2);
-
 }
 
 /*
@@ -248,8 +208,10 @@ int executeCommand(int nbArgs, char *args[])
 
 	// Si find est égal à 0, on affiche que la commande n'existe pas
 	if (!find && strcmp(cmd, "exit") != 0)
+	{
 		printf("%s: command not found\n", cmd);
 		return -1;
+	}
 
 	return 0;
 
