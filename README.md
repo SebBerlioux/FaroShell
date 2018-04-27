@@ -10,11 +10,11 @@ Ce projet a pour but de créer un mini shell en langage C dans lequel les comman
 - cat    ✓  (Options disponibles : -A -E -n -T)
 - mv     ✓  (Options disponibles : -i -v)
 - cp     ✓  (sans options)
-- rm     ✓  (Options disponibles : -r -f )
+- rm     ✓  (Options disponibles : -r -f)
 - du     ✓  (Options disponibles : -a -c -h)
 - chmod  ✓  
 - chgrp  ✓
-- echo   ✓  (sans options)
+- echo   ✓  (Options disponibles : -r -f)
 - su     ✓
 
 ## L'équipe
