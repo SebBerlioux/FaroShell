@@ -132,6 +132,19 @@ void splitCommands(char* commandLine)
 		else if (strcmp(argument, "&&") == 0)
 		{
 			specialArg = 7;
+			setSpecial(specialArg);
+			int exec = executeCommand(nbArgs, args);
+			if (exec != 0)
+			{
+				setSpecial(0);
+				argument = NULL;
+			}
+			else
+			{
+				nbArgs = 0;
+				specialArg = 0;
+				setSpecial(specialArg);
+			}
 		}
 		else if (redirect == 1)
 		{
