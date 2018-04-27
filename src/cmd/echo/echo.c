@@ -1,4 +1,5 @@
 #include "echo.h"
+#include "../../utils/faroprint.h"
 
 int fecho(int argc, char *argv[])
 {
@@ -31,8 +32,8 @@ int fecho(int argc, char *argv[])
   char *line = (char*)malloc(sizeof(toRead)); // chaine transformée
 
   if(toRead == NULL){ // string missing
-    faroprintf("Error: argument missing\n");
-    faroprintf("Usage: echo [-option][string]\n");
+    faroprint("Error: argument missing\n");
+    faroprint("Usage: echo [-option][string]\n");
     return 1; // retour erreur
   }
 
@@ -71,11 +72,19 @@ int fecho(int argc, char *argv[])
   } //  end while
 
   for(int j = 0; j<i; j++){
+<<<<<<< HEAD
     faroprintf("%c", line[j]);
   }
 
   free(line);
   if(!caseN){faroprintf("\n");} // option -n
+=======
+    faroprint("%c", line[j]);
+  }
+
+  free(line);
+  if(!caseN){faroprint("\n");} // option -n
+>>>>>>> f897c8bdf5941481df5ef035966c65c18220ff04
 
   return 0;
 }
