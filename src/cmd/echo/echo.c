@@ -6,34 +6,52 @@ int fecho(int argc, char *argv[])
 
   extern int optind;
   int opt;
-  int indicateurString = 1;
 
+  int nbArg = 1; // compteur d'arguments (init à 1 pour ne pas compter la commande)
   // validateurs d'option
   int caseN = 0;
   int caseE = 0;
-
-  char *toRead = NULL;
 
   while((opt = getopt(argc, argv, "ne")) != -1){
     switch (opt) {
       case 'n':
         caseN = 1;
-        indicateurString++;
         break;
       case 'e':
         caseE = 1;
-        indicateurString++;
         break;
       default:
         break;
     }
   }
-  toRead = argv[optind];
-  char *line = (char*)malloc(sizeof(toRead)); // chaine transformée
+
+  nbArg = optind;
+  int k = 0; // compteur pour mettre tout les strings à lire dans toRead
+  int t = 0;
+  // on alloue la mémoire suffisante à toRead pour toutes les string à lire
+  int tmp = argc - nbArg;
+  char tmpC;
+  char *toRead = (char*)malloc((tmp)*sizeof(char));
+
+  // on charge toutes les strings dans toRead
+  while(nbArg != argc){
+    do{
+      tmpC = argv[nbArg][t];
+      toRead[k] = tmpC;
+      k++;
+      t++;
+    }while(tmpC != '\0');
+    nbArg++;
+    t = 0;
+  }
+
+  char *line = (char*)malloc(sizeof(toRead)); // chaine transformée avec une taille maximale égale à celle de toRead (cas sans option)
 
   if(toRead == NULL){ // string missing
     faroprint("Error: argument missing\n");
     faroprint("Usage: echo [-option][string]\n");
+    free(toRead);
+    free(line);
     return 1; // retour erreur
   }
 
@@ -45,7 +63,7 @@ int fecho(int argc, char *argv[])
   int indiceLine = 0; // indice pour la ligne à remplir qui sera affichée
 
   // on regarde chaque caractère de la string à lire
-  while (toRead[i] != '\0') {
+  while (k != 0) {
     c = toRead[i];
 
     if(caseE){ // interpretation of backslash escapes -- option -e
@@ -65,16 +83,18 @@ int fecho(int argc, char *argv[])
 
 
     } // end caseE
-    else{
+    else{ // cas sans option
       line[i] = c;
     }
     i++;
+    k--;
   } //  end while
 
   for(int j = 0; j<i; j++){
     faroprint("%c", line[j]);
   }
 
+  free(toRead);
   free(line);
   if(!caseN){faroprint("\n");} // option -n
 
