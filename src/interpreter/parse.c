@@ -146,13 +146,14 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 	char **argv = malloc(NOMBRE_ARGUMENT * sizeof(char *));
 	char *specialChar = malloc(sizeof(char*));
 	specialChar = specials_list[specialArg-1];
+	int execute = 0;
 
 	printf("special = %s\n", specialChar);
 
 	while (strcmp(args[i], specialChar))
 	{
 		argv[i] = args[i];
-		printf("special argv1 = %s\n", argv[i]);
+		//printf("special argv1 = %s\n", argv[i]);
 		i++;
 		argc++;
 	}
@@ -160,24 +161,31 @@ void parseSpecial(int specialArg, int nbArgs, char *args[])
 	int argc2 = nbArgs - argc - 1;
 	char **argv2 = malloc(NOMBRE_ARGUMENT * sizeof(char *));
 
-	printf("argc = %d\nargc2 = %d\n", argc2, argc);
+	//printf("argc = %d\nargc2 = %d\n", argc2, argc);
 	int j = 0;
 	for (int i = argc+1; i < nbArgs; i++)
 	{
 		if (specialArg == 2 || specialArg == 4)
 		{
 			printf("double or simple redirect\n");
-			setFileName(args[i]);
+			if (strcmp(argv[0], "cat") == 0
+				&& strcmp(argv[argc-1], args[i]) == 0)
+			{
+				printf("%s: %s: input file is output file\n", argv[0], args[i]);
+			} else {
+				setFileName(args[i]);
+				execute = 1;
+			}
 		}
 		else
 		{
 			argv2[j] = args[i];
-			printf("special argv2[%d] = %s\n", j, argv2[j]);
+			//printf("special argv2[%d] = %s\n", j, argv2[j]);
 			j++;
 		}
 	}
 
-	executeCommand(argc, argv);
+	if (execute) executeCommand(argc, argv);
 	//executeCommand(argc2, argv2);
 
 	free(argv);
