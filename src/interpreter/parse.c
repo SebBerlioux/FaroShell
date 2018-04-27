@@ -113,6 +113,21 @@ void splitCommands(char* commandLine)
 		else if (strcmp(argument, "||") == 0)
 		{
 			specialArg = 6;
+			setSpecial(specialArg);
+			int exec = executeCommand(nbArgs, args);
+			if (exec == 0)
+			{
+				setSpecial(0);
+				executeCommand(nbArgs, args);
+				argument = NULL;
+				args[nbArgs] = argument;
+			}
+			else
+			{
+				nbArgs = 0;
+				specialArg = 0;
+				setSpecial(specialArg);
+			}
 		}
 		else if (strcmp(argument, "&&") == 0)
 		{
