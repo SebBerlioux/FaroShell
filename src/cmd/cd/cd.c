@@ -25,7 +25,11 @@ int fcd(int argc, char *argv[])
       faroprint("Vous n'avez pas le droit d'entrer dans ce dossier\n");
     }
   }
+  else{
+    printf("Error: too many arguments!\n");
+    printf("Usage: cd [path]\n");
+    return 1;
+  }
 
   return 0;
-
 }
