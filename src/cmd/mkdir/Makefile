@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/mkdir $(FaroShell)/$(binCmd)/$(static)/libmkdir.a \
 
 $(FaroShell)/$(binCmd)/mkdir: $(FaroShell)/$(objCmd)/mkdir/mkdir.o \
 		$(FaroShell)/$(objCmd)/mkdir/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/mkdir $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/mkdir $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/mkdir/%.o: $(FaroShell)/$(src)/$(cmd)/mkdir/%.c
 	@echo "Building mkdir"

@@ -1,19 +1,20 @@
 #include <stdio.h>
 #include "cp.h"
+#include "../../utils/faroprint.h"
 
 // Fonction qui sert  à  copier  des  fichiers  et eventuellement des répertoires.
 int fcp(int argc, char *argv[]){
 
     if(argc<2){
-        printf("cp : too few argument\n");
+        faroprint("cp : too few argument\n");
         return -1;
     }
     if(argc==2){
-        printf("cp : missing destination file after '%s'\n",argv[1]);
+        faroprint("cp : missing destination file after '%s'\n",argv[1]);
         return -1;
     }
     else if(argc>3){
-        printf("cp : too many arguments\n");
+        faroprint("cp : too many arguments\n");
         return -1;
     }
 
@@ -32,7 +33,7 @@ int fcp(int argc, char *argv[]){
             {
                 strcat(path_Dest, "/");
                 strcat(path_Dest, argv[1]);
-                //printf("Destination du fichier : %s\n", path_Dest);
+                //faroprint("Destination du fichier : %s\n", path_Dest);
             }
 
             else    //cas ou l'on reste dans le meme dossier
@@ -45,14 +46,14 @@ int fcp(int argc, char *argv[]){
             if((f_Src = fopen(path_Src, "r")) == NULL)
             {
                 // Si on a pas la permission pour deplacer le fichier
-                printf("Le fichier source semble introuvable\n");
+                faroprint("Le fichier source semble introuvable\n");
                 return 1;
             }
 
             if((f_Dest = fopen(path_Dest, "w+")) == NULL)
             {
                 // Si le dossier de destination n'existe pas
-                printf("Le dossier de destination est introuvable\n");
+                faroprint("Le dossier de destination est introuvable\n");
                 fclose(f_Src);
                 return 2;
             }
@@ -71,7 +72,7 @@ int fcp(int argc, char *argv[]){
         }
 
         else{
-            printf("cp : file/directory '%s' doesn't exist\n", argv[1]);
+            faroprint("cp : file/directory '%s' doesn't exist\n", argv[1]);
             return -1;
         }
     }
@@ -90,12 +91,12 @@ int cp_avanced(const char *Source_ID,const char *Destination_ID){
 
     //Cas avec erreur
     if ((source=opendir(Source_ID))==NULL){
-        printf("Impossible d'ouvrir le repertoire %s\n",Source_ID);
+        faroprint("Impossible d'ouvrir le repertoire %s\n",Source_ID);
         return -1;
     }
 
     if ((destination=opendir(Destination_ID))==NULL){
-        printf("Le repertoire existe pas %s\n",Destination_ID);
+        faroprint("Le repertoire existe pas %s\n",Destination_ID);
         return -1;
     }
 
@@ -129,13 +130,13 @@ int cp_avanced(const char *Source_ID,const char *Destination_ID){
 
             if((f_Src = fopen(path_Src, "r")) == NULL){
                 // Si le fichier s'ouvre pas
-                printf("Le fichier source %s semble introuvable dans le dossier\n", path_Src);
+                faroprint("Le fichier source %s semble introuvable dans le dossier\n", path_Src);
                 return 1;
             }
 
             if((f_Dest = fopen(path_Dest, "w")) == NULL){
                 // Si le dossier de destination n'existe pas
-                printf("Le fichier de destination : %s semble introuvable dans le dossier\n", path_Dest);
+                faroprint("Le fichier de destination : %s semble introuvable dans le dossier\n", path_Dest);
                 fclose(f_Src);
                 return 2;
             }

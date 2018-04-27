@@ -1,4 +1,5 @@
 #include "mv.h"
+#include "../../utils/faroprint.h"
 
 int fmv(int argc, char *argv[])
 {
@@ -17,7 +18,7 @@ int fmv(int argc, char *argv[])
 
 	if (argc < 3)  //Test des arguments
 	{
-		printf("FaroShell : Manque de paramètre !\n");
+		faroprint("FaroShell : Manque de paramètre !\n");
 	}
 	else
 	{
@@ -66,13 +67,13 @@ int fmv(int argc, char *argv[])
 				strcpy(dest, argv[argc-1]);
 	    }
 
-			if (verbose) printf("Destination set to : %s\n", dest);
+			if (verbose) faroprint("Destination set to : %s\n", dest);
 
-			if (verbose) printf("Item to move :  \"%s\"\n", item);
+			if (verbose) faroprint("Item to move :  \"%s\"\n", item);
 
 			if (info)
 			{
-				printf("Voulez-vous déplacer \"%s\" vers \"%s\" ? (y/n) ", item, dest);  //On demande une confirmation
+				faroprint("Voulez-vous déplacer \"%s\" vers \"%s\" ? (y/n) ", item, dest);  //On demande une confirmation
 				do
 				{
 					rep = getc(stdin);
@@ -83,11 +84,11 @@ int fmv(int argc, char *argv[])
 					else if (rep == 'n')
 					{
 						ren = 0;
-						printf("Aucunes modifications n'a été aportées.\n");
+						faroprint("Aucunes modifications n'a été aportées.\n");
 					}
 					else
 					{
-						printf("Veuillez répondre par y ou n.\n");
+						faroprint("Veuillez répondre par y ou n.\n");
 					}
 				}
 				while(rep != 'y' && rep != 'n');
@@ -102,11 +103,11 @@ int fmv(int argc, char *argv[])
 				ret = rename(item, dest); //on déplace l'objet.
 				if (ret != 0)
 				{
-					printf("FaroShell : Impossible de déplacer l'élément suivant : \"%s\".\n", item);
+					faroprint("FaroShell : Impossible de déplacer l'élément suivant : \"%s\".\n", item);
 				}
 				else
 				{
-					if (verbose) printf("L'élément \"%s\" a été déplacé vers : \"%s\"\n", item, dest);
+					if (verbose) faroprint("L'élément \"%s\" a été déplacé vers : \"%s\"\n", item, dest);
 				}
 			}
 			free(item);

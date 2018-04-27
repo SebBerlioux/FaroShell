@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/rm $(FaroShell)/$(binCmd)/$(static)/librm.a \
 
 $(FaroShell)/$(binCmd)/rm: $(FaroShell)/$(objCmd)/rm/rm.o \
 		$(FaroShell)/$(objCmd)/rm/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/rm $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/rm $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/rm/%.o: $(FaroShell)/$(src)/$(cmd)/rm/%.c
 	@echo "Building rm"

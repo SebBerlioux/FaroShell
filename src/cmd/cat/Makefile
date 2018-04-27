@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/cat $(FaroShell)/$(binCmd)/$(static)/libcat.a \
 
 $(FaroShell)/$(binCmd)/cat: $(FaroShell)/$(objCmd)/cat/cat.o \
 		$(FaroShell)/$(objCmd)/cat/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/cat $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/cat $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/cat/%.o: $(FaroShell)/$(src)/$(cmd)/cat/%.c
 	@echo "Building cat"

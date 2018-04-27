@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/pwd $(FaroShell)/$(binCmd)/$(static)/libpwd.a \
 
 $(FaroShell)/$(binCmd)/pwd: $(FaroShell)/$(objCmd)/pwd/pwd.o \
 		$(FaroShell)/$(objCmd)/pwd/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/pwd $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/pwd $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/pwd/%.o: $(FaroShell)/$(src)/$(cmd)/pwd/%.c
 	@echo "Building pwd"

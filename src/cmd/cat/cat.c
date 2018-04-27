@@ -1,12 +1,13 @@
 #include "cat.h"
+#include "../../utils/faroprint.h"
 
 // ex:$ cat [-options] [fichier]
 
 int fcat(int argc, char *argv[]){
 
   if(argc < 2){ // manque de parametre
-    printf("Erreur, manque de parametre !\n");
-    printf("Usage: cat [-option(s)] [fichier]\n");
+    faroprint("Erreur, manque de parametre !\n");
+    faroprint("Usage: cat [-option(s)] [fichier]\n");
     return 1; // retour erreur
   }
   else{
@@ -45,11 +46,11 @@ int fcat(int argc, char *argv[]){
           indicateurFichier++;
           break;
         case '?':
-          printf("Incorrect argument given: %s\n", argv[optind-1]);
-          printf("Available arguments are: -A, -b, -E (-e), -n, -T (-t) \n");
+          faroprint("Incorrect argument given: %s\n", argv[optind-1]);
+          faroprint("Available arguments are: -A, -b, -E (-e), -n, -T (-t) \n");
           return 1; //retour erreur
           break;
-        default: printf("bonsoir\n"); break;
+        default: faroprint("bonsoir\n"); break;
       }//end switch
     }//end while
 
@@ -63,7 +64,7 @@ int fcat(int argc, char *argv[]){
 
     fp = fopen(argv[indicateurFichier], "r");
     if (fp == NULL){ // erreur lors de l'ouverture du fichier
-      printf("Erreur lors de l'ouverture du fichier !\n");
+      faroprint("Erreur lors de l'ouverture du fichier !\n");
       return 1; //retour erreur
     }
 
@@ -79,20 +80,20 @@ int fcat(int argc, char *argv[]){
       if(caseN){ // option n --------------- ok
         if(nouvelleLigne){
           n++;
-          printf("\t%i  ", n);
+          faroprint("\t%i  ", n);
           nouvelleLigne = 0;
         }
       }
 
       if(c == '\t'){ // option T ou A  ------------- ok pour T
         if(caseT || caseA){
-          printf("^I");
+          faroprint("^I");
           affichage = 0;
         }
       }
       if(c == '\n'){ // option E ou A
         if(caseE || caseA){
-          printf("$\n");
+          faroprint("$\n");
           affichage = 0;
         }
         nouvelleLigne = 1;
@@ -100,12 +101,12 @@ int fcat(int argc, char *argv[]){
 
       if(affichage){
         cchar = (char) c;
-        printf("%c", cchar);
+        faroprint("%c", cchar);
       }
     } // end while
 
       fclose(fp);
   } // end else
-  printf("\n");
+  faroprint("\n");
   return 0;
 } //end function

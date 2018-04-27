@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/cp $(FaroShell)/$(binCmd)/$(static)/libcp.a \
 
 $(FaroShell)/$(binCmd)/cp: $(FaroShell)/$(objCmd)/cp/cp.o \
 		$(FaroShell)/$(objCmd)/cp/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/cp $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/cp $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/cp/%.o: $(FaroShell)/$(src)/$(cmd)/cp/%.c
 	@echo "Building cp"

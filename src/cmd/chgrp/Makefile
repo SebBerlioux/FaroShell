@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/chgrp $(FaroShell)/$(binCmd)/$(static)/libchgrp.a \
 
 $(FaroShell)/$(binCmd)/chgrp: $(FaroShell)/$(objCmd)/chgrp/chgrp.o \
 		$(FaroShell)/$(objCmd)/chgrp/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/chgrp $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/chgrp $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/chgrp/%.o: $(FaroShell)/$(src)/$(cmd)/chgrp/%.c
 	@echo "Building chgrp"

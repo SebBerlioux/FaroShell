@@ -1,5 +1,7 @@
 #include "faroprint.h"
 
+int spec = 0;
+
 /*
     Fonction qui permet de changer la valeur "special"
 */

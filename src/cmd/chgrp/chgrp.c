@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "chgrp.h"
+#include "../../utils/faroprint.h"
 
 //  Change le groupe d'utilisateur possédant un fichier ou un dossier.
 
@@ -7,18 +8,18 @@ int grp(int argc, char *argv[])
 {
     if(argc < 3)
     {
-        printf("chgrp : too few arguments\n");
+        faroprint("chgrp : too few arguments\n");
 
     }
 
     else if(argc > 3)
     {
-        printf("chgrp : too many arguments\n");
+        faroprint("chgrp : too many arguments\n");
     }
 
     else
     {
-        printf("%s\nGroupe : %s\nFichier : %s\n", argv[0], argv[1], argv[2]);   //Affiche les arguments
+        faroprint("%s\nGroupe : %s\nFichier : %s\n", argv[0], argv[1], argv[2]);   //Affiche les arguments
         FILE *pass;         // Fichier qui va lire le fichiergroupe dans /etc pour acceder au differents groupe present sur le systeme
         char ligne[100];    // Variable qui va stocker les lignes (donc les noms des groupes) dans le fichier group
         char *ret;          // Tampon pour le char*
@@ -50,7 +51,7 @@ int grp(int argc, char *argv[])
 
             else
             {
-                printf("error opening /etc/group\n");
+                faroprint("error opening /etc/group\n");
                 return -1;
             }
             fclose(pass);

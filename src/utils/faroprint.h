@@ -15,7 +15,6 @@
 #define OR 6
 #define AND 7
 
-int spec = 0;
 char *filename;
 
 void setSpecial(int value);

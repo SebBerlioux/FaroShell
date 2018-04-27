@@ -1,4 +1,5 @@
 #include "du.h"
+#include "../../utils/faroprint.h"
 
 int fdu(int argc, char *argv[]){
 
@@ -47,12 +48,12 @@ int fdu(int argc, char *argv[]){
       struct passwd *pw = getpwuid(getuid());
       const char *homedir = pw->pw_dir;
       stat(homedir,&s); // on stocke dans s les données du dossier homedir
-      printf("%li\t\t%s\n", s.st_size, homedir);
+      faroprint("%li\t\t%s\n", s.st_size, homedir);
     */
   }else{
     dir = opendir(argv[indicateurFichier]);
     if(dir == NULL){
-      printf("Le dossier %s n'existe pas !", argv[1]);
+      faroprint("Le dossier %s n'existe pas !", argv[1]);
       return 1; // retour erreur
     }
   } // end else
@@ -74,7 +75,7 @@ int fdu(int argc, char *argv[]){
       if(caseH){
         conversionHumanReadable(s.st_size, subdir->d_name, 1);
       }else{
-        printf("%ld\t%s\n", s.st_size, subdir->d_name);
+        faroprint("%ld\t%s\n", s.st_size, subdir->d_name);
       }
 
       if(caseC){
@@ -86,7 +87,7 @@ int fdu(int argc, char *argv[]){
         if(caseH){
           conversionHumanReadable(s.st_size, subdir->d_name, 1);
         }else{
-          printf("%ld\t%s\n", s.st_size, subdir->d_name);
+          faroprint("%ld\t%s\n", s.st_size, subdir->d_name);
         }
 
         if(caseC){
@@ -100,7 +101,7 @@ int fdu(int argc, char *argv[]){
     if(caseH){
       conversionHumanReadable(tailleTotale,"total",1);
     }else{
-      printf("%i\ttotal\n", tailleTotale);
+      faroprint("%i\ttotal\n", tailleTotale);
     }
   }
   closedir(dir);
@@ -110,15 +111,15 @@ int fdu(int argc, char *argv[]){
 void conversionHumanReadable(off_t size, char *name, int indice){
   if(size < 1000){ // inférieur à 1000 bytes
     if(indice == 1){
-      printf("%ldB\t%s\n", size, name);
+      faroprint("%ldB\t%s\n", size, name);
     }else if(indice == 2){
-      printf("%ldK\t%s\n", size, name);
+      faroprint("%ldK\t%s\n", size, name);
     }else if(indice == 3){
-      printf("%ldM\t%s\n", size, name);
+      faroprint("%ldM\t%s\n", size, name);
     }else if(indice == 2){
-      printf("%ldG\t%s\n", size, name);
+      faroprint("%ldG\t%s\n", size, name);
     }else if(indice == 2){
-      printf("%ldT\t%s\n", size, name);
+      faroprint("%ldT\t%s\n", size, name);
     }
   }else{ // superieur a 1000 bytes
     conversionHumanReadable(size/1000,name, indice+1);

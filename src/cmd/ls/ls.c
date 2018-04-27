@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "ls.h"
-
+#include "../../utils/faroprint.h"
 
 //affiche les informations du fichier / répertoire actuel sur une ligne
 

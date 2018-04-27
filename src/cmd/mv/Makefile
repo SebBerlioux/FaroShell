@@ -7,7 +7,7 @@ all: $(FaroShell)/$(binCmd)/mv $(FaroShell)/$(binCmd)/$(static)/libmv.a \
 
 $(FaroShell)/$(binCmd)/mv: $(FaroShell)/$(objCmd)/mv/mv.o \
 		$(FaroShell)/$(objCmd)/mv/main.o
-	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/mv $^
+	$(CC) -o $(FaroShell)/$(bin)/$(cmd)/mv $^ $(FaroShell)/$(obj)/$(utilsObj)
 
 $(FaroShell)/$(objCmd)/mv/%.o: $(FaroShell)/$(src)/$(cmd)/mv/%.c
 	@echo "Building mv"
