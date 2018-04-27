@@ -9,7 +9,7 @@ Ce projet a pour but de créer un mini shell en langage C dans lequel les comman
 - ls     ✓  (Options disponibles : -a -c -h)
 - cat    ✓  (Options disponibles : -A -E -n -T)
 - mv     ✓  (Options disponibles : -i -v)
-- cp     ✓  (sans options)
+- cp     ✓  (Récursivité intégrée)
 - rm     ✓  (Options disponibles : -r -f )
 - du     ✓  (Options disponibles : -a -c -h)
 - chmod  ✓  
